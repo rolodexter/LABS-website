@@ -1,0 +1,22 @@
+{
+  "name": "rolodexter-labs-website",
+  "version": "1.0.0",
+  "description": "rolodexterLABS Teaser Landing Page",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "rolodexter",
+    "AI",
+    "landing-page"
+  ],
+  "author": "Joe Maristela",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
