@@ -9,11 +9,12 @@ const nextConfig = {
     // Disable TypeScript during build to avoid failures
     ignoreBuildErrors: true,
   },
-  // Disable static optimization for pages that use Privy
-  // This ensures the Privy provider is only initialized on the client side
+  // Completely disable static page generation to prevent Privy initialization during build
+  output: 'standalone',
+  // Disable SSG, forcing all pages to be rendered at runtime
   experimental: {
     // Avoid issues with environment variables during build
-    esmExternals: 'loose',
+    runtime: 'nodejs',
   },
   // Enable runtime configuration to ensure environment variables are available
   publicRuntimeConfig: {

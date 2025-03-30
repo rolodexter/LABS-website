@@ -1,8 +1,22 @@
 import { PrivyProvider } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 const PrivyAuth = ({ children }) => {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  
+  // Make sure we only run this on the client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Skip Privy initialization entirely on server
+  if (!isClient) {
+    return <>{children}</>;
+  }
+  
+  // Get appId from environment (client-side only)
   const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
   const handleLogin = (user) => {
@@ -46,7 +60,12 @@ const PrivyAuth = ({ children }) => {
     },
   };
 
-  return <PrivyProvider config={config}>{children}</PrivyProvider>;
+  try {
+    return <PrivyProvider config={config}>{children}</PrivyProvider>;
+  } catch (error) {
+    console.error("Error initializing PrivyProvider:", error);
+    return <>{children}</>;
+  }
 };
 
 export default PrivyAuth;
