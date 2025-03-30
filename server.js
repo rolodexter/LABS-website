@@ -1,30 +1,51 @@
 const express = require('express');
 const path = require('path');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const next = require('next');
+
+// Determine if we're in development or production
+const dev = process.env.NODE_ENV !== 'production';
+
+// Initialize Next.js
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
 
 // Load environment variables
 require('dotenv').config();
+if (dev) {
+  require('dotenv').config({ path: '.env.local' });
+}
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+const PORT = process.env.PORT || 3000;
 
-// Login route - redirects to Google OAuth
-app.get('/login', (req, res) => {
-  const googleClientId = process.env.GOOGLE_CLIENT_ID;
-  const redirectUri = encodeURIComponent(`${process.env.NEXTAUTH_URL || 'https://rolodexterlabs-production.up.railway.app'}/api/auth/callback/google`);
-  const scope = encodeURIComponent('profile email');
+// Prepare and start the server
+nextApp.prepare().then(() => {
+  const app = express();
+
+  // Serve static files from the public directory
+  app.use(express.static(path.join(__dirname, 'public')));
   
-  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+  // Serve CSS files from the css directory for backward compatibility
+  app.use('/css', express.static(path.join(__dirname, 'css')));
   
-  res.redirect(googleAuthUrl);
-});
+  // Handle API routes
+  app.all('/api/*', (req, res) => {
+    return handle(req, res);
+  });
 
-// For any other request, send the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+  // Serve the landing page for the root route
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
 
-app.listen(PORT, () => {
-  console.log(`rolodexterLABS website is running on port ${PORT}`);
+  // Let Next.js handle all other routes
+  app.all('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  app.listen(PORT, () => {
+    console.log(`rolodexterLABS website is running on port ${PORT}`);
+  });
+}).catch(err => {
+  console.error('Error starting server:', err);
+  process.exit(1);
 });
