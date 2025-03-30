@@ -5,7 +5,7 @@ import { ThemeProvider } from '../components/ThemeProvider';
 import '../css/style.css';
 
 // Add Tailwind CSS
-import 'tailwindcss/tailwind.css';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
