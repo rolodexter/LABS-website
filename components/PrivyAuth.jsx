@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 const PrivyAuth = ({ children }) => {
   const router = useRouter();
+  const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
   const handleLogin = (user) => {
     console.log("User logged in successfully:", user);
@@ -14,8 +15,14 @@ const PrivyAuth = ({ children }) => {
     router.push('/');
   };
 
+  // If no app ID is provided, just render children without Privy
+  if (!appId) {
+    console.warn("No Privy App ID found in environment variables. Skipping Privy authentication.");
+    return <>{children}</>;
+  }
+
   const config = {
-    appId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
+    appId: appId,
     onSuccess: handleLogin,
     onLogout: handleLogout,
     loginMethods: [

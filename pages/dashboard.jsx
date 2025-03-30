@@ -1,10 +1,37 @@
 import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+// Prevent server-side rendering issues with Privy
+export const config = {
+  unstable_runtimeJS: true
+};
 
 export default function Dashboard() {
-  const { ready, authenticated, user, logout, connectWallet, linkWallet, unlinkWallet } = usePrivy();
+  const [isPrivyAvailable, setIsPrivyAvailable] = useState(true);
   const router = useRouter();
+  
+  // Default empty state for Privy hooks
+  let privyHook = { 
+    ready: false, 
+    authenticated: false, 
+    user: null, 
+    logout: () => {}, 
+    connectWallet: () => {}, 
+    linkWallet: () => {}, 
+    unlinkWallet: () => {} 
+  };
+  
+  try {
+    privyHook = usePrivy();
+  } catch (error) {
+    if (isPrivyAvailable) {
+      console.error("Privy hook unavailable:", error);
+      setIsPrivyAvailable(false);
+    }
+  }
+  
+  const { ready, authenticated, user, logout, connectWallet, linkWallet, unlinkWallet } = privyHook;
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -13,7 +40,8 @@ export default function Dashboard() {
     }
   }, [ready, authenticated, router]);
 
-  if (!ready || !authenticated) {
+  // Handle loading state for both server-rendering and client-side
+  if (!isPrivyAvailable || !ready || !authenticated) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">

@@ -8,7 +8,21 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const { authenticated, user, logout } = usePrivy();
+  const [isPrivyAvailable, setIsPrivyAvailable] = useState(true);
+  
+  // Default empty state for Privy hooks
+  let privyState = { authenticated: false, user: null, logout: () => {} };
+  
+  try {
+    privyState = usePrivy();
+  } catch (error) {
+    if (isPrivyAvailable) {
+      console.error("Privy hook unavailable in Header:", error);
+      setIsPrivyAvailable(false);
+    }
+  }
+  
+  const { authenticated, user, logout } = privyState;
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
 
@@ -39,7 +53,9 @@ const Header = () => {
 
   // Handle logout
   const handleLogout = async () => {
-    await logout();
+    if (logout && typeof logout === 'function') {
+      await logout();
+    }
     router.push('/');
   };
   

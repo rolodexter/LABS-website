@@ -1,19 +1,68 @@
 import { usePrivy } from '@privy-io/react-auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+// Prevent server-side rendering issues with Privy
+export const config = {
+  unstable_runtimeJS: true
+};
+
 export default function Login() {
-  const { login, authenticated, user, logout, ready } = usePrivy();
+  const [isPrivyAvailable, setIsPrivyAvailable] = useState(true);
+  let privyHook = { login: null, authenticated: false, user: null, logout: null, ready: false };
+  
+  try {
+    privyHook = usePrivy();
+  } catch (error) {
+    // If Privy is not available or properly initialized
+    if (!isPrivyAvailable) {
+      console.error("Privy hook unavailable:", error);
+    }
+    if (isPrivyAvailable) {
+      setIsPrivyAvailable(false);
+    }
+  }
+  
+  const { login, authenticated, user, logout, ready } = privyHook;
 
   // Debug logs for Privy state
   useEffect(() => {
-    if (ready) {
+    if (ready && isPrivyAvailable) {
       console.log("Privy authenticated:", authenticated);
       if (authenticated && user) {
         console.log("User object:", user);
       }
     }
-  }, [ready, authenticated, user]);
+  }, [ready, authenticated, user, isPrivyAvailable]);
+
+  // If Privy is not available, show alternative login options
+  if (!isPrivyAvailable) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="w-full max-w-md space-y-8 p-8">
+          <div className="text-center">
+            <h2 className="mt-6 text-3xl font-bold">rolodexterLABS</h2>
+            <p className="mt-2 text-sm opacity-60">AI-Driven Intelligence & Automated Workflows</p>
+          </div>
+          
+          <div className="mt-8 space-y-3">
+            <Link href="/auth/signin" className="w-full flex items-center justify-center px-4 py-3 bg-white text-black hover:bg-white/90 transition-colors rounded-lg">
+              Sign in with OAuth
+            </Link>
+            <Link href="/" className="w-full flex items-center justify-center px-4 py-3 border border-white hover:bg-white hover:text-black transition-colors rounded-lg">
+              Back to Home
+            </Link>
+          </div>
+          
+          <div className="mt-8 text-center text-sm">
+            <p className="opacity-60">
+              By signing in, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
