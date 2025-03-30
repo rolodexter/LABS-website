@@ -30,9 +30,3 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-@media (prefers-color-scheme: dark) {
-  html.dark {
-    color-scheme: dark;
-  }
-}

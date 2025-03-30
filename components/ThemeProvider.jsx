@@ -3,31 +3,28 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  // Initialize with system preference, but don't cause hydration errors
+  // Initialize with a default theme that won't cause hydration issues
   const [theme, setTheme] = useState('light');
   const [mounted, setMounted] = useState(false);
   
-  // Only run after component mounts (client-side)
+  // Only run on client-side after component is mounted
   useEffect(() => {
     setMounted(true);
     
-    // Check for system preference for dark mode
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Check system preference for dark mode
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = prefersDark ? 'dark' : 'light';
     
-    // Set initial theme based on system preference only
-    const initialTheme = systemPrefersDark ? 'dark' : 'light';
+    // Set theme based on system preference
     setTheme(initialTheme);
-    
-    // Apply theme class to document
     document.documentElement.classList.add(initialTheme);
     
-    // Listen for system preference changes
+    // Listen for changes in system preference
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e) => {
       const newTheme = e.matches ? 'dark' : 'light';
       setTheme(newTheme);
-      document.documentElement.classList.remove('dark', 'light');
-      document.documentElement.classList.add(newTheme);
+      updateTheme(newTheme);
     };
     
     mediaQuery.addEventListener('change', handleChange);
@@ -40,7 +37,11 @@ export const ThemeProvider = ({ children }) => {
     
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    
+    updateTheme(newTheme);
+  };
+  
+  // Helper function to update DOM
+  const updateTheme = (newTheme) => {
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(newTheme);
   };
