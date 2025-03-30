@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { ThemeProvider } from '../components/ThemeProvider';
-import '../css/style.css';
 
 // Add Tailwind CSS
 import '../styles/globals.css';

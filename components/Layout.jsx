@@ -3,19 +3,30 @@ import Header from './navigation/Header';
 import Footer from './navigation/Footer';
 
 const Layout = ({ children }) => {
-  // Add padding to account for fixed header but ensure it's visible
   useEffect(() => {
-    // Apply padding for fixed header without additional stylings that could hide it
-    document.body.style.paddingTop = '64px';
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.body.style.minHeight = '100vh';
+    document.body.style.display = 'flex';
+    document.body.style.flexDirection = 'column';
+    document.body.style.backgroundColor = 'black';
+    document.body.style.color = 'white';
+    
     return () => {
-      document.body.style.paddingTop = '0';
+      document.body.style.margin = '';
+      document.body.style.padding = '';
+      document.body.style.minHeight = '';
+      document.body.style.display = '';
+      document.body.style.flexDirection = '';
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
     };
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-white dark:bg-black">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
-      <main className="flex-1 w-full mt-16">
+      <main className="flex-1 w-full">
         {children}
       </main>
       <Footer />
