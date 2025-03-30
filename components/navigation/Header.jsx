@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
 import { useTheme } from '../ThemeProvider';
 
@@ -8,21 +7,11 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const [isPrivyAvailable, setIsPrivyAvailable] = useState(true);
   
-  // Default empty state for Privy hooks
-  let privyState = { authenticated: false, user: null, logout: () => {} };
+  // Temporarily disable Privy
+  const authenticated = false;
+  const user = null;
   
-  try {
-    privyState = usePrivy();
-  } catch (error) {
-    if (isPrivyAvailable) {
-      console.error("Privy hook unavailable in Header:", error);
-      setIsPrivyAvailable(false);
-    }
-  }
-  
-  const { authenticated, user, logout } = privyState;
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
 
@@ -51,11 +40,8 @@ const Header = () => {
     }
   };
 
-  // Handle logout
+  // Temporary no-op logout function
   const handleLogout = async () => {
-    if (logout && typeof logout === 'function') {
-      await logout();
-    }
     router.push('/');
   };
   
