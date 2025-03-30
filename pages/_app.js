@@ -1,12 +1,21 @@
 import React from 'react';
 import PrivyAuth from '../components/PrivyAuth';
+import Layout from '../components/Layout';
+import { ThemeProvider } from '../components/ThemeProvider';
 import '../css/style.css';
+
+// Add Tailwind CSS
+import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <PrivyAuth>
-      <Component {...pageProps} />
-    </PrivyAuth>
+    <ThemeProvider>
+      <PrivyAuth>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </PrivyAuth>
+    </ThemeProvider>
   );
 }
 

@@ -32,12 +32,7 @@ nextApp.prepare().then(() => {
     return handle(req, res);
   });
 
-  // Serve the landing page for the root route
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  });
-
-  // Let Next.js handle all other routes
+  // Let Next.js handle all routes - remove the specific handling of root route
   app.all('*', (req, res) => {
     return handle(req, res);
   });
