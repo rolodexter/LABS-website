@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import TwitterProvider from 'next-auth/providers/twitter';
 import FacebookProvider from 'next-auth/providers/facebook';
@@ -8,7 +8,23 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+// Declare session types to include user ID and role
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role?: string;
+    }
+  }
+  interface User {
+    role?: string;
+  }
+}
+
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -29,43 +45,16 @@ export const authOptions = {
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
-    // Custom Telegram Provider
-    {
-      id: 'telegram',
-      name: 'Telegram',
-      type: 'oauth',
-      // Implement Telegram Login Widget flow
-      // This is a simplified version - you'll need to implement the full Telegram Login flow
-      authorization: 'https://oauth.telegram.org/auth',
-      token: {
-        url: 'https://oauth.telegram.org/access_token',
-        async request({ client, params, checks, provider }) {
-          // Implement Telegram-specific token validation
-        },
-      },
-      userinfo: {
-        url: 'https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/getMe',
-        async request({ client, tokens }) {
-          // Implement Telegram user info retrieval
-        },
-      },
-      profile(profile) {
-        return {
-          id: profile.id,
-          name: profile.username,
-          image: profile.photo_url,
-        };
-      },
-    },
   ],
   callbacks: {
     async session({ session, user }) {
-      // Add user ID and role to session
-      session.user.id = user.id;
-      session.user.role = user.role;
+      if (user) {
+        session.user.id = user.id;
+        session.user.role = user.role;
+      }
       return session;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -84,5 +73,4 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export default NextAuth(authOptions); 
