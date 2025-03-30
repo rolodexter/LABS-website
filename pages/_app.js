@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PrivyAuth from '../components/PrivyAuth';
+import dynamic from 'next/dynamic';
 import Layout from '../components/Layout';
 import { ThemeProvider } from '../components/ThemeProvider';
 import '../css/style.css';
@@ -7,31 +7,39 @@ import '../css/style.css';
 // Add Tailwind CSS
 import '../styles/globals.css';
 
-// Config to disable static optimization
-export const config = {
-  unstable_runtimeJS: true
-};
+// Dynamically import PrivyAuth with no SSR
+const PrivyAuth = dynamic(
+  () => import('../components/PrivyAuth'),
+  { ssr: false }
+);
 
 function MyApp({ Component, pageProps }) {
-  const [isBrowser, setIsBrowser] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsBrowser(true);
+    setMounted(true);
   }, []);
 
-  return (
-    <ThemeProvider>
-      {isBrowser ? (
-        <PrivyAuth>
+  // Only show the application after mounting to prevent hydration errors
+  if (!mounted) {
+    return (
+      <ThemeProvider>
+        <div style={{ visibility: 'hidden' }}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </PrivyAuth>
-      ) : (
+        </div>
+      </ThemeProvider>
+    );
+  }
+
+  return (
+    <ThemeProvider>
+      <PrivyAuth>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      )}
+      </PrivyAuth>
     </ThemeProvider>
   );
 }
