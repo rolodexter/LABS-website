@@ -87,9 +87,11 @@ export default function RolodexterLabs() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Interested in collaborating on AI research or development?
           </p>
-          <Button as={Link} href="/contact">
-            Contact Us
-          </Button>
+          <Link href="/contact">
+            <Button>
+              Contact Us
+            </Button>
+          </Link>
         </div>
 
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
@@ -97,9 +99,11 @@ export default function RolodexterLabs() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Explore our latest research papers and publications.
           </p>
-          <Button as={Link} href="/research" color="light">
-            View Research
-          </Button>
+          <Link href="/research">
+            <Button color="light">
+              View Research
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
