@@ -1,6 +1,43 @@
 import { Button, Card } from '@/components/ui';
-import Badge from '../../../components/ui/Badge';
 import Link from 'next/link';
+import { HTMLAttributes } from 'react';
+
+// Inline Badge component to avoid import issues during build
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  variant?: 'default' | 'outline';
+  size?: 'sm' | 'md';
+}
+
+const Badge = ({
+  children,
+  className = '',
+  variant = 'default',
+  size = 'md',
+  ...props
+}: BadgeProps) => {
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-full';
+  
+  const variants = {
+    default: 'bg-gray-100 text-gray-800',
+    outline: 'border border-black text-black'
+  };
+
+  const sizes = {
+    sm: 'px-2 py-0.5 text-xs',
+    md: 'px-3 py-1 text-sm'
+  };
+
+  const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+
+  return (
+    <span
+      className={classes}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
 
 export default function Events() {
   const upcomingEvents = [
