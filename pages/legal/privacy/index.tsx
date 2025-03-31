@@ -88,13 +88,13 @@ export default function PrivacyPolicy() {
             >
               Privacy Settings
             </Button>
-            <Link href="/legal/cookies">
-              <Button
-                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                Cookie Settings
-              </Button>
-            </Link>
+            <Button
+              as={Link}
+              href="/legal/cookies"
+              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+            >
+              Cookie Settings
+            </Button>
           </div>
         </div>
 
@@ -104,20 +104,20 @@ export default function PrivacyPolicy() {
             If you have any questions about our Privacy Policy or how we handle your data, please contact our Data Protection Officer.
           </p>
           <div className="flex gap-4">
-            <Link href="/contact">
-              <Button
-                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                Contact DPO
-              </Button>
-            </Link>
-            <Link href="/legal/terms">
-              <Button
-                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                Terms of Service
-              </Button>
-            </Link>
+            <Button
+              as={Link}
+              href="/contact"
+              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+            >
+              Contact DPO
+            </Button>
+            <Button
+              as={Link}
+              href="/legal/terms"
+              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+            >
+              Terms of Service
+            </Button>
           </div>
         </div>
       </div>

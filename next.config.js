@@ -22,6 +22,11 @@ const nextConfig = {
     ],
   },
 
+  // Configure Emotion
+  compiler: {
+    emotion: true,
+  },
+
   // Override the default webpack configuration
   webpack: (config, { isServer }) => {
     // Handle image files directly using file-loader

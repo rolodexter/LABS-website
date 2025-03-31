@@ -8,13 +8,6 @@
   --background-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 0, 0, 0;
-  }
-}
-
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
@@ -36,7 +29,20 @@ a {
   flex-direction: column;
 }
 
-/* Transition effects for dark mode toggling */
+/* Base text styles */
+@layer base {
+  html {
+    @apply text-black bg-white;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-black;
+  }
+  p {
+    @apply text-gray-600;
+  }
+}
+
+/* Transition effects */
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

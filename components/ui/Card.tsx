@@ -12,7 +12,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(({
   padding = 'md',
   ...props
 }, ref) => {
-  const baseStyles = 'bg-white border border-gray-200 rounded-lg';
+  const baseStyles = 'bg-white border border-gray-200 rounded-lg text-black';
   
   const variants = {
     default: '',

@@ -3,6 +3,11 @@ import Link from 'next/link';
 export default function About() {
   const milestones = [
     {
+      date: '2010s',
+      title: 'Origins',
+      description: 'Joe Maristela first utilized rolodexter as a common interface between himself and staff at the ParkHealth Foundation, laying the groundwork for what would become rolodexterLABS.'
+    },
+    {
       date: '2023',
       title: 'Foundation',
       description: 'rolodexterLABS was established with a vision to revolutionize AI development.'
@@ -14,30 +19,13 @@ export default function About() {
     },
     {
       date: '2025',
-      title: 'Global Expansion',
-      description: 'Expanded operations globally and launched rolodexterLARP division.'
-    }
-  ];
-
-  const values = [
-    {
-      title: 'Innovation',
-      description: 'Pushing the boundaries of AI technology and research.'
-    },
-    {
-      title: 'Excellence',
-      description: 'Commitment to delivering high-quality solutions.'
-    },
-    {
-      title: 'Collaboration',
-      description: 'Working together with partners and communities.'
+      title: 'Community & Expansion',
+      description: 'Expanded operations globally and launched the rolodexterLARP division. Introduced the pump.fun token to gauge community interest in our technology platform and approach to AI.'
     }
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-24">
-      <h1 className="text-4xl font-bold mb-16">About rolodexterLABS</h1>
-      
       <div className="grid md:grid-cols-2 gap-16 mb-24">
         <div className="space-y-6">
           <h2 className="text-2xl font-bold">Our Mission</h2>
@@ -64,13 +52,15 @@ export default function About() {
       </div>
 
       <div className="mb-24">
-        <h2 className="text-2xl font-bold mb-12">Our Journey</h2>
+        <h2 className="text-2xl font-bold mb-8">Our Journey</h2>
         <div className="space-y-12">
           {milestones.map((milestone, index) => (
             <div key={index} className="flex gap-8">
-              <div className="flex-none w-24 font-bold">{milestone.date}</div>
+              <div className="w-24 flex-shrink-0">
+                <span className="text-xl font-bold">{milestone.date}</span>
+              </div>
               <div>
-                <h3 className="font-bold mb-2">{milestone.title}</h3>
+                <h3 className="text-xl font-bold mb-2">{milestone.title}</h3>
                 <p className="text-gray-600">{milestone.description}</p>
               </div>
             </div>
@@ -78,15 +68,21 @@ export default function About() {
         </div>
       </div>
 
-      <div>
-        <h2 className="text-2xl font-bold mb-12">Our Values</h2>
+      <div className="mb-24">
+        <h2 className="text-2xl font-bold mb-8">Our Values</h2>
         <div className="grid md:grid-cols-3 gap-12">
-          {values.map((value, index) => (
-            <div key={index} className="p-8 border border-gray-200 rounded-lg">
-              <h3 className="text-xl font-bold mb-4">{value.title}</h3>
-              <p className="text-gray-600">{value.description}</p>
-            </div>
-          ))}
+          <div>
+            <h3 className="text-xl font-bold mb-4">Impact</h3>
+            <p className="text-gray-600">We strive to create meaningful change through our technology, focusing on solutions that drive real-world progress and societal advancement.</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Efficiency</h3>
+            <p className="text-gray-600">Our commitment to optimizing processes and systems ensures we deliver maximum value while minimizing resource consumption.</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Science</h3>
+            <p className="text-gray-600">We ground our work in scientific principles, embracing rigorous research and empirical evidence to guide our technological innovations.</p>
+          </div>
         </div>
       </div>
     </div>

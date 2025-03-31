@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Ensure consistent box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Basic link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus outline for accessibility */
+:focus {
+  outline: 2px solid black;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background-rgb));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--foreground-rgb));
+  border-radius: 4px;
+}
+
+/* Disable tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}

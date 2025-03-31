@@ -15,7 +15,7 @@ export default function Footer() {
       links: [
         { label: 'About', href: '/about' },
         { label: 'Careers', href: '/careers' },
-        { label: 'Blog', href: '/blog' },
+        { label: 'Blog', href: 'https://rolodexterlabs.substack.com/' },
         { label: 'Press', href: '/press' },
         { label: 'Contact', href: '/contact' }
       ]
@@ -23,8 +23,8 @@ export default function Footer() {
     {
       title: 'Community',
       links: [
-        { label: 'Forums', href: '/community/forums' },
-        { label: 'Events', href: '/community/events' },
+        { label: 'Forums', href: 'https://github.com/rolodexter/rolodexter/discussions' },
+        { label: 'Events', href: 'https://lu.ma/rolodexterLABS' },
         { label: 'Discord', href: 'https://discord.gg/rolodexter' },
         { label: 'Telegram', href: 'https://t.me/rolodexter' },
         { label: 'Twitter', href: 'https://twitter.com/rolodexter' }

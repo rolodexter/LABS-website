@@ -69,13 +69,13 @@ export default function Press() {
               <p className="text-gray-600 dark:text-gray-400 mb-4">{release.excerpt}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500 dark:text-gray-400">{release.category}</span>
-                <Link href={`/press/releases/${release.title.toLowerCase().replace(/ /g, '-')}`}>
-                  <Button
-                    className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-                  >
-                    Read More
-                  </Button>
-                </Link>
+                <Button
+                  as={Link}
+                  href={`/press/releases/${release.title.toLowerCase().replace(/ /g, '-')}`}
+                  className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                >
+                  Read More
+                </Button>
               </div>
             </Card>
           ))}
@@ -102,13 +102,13 @@ export default function Press() {
               <div key={resource.title}>
                 <h3 className="font-bold mb-1 text-black dark:text-white">{resource.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-2">{resource.description}</p>
-                <Link href={resource.href}>
-                  <Button
-                    className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-                  >
-                    Download
-                  </Button>
-                </Link>
+                <Button
+                  as={Link}
+                  href={resource.href}
+                  className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                >
+                  Download
+                </Button>
               </div>
             ))}
           </div>
@@ -120,13 +120,13 @@ export default function Press() {
         <p className="text-gray-600 dark:text-gray-400 mb-6">
           For additional information or to schedule an interview, please contact our press team.
         </p>
-        <Link href="/contact?department=press">
-          <Button
-            className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-          >
-            Contact Press Team
-          </Button>
-        </Link>
+        <Button
+          as={Link}
+          href="/contact?department=press"
+          className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+        >
+          Contact Press Team
+        </Button>
       </div>
     </div>
   );

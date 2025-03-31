@@ -23,7 +23,7 @@ export default function Training() {
   const benefits = [
     {
       title: 'Customized Learning',
-      description: 'Programs tailored to your team\'s needs and skill level'
+      description: 'Programs tailored to your team's needs and skill level'
     },
     {
       title: 'Practical Experience',
@@ -80,11 +80,9 @@ export default function Training() {
           <p className="mb-6 text-gray-600 dark:text-gray-400">
             Custom training programs for organizations looking to upskill their teams.
           </p>
-          <Link href="/contact">
-            <Button>
-              Request Team Training
-            </Button>
-          </Link>
+          <Button as={Link} href="/contact">
+            Request Team Training
+          </Button>
         </div>
 
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
@@ -92,11 +90,9 @@ export default function Training() {
           <p className="mb-6 text-gray-600 dark:text-gray-400">
             Join our upcoming public training sessions and workshops.
           </p>
-          <Link href="/training/schedule">
-            <Button color="light">
-              View Schedule
-            </Button>
-          </Link>
+          <Button as={Link} href="/training/schedule" color="light">
+            View Schedule
+          </Button>
         </div>
       </div>
     </div>

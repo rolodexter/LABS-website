@@ -32,11 +32,9 @@ export default function Services() {
             <div className="text-4xl mb-4">{service.icon}</div>
             <h2 className="text-2xl font-bold mb-2 text-black dark:text-white">{service.title}</h2>
             <p className="mb-4 text-gray-600 dark:text-gray-400">{service.description}</p>
-            <Link href={service.href}>
-              <Button className="w-full">
-                Learn More
-              </Button>
-            </Link>
+            <Button as={Link} href={service.href} className="w-full">
+              Learn More
+            </Button>
           </Card>
         ))}
       </div>

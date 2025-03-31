@@ -108,11 +108,9 @@ export default function RolodexterLarp() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Ready to create an unforgettable LARP experience?
           </p>
-          <Link href="/contact">
-            <Button>
-              Get Started
-            </Button>
-          </Link>
+          <Button as={Link} href="/contact">
+            Get Started
+          </Button>
         </div>
 
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
@@ -120,11 +118,9 @@ export default function RolodexterLarp() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Find upcoming LARP events in your area.
           </p>
-          <Link href="/events">
-            <Button color="light">
-              View Events
-            </Button>
-          </Link>
+          <Button as={Link} href="/events" color="light">
+            View Events
+          </Button>
         </div>
       </div>
     </div>
