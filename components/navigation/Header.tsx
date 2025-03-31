@@ -1,45 +1,98 @@
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Navbar, Dropdown, Button } from 'flowbite-react';
+import Link from 'next/link';
+
+// Custom theme for Flowbite components to enforce black-and-white scheme
+const customTheme = {
+  navbar: {
+    root: {
+      base: "bg-white dark:bg-black px-2 py-2.5 border-b border-gray-200 dark:border-gray-800"
+    },
+    collapse: {
+      base: "w-full md:block md:w-auto",
+      list: "mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium"
+    },
+    link: {
+      base: "block py-2 pr-4 pl-3 md:p-0 text-black dark:text-white",
+      active: {
+        on: "bg-black text-white dark:bg-white dark:text-black md:bg-transparent md:text-black dark:md:text-white md:border-b-2 md:border-black dark:md:border-white",
+        off: "border-b border-transparent hover:border-black dark:hover:border-white"
+      }
+    },
+    toggle: {
+      base: "inline-flex items-center p-2 text-black dark:text-white rounded-lg md:hidden focus:outline-none",
+      icon: "h-6 w-6 shrink-0"
+    }
+  },
+  dropdown: {
+    floating: {
+      base: "z-10 w-fit rounded bg-white dark:bg-black divide-y divide-gray-200 dark:divide-gray-700 shadow-md",
+      item: {
+        base: "block px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800",
+        icon: "mr-2 h-4 w-4"
+      }
+    }
+  },
+  button: {
+    base: "inline-flex items-center justify-center font-medium text-center text-black dark:text-white focus:ring-2 focus:outline-none",
+    color: {
+      dark: "bg-black text-white dark:bg-white dark:text-black hover:bg-gray-900 dark:hover:bg-gray-100",
+      light: "bg-white text-black dark:bg-black dark:text-white border border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-900"
+    }
+  }
+};
+
+// Theme toggle component
+const ThemeToggle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+      setIsDarkMode(true);
+    }
+  };
+
+  return (
+    <button
+      className="p-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+      onClick={toggleTheme}
+      aria-label="Toggle dark mode"
+    >
+      {isDarkMode ? (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path>
+        </svg>
+      ) : (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+      )}
+    </button>
+  );
+};
 
 const Header = () => {
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-
-  // Handle scroll for header appearance changes
+  
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    
-    // Set mounted state to enable client-side effects
     setMounted(true);
-    window.addEventListener('scroll', handleScroll);
-    // Initial check for page loaded with scroll position
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    if (isMenuOpen) setIsMenuOpen(false);
-  }, [router.asPath, isMenuOpen]);
-
-  // Handle escape key to close menu
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', handleEscKey);
-    return () => document.removeEventListener('keydown', handleEscKey);
-  }, []);
+  const isActive = (path: string) => {
+    return router.asPath === path || router.asPath.startsWith(`${path}/`);
+  };
 
   // Menu structure
   const menuItems = [
@@ -63,249 +116,106 @@ const Header = () => {
     },
     { 
       label: 'Research', 
-      href: '/research',
-      subMenu: [
-        { label: 'Publications', href: '/research/publications', description: 'Academic and industry papers' },
-        { label: 'Projects', href: '/research/projects', description: 'Ongoing research initiatives' },
-        { label: 'Collaborations', href: '/research/collaborations', description: 'Academic and industry partnerships' }
-      ]
+      href: '/research'
     },
     { 
       label: 'Companies', 
-      href: '/companies',
-      subMenu: [
-        { label: 'Portfolio', href: '/companies/portfolio', description: 'Companies in our ecosystem' },
-        { label: 'Partners', href: '/companies/partners', description: 'Strategic business partners' },
-        { label: 'Join Us', href: '/companies/join', description: 'Become part of our network' }
-      ]
+      href: '/companies'
     },
     { 
       label: 'Community', 
-      href: '/community',
-      subMenu: [
-        { label: 'Events', href: '/community/events', description: 'Conferences and meetups' },
-        { label: 'Forums', href: '/community/forums', description: 'Discussion and support communities' },
-        { label: 'Resources', href: '/community/resources', description: 'Education materials and tools' }
-      ]
+      href: '/community'
     },
   ];
 
-  const isActive = useCallback((path: string) => {
-    return router.asPath === path || router.asPath.startsWith(`${path}/`);
-  }, [router.asPath]);
+  // Custom link component to work with Next.js Link and Flowbite
+  const CustomLink = ({ href, children, ...props }: any) => {
+    return (
+      <Link href={href} {...props}>
+        {children}
+      </Link>
+    );
+  };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white shadow-sm' : 'bg-white/95 backdrop-blur-sm'
-    }`}>
-      <div 
-        aria-hidden="true" 
-        className="absolute bottom-0 left-0 right-0 h-px bg-gray-200 transition-opacity duration-300"
-      />
+    <Navbar
+      fluid
+      theme={customTheme.navbar}
+      className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black shadow-sm dark:shadow-gray-800"
+    >
+      <Navbar.Brand href="/" as={CustomLink}>
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white">
+          rolodexterLABS
+        </span>
+      </Navbar.Brand>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-md" aria-label="rolodexterLABS - Home">
-              <Image 
-                src={mounted ? "/logos/inline_black.png" : "/logos/inline_black.png"} 
-                alt="rolodexterLABS" 
-                width={180} 
-                height={32} 
-                className="h-8 w-auto transition-all duration-300" 
-                priority
-              />
-            </Link>
-          </div>
-
-          {/* Desktop Menu - Modern Style */}
-          <nav className="hidden md:flex md:items-center">
-            <ul className="flex space-x-1 lg:space-x-6 items-center">
-              {menuItems.map((item) => (
-                <li 
-                  key={item.label} 
-                  className={`group relative px-1 py-2 ${
-                    isActive(item.href) ? 'text-black' : 'text-gray-700 hover:text-black'
-                  }`}
-                >
-                  {/* Main Navigation Item */}
-                  <Link 
-                    href={item.href}
-                    className={`text-sm font-medium px-2 py-1 transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 ${
-                      isActive(item.href) ? 'text-black' : 'text-gray-700 hover:text-black'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-
-                  {/* Modern dropdown without arrows */}
-                  {item.subMenu && (
-                    <div className="absolute top-full left-0 pt-2 mt-1 min-w-[220px] opacity-0 invisible scale-95 origin-top-left group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-150 ease-out">
-                      <div className="bg-white rounded-md shadow-lg overflow-hidden border border-gray-100">
-                        <div className="py-1">
-                          {item.subMenu.map((subItem) => (
-                            <Link
-                              key={subItem.label}
-                              href={subItem.href}
-                              className={`block px-4 py-2.5 hover:bg-gray-50 transition-colors duration-150 ${
-                                isActive(subItem.href) ? 'bg-gray-50 text-black' : 'text-gray-800'
-                              }`}
-                            >
-                              <div className="flex flex-col">
-                                <span className="text-sm font-medium">
-                                  {subItem.label}
-                                </span>
-                                {subItem.description && (
-                                  <span className="text-xs text-gray-500 mt-0.5 font-normal">
-                                    {subItem.description}
-                                  </span>
-                                )}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </li>
-              ))}
-
-              {/* Authentication items */}
-              <li className="ml-6">
-                <div className="h-4 w-px bg-gray-200"></div>
-              </li>
-              <li className="ml-6">
-                <Link 
-                  href="/dashboard" 
-                  className="text-sm font-medium px-3 py-2 text-gray-700 hover:text-black transition-colors duration-150"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li className="ml-4">
-                <Link 
-                  href="/login" 
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-black bg-transparent hover:bg-gray-50 border border-gray-300 hover:border-black transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
-                >
-                  Login
-                </Link>
-              </li>
-              <li className="ml-3">
-                <Link 
-                  href="/signup" 
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
-                >
-                  Sign Up
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-black hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 transition-colors duration-200"
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              <span className="sr-only">{isMenuOpen ? 'Close main menu' : 'Open main menu'}</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                {isMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
+      <div className="flex md:order-2 items-center">
+        <ThemeToggle />
+        <Button 
+          as={CustomLink} 
+          href="/login" 
+          color="light"
+          theme={customTheme.button}
+          className="ml-2 bg-white text-black dark:bg-black dark:text-white border border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-900"
+        >
+          Login
+        </Button>
+        <Navbar.Toggle />
       </div>
-
-      {/* Mobile menu */}
-      <div 
-        id="mobile-menu"
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
-        aria-hidden={!isMenuOpen}
-      >
-        <div className="px-3 pt-3 pb-4 bg-white border-t border-gray-200 shadow-lg space-y-1">
-          {menuItems.map((item) => (
-            <div key={item.label} className="rounded-md">
-              {/* Main menu item link */}
-              <Link
+      
+      <Navbar.Collapse theme={customTheme.navbar.collapse}>
+        {menuItems.map((item) => {
+          // If item has submenu, create a dropdown
+          if (item.subMenu && item.subMenu.length > 0) {
+            return (
+              <Navbar.Link 
+                key={item.label}
                 href={item.href}
-                className={`block px-3 py-2.5 rounded-md text-base font-medium transition-colors duration-150 ${
-                  isActive(item.href) ? 'bg-gray-50 text-black' : 'text-gray-700 hover:bg-gray-50 hover:text-black'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
+                as={CustomLink}
+                active={isActive(item.href)}
+                theme={customTheme.navbar.link}
               >
-                {item.label}
-              </Link>
-              
-              {/* Sub-menu items */}
-              {item.subMenu && (
-                <div className="mt-1 ml-3 border-l border-gray-200 pl-3 space-y-1 py-1">
+                <Dropdown
+                  inline
+                  label={item.label}
+                  theme={customTheme.dropdown}
+                  placement="bottom"
+                  arrowIcon={true}
+                >
                   {item.subMenu.map((subItem) => (
-                    <Link
-                      key={subItem.label}
-                      href={subItem.href}
-                      className={`block px-3 py-2 rounded-md text-sm transition-colors duration-150 ${
-                        isActive(subItem.href) ? 'bg-gray-50 text-black' : 'text-gray-600 hover:bg-gray-50 hover:text-black'
-                      }`}
-                      onClick={() => setIsMenuOpen(false)}
+                    <Dropdown.Item 
+                      key={subItem.label} 
+                      href={subItem.href} 
+                      as={CustomLink}
+                      className="text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
-                      <span className="block font-medium">{subItem.label}</span>
-                      {subItem.description && (
-                        <span className="block text-xs mt-0.5 text-gray-500">
-                          {subItem.description}
-                        </span>
-                      )}
-                    </Link>
+                      <div>
+                        <p className="font-medium">{subItem.label}</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">{subItem.description}</p>
+                      </div>
+                    </Dropdown.Item>
                   ))}
-                </div>
-              )}
-            </div>
-          ))}
-          <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-            <Link
-              href="/dashboard"
-              className="block px-3 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150"
-              onClick={() => setIsMenuOpen(false)}
+                </Dropdown>
+              </Navbar.Link>
+            );
+          }
+          
+          // If item doesn't have submenu, create a regular nav link
+          return (
+            <Navbar.Link 
+              key={item.label}
+              href={item.href}
+              as={CustomLink}
+              active={isActive(item.href)}
+              theme={customTheme.navbar.link}
+              className="text-black dark:text-white hover:border-black dark:hover:border-white"
             >
-              Dashboard
-            </Link>
-            <div className="px-3 py-3 space-y-2">
-              <Link
-                href="/login"
-                className="block w-full text-center px-3 py-2.5 rounded-md text-base font-medium text-black border border-gray-300 hover:border-black hover:bg-gray-50 transition-all duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="block w-full text-center px-3 py-2.5 rounded-md text-base font-medium text-white bg-black hover:bg-gray-800 transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+              {item.label}
+            </Navbar.Link>
+          );
+        })}
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
