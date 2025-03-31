@@ -97,16 +97,9 @@ const ThemeToggle = () => {
 const Header = () => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     setMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const isActive = (path: string) => {
@@ -141,7 +134,8 @@ const Header = () => {
       label: 'Companies', 
       href: '/companies',
       subMenu: [
-        { label: 'rolodexterLABS', href: '/companies/rolodexter-labs', description: 'AI Research and Development' },
+        { label: 'rolodexterAI', href: '/companies/rolodexter-ai', description: 'Enterprise AI Solutions' },
+        { label: 'rolodexterEDU', href: '/companies/rolodexter-edu', description: 'Educational Technology' },
         { label: 'rolodexterLARP', href: '/companies/rolodexter-larp', description: 'Live Action Role-Playing Solutions' },
         { label: 'Partners', href: '/companies/partners', description: 'Strategic Technology Partners' }
       ]
@@ -158,133 +152,88 @@ const Header = () => {
   };
 
   return (
-    <>
-      <style jsx global>{`
-        @media (min-width: 768px) {
-          .nav-item-dropdown {
-            position: relative;
-          }
-          .nav-item-dropdown:hover .dropdown-menu {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-          }
-          .dropdown-menu {
-            display: block;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            min-width: 250px;
-            padding: 0.5rem 0;
-            margin-top: 0;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-            transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
-          }
-          .nav-item-dropdown::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            height: 20px;
-          }
-          :root {
-            --bg-color: #ffffff;
-            --border-color: #e5e7eb;
-          }
-          .dark {
-            --bg-color: #000000;
-            --border-color: #374151;
-          }
-        }
-      `}</style>
-      <Navbar
-        fluid
-        rounded
-        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800"
-      >
-        <Navbar.Brand href="/" as={CustomLink}>
-          <span className="self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white">
-            rolodexterLABS
-          </span>
-        </Navbar.Brand>
-        
-        <div className="flex md:order-2">
-          <Button 
-            as={CustomLink} 
-            href="/login" 
-            className="mr-2 bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-          >
-            Login
-          </Button>
-          <Button 
-            as={CustomLink} 
-            href="/signup" 
-            className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-          >
-            Sign Up
-          </Button>
-          <Navbar.Toggle className="ml-2 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900" />
-        </div>
-        
-        <Navbar.Collapse>
-          {menuItems.map((item) => {
-            // If item has submenu, create a dropdown
-            if (item.subMenu && item.subMenu.length > 0) {
-              return (
-                <div key={item.label} className="nav-item-dropdown">
-                  <Navbar.Link 
-                    href={item.href}
-                    as={CustomLink}
-                    active={isActive(item.href)}
-                    className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100 pb-2"
-                  >
-                    {item.label}
-                  </Navbar.Link>
-                  <div className="dropdown-menu">
-                    {item.subMenu.map((subItem) => (
-                      <Link
-                        key={subItem.label}
-                        href={subItem.href}
-                        className="block px-4 py-3 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                      >
-                        <div>
-                          <div className="font-medium">{subItem.label}</div>
-                          {subItem.description && (
-                            <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
-                              {subItem.description}
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              );
-            }
-            // Regular menu item without submenu
+    <Navbar
+      fluid
+      rounded
+      className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800"
+    >
+      <Navbar.Brand href="/" as={CustomLink}>
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white">
+          rolodexterLABS
+        </span>
+      </Navbar.Brand>
+      
+      <div className="flex md:order-2">
+        <Button 
+          as={CustomLink} 
+          href="/login" 
+          className="mr-2 bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+        >
+          Login
+        </Button>
+        <Button 
+          as={CustomLink} 
+          href="/signup" 
+          className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+        >
+          Sign Up
+        </Button>
+        <Navbar.Toggle className="ml-2 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900" />
+      </div>
+      
+      <Navbar.Collapse>
+        {menuItems.map((item) => {
+          // If item has submenu, create a dropdown
+          if (item.subMenu && item.subMenu.length > 0) {
             return (
-              <Navbar.Link
+              <Navbar.Link 
                 key={item.label}
                 href={item.href}
                 as={CustomLink}
                 active={isActive(item.href)}
                 className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
               >
-                {item.label}
+                <Dropdown
+                  inline
+                  label={item.label}
+                  placement="bottom"
+                  arrowIcon={true}
+                  className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800"
+                >
+                  {item.subMenu.map((subItem) => (
+                    <Dropdown.Item 
+                      key={subItem.label} 
+                      href={subItem.href} 
+                      as={CustomLink}
+                      active={isActive(subItem.href)}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-900"
+                    >
+                      <div>
+                        <p className="font-medium text-black dark:text-white">{subItem.label}</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">{subItem.description}</p>
+                      </div>
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown>
               </Navbar.Link>
             );
-          })}
-        </Navbar.Collapse>
-      </Navbar>
-    </>
+          }
+          
+          // If item doesn't have submenu, create a regular nav link
+          return (
+            <Navbar.Link 
+              key={item.label}
+              href={item.href}
+              as={CustomLink}
+              active={isActive(item.href)}
+              className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              {item.label}
+            </Navbar.Link>
+          );
+        })}
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 

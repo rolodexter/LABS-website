@@ -23,7 +23,7 @@ export default function Training() {
   const benefits = [
     {
       title: 'Customized Learning',
-      description: "Programs tailored to your team's needs and skill level"
+      description: 'Programs tailored to your team's needs and skill level'
     },
     {
       title: 'Practical Experience',

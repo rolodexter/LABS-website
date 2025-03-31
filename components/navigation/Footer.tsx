@@ -36,12 +36,12 @@ export default function Footer() {
         { label: 'GitHub', href: 'https://github.com/rolodexter' },
         { label: 'Documentation', href: '/docs' },
         { label: 'API Reference', href: '/docs/api' },
-        { label: 'rolodexterIDE', href: '/products/rolodexter-ide' },
+        { label: 'rolodexterGPT', href: '/products/rolodexter-gpt' },
         { label: 'rolodexterVS', href: '/products/rolodexter-vs' }
       ]
     },
     {
-      title: 'Researchers',
+      title: 'Research',
       links: [
         { label: 'Publications', href: '/research/publications' },
         { label: 'Research Papers', href: '/research/papers' },
@@ -98,7 +98,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
-              © {new Date().getFullYear()} rolodexterLABS. All rights reserved.
+              {new Date().getFullYear()} rolodexterLABS. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link
