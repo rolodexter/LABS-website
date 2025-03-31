@@ -60,7 +60,7 @@ export default function AppWithLayout({ Component, pageProps }: AppPropsWithLayo
   const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={<div>Something went wrong. Please try again later.</div>}>
       <ClientPrivyProvider>
         {getLayout(<Component {...pageProps} />)}
       </ClientPrivyProvider>
