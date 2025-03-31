@@ -28,14 +28,7 @@ const ClientPrivyProvider = dynamic(
           loginMethods: ['email', 'google'],
           appearance: {
             theme: 'light',
-            accentColor: '#000000',
-            modal: {
-              welcomeMessage: 'Welcome to rolodexterLABS',
-              loginButtonText: 'Sign in',
-              signupButtonText: 'Create account',
-              createAccountButtonText: 'Sign up',
-              forgotPasswordButtonText: 'Reset password'
-            }
+            accentColor: '#000000'
           }
         }}
         onSuccess={(user) => {
