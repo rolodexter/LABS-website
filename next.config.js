@@ -65,6 +65,9 @@ const nextConfig = {
     esmExternals: false,
     serverComponentsExternalPackages: ['express'],
   },
+
+  // Enable proper output configuration for standalone server
+  output: 'standalone',
 };
 
 module.exports = nextConfig;

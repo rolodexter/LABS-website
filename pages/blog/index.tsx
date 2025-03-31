@@ -1,4 +1,3 @@
-import { Button, Card } from 'flowbite-react';
 import Link from 'next/link';
 
 export default function Blog() {
@@ -58,93 +57,80 @@ export default function Blog() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-16">
+    <div className="max-w-7xl mx-auto px-6 py-24">
       <div className="mb-16">
-        <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">Blog</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">
-          Insights and updates from the rolodexter team
+        <h1 className="text-4xl font-bold mb-4">Blog</h1>
+        <p className="text-gray-600">
+          Insights and updates from the rolodexterLABS team
         </p>
       </div>
 
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-8 text-black dark:text-white">Featured Posts</h2>
+      {/* Featured Posts */}
+      <div className="mb-24">
+        <h2 className="text-2xl font-bold mb-8">Featured</h2>
         <div className="grid md:grid-cols-2 gap-8">
-          {featuredPosts.map((post) => (
-            <Card key={post.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
-              <div className="flex flex-col h-full">
+          {featuredPosts.map((post, index) => (
+            <Link href={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`} key={index}>
+              <article className="group border border-gray-200 rounded-lg p-8 hover:border-black transition-colors">
                 <div className="mb-4">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{post.category}</span>
-                  <h3 className="text-2xl font-bold mb-2 text-black dark:text-white">{post.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{post.excerpt}</p>
+                  <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
+                    {post.category}
+                  </span>
                 </div>
-                <div className="mt-auto">
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    <span>{post.author}</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <Button
-                    as={Link}
-                    href={`/blog/${post.title.toLowerCase().replace(/ /g, '-')}`}
-                    className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-                  >
-                    Read More
-                  </Button>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-gray-600 transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  <span>{post.author}</span>
+                  <span>{post.date} • {post.readTime}</span>
                 </div>
-              </div>
-            </Card>
+              </article>
+            </Link>
           ))}
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 mb-16">
-        <div className="md:col-span-2">
-          <h2 className="text-2xl font-bold mb-8 text-black dark:text-white">Recent Posts</h2>
-          <div className="space-y-8">
-            {recentPosts.map((post) => (
-              <Card key={post.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
-                <div className="flex flex-col">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{post.category}</span>
-                  <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{post.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <span>{post.author}</span>
-                    <span>{post.readTime}</span>
-                  </div>
+      {/* Recent Posts */}
+      <div className="mb-24">
+        <h2 className="text-2xl font-bold mb-8">Recent Posts</h2>
+        <div className="space-y-8">
+          {recentPosts.map((post, index) => (
+            <Link href={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`} key={index}>
+              <article className="group border-b border-gray-200 pb-8 last:border-0">
+                <div className="mb-2">
+                  <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
+                    {post.category}
+                  </span>
                 </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-bold mb-8 text-black dark:text-white">Categories</h2>
-          <div className="space-y-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                as={Link}
-                href={`/blog/category/${category.toLowerCase()}`}
-                className="w-full mb-2 bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-gray-600 transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  <span>{post.author}</span>
+                  <span>{post.date} • {post.readTime}</span>
+                </div>
+              </article>
+            </Link>
+          ))}
         </div>
       </div>
 
-      <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg text-center">
-        <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Subscribe to Our Newsletter</h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Get the latest insights and updates delivered to your inbox.
-        </p>
-        <Button
-          as={Link}
-          href="/newsletter"
-          className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-        >
-          Subscribe Now
-        </Button>
+      {/* Categories */}
+      <div>
+        <h2 className="text-2xl font-bold mb-8">Categories</h2>
+        <div className="flex flex-wrap gap-4">
+          {categories.map((category, index) => (
+            <Link
+              href={`/blog/category/${category.toLowerCase()}`}
+              key={index}
+              className="px-4 py-2 border border-gray-200 rounded-full hover:border-black transition-colors"
+            >
+              {category}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

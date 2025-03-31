@@ -1,4 +1,4 @@
-import { Card, Button } from 'flowbite-react';
+import { Card, Button  } from '@/components/ui';
 
 export default function Community() {
   const events = [

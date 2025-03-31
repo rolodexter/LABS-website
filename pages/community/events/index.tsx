@@ -1,4 +1,4 @@
-import { Button, Card, Badge } from 'flowbite-react';
+import { Button, Card, Badge  } from '@/components/ui';
 import Link from 'next/link';
 
 export default function Events() {

@@ -1,4 +1,4 @@
-import { Button, Card } from 'flowbite-react';
+import { Button, Card  } from '@/components/ui';
 import Link from 'next/link';
 
 export default function WorkforceDevelopment() {

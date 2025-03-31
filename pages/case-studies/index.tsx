@@ -1,4 +1,4 @@
-import { Button, Card } from 'flowbite-react';
+import { Button, Card } from '@/components/ui';
 import Link from 'next/link';
 
 export default function CaseStudies() {
@@ -24,28 +24,33 @@ export default function CaseStudies() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-16">
-      <h1 className="text-4xl font-bold mb-8 text-black dark:text-white">Case Studies</h1>
+    <div className="max-w-7xl mx-auto px-6 py-24">
+      <h1 className="text-4xl font-bold mb-12">Case Studies</h1>
       
       <div className="space-y-8">
         {caseStudies.map((study) => (
-          <Card key={study.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-2 text-black dark:text-white">{study.title}</h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Industry: {study.industry}</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{study.solution}</p>
-                <Button as={Link} href={`/case-studies/${study.title.toLowerCase().replace(/\s+/g, '-')}`}>
+          <Card key={study.title} variant="hover" padding="lg">
+            <div className="grid md:grid-cols-2 gap-12">
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">{study.title}</h2>
+                  <p className="text-gray-600">Industry: {study.industry}</p>
+                </div>
+                <p className="text-gray-600">{study.solution}</p>
+                <Button 
+                  href={`/case-studies/${study.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  variant="outline"
+                >
                   Read Full Case Study
                 </Button>
               </div>
               
               <div>
-                <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Key Results</h3>
-                <ul className="space-y-2">
+                <h3 className="text-xl font-bold mb-6">Key Results</h3>
+                <ul className="space-y-4">
                   {study.results.map((result) => (
-                    <li key={result} className="flex items-center text-gray-600 dark:text-gray-400">
-                      <span className="mr-2">✓</span>
+                    <li key={result} className="flex items-center text-gray-600">
+                      <span className="mr-3 text-black">✓</span>
                       {result}
                     </li>
                   ))}

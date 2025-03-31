@@ -1,4 +1,4 @@
-import { Button, Card, Label, TextInput } from 'flowbite-react';
+import { Button, Card, Label, TextInput  } from '@/components/ui';
 import Link from 'next/link';
 
 export default function Login() {

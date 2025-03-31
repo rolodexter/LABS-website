@@ -1,4 +1,4 @@
-import { Card } from 'flowbite-react';
+import { Card  } from '@/components/ui';
 import Link from 'next/link';
 
 export default function Documentation() {

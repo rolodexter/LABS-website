@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+import { Button  } from '@/components/ui';
 import Link from 'next/link';
 import DiscoverySection from '../../../components/sections/DiscoverySection';
 

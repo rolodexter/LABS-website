@@ -1,4 +1,4 @@
-import { Button, Card, Label, TextInput, Textarea } from 'flowbite-react';
+import { Button, Card, Label, TextInput, Textarea  } from '@/components/ui';
 
 export default function Contact() {
   return (
