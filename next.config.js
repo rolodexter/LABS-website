@@ -27,7 +27,7 @@ const nextConfig = {
 
   // Disable static optimization on pages to ensure proper server-side rendering
   experimental: {
-    outputFileTracingIgnores: ['node_modules'],
+    outputFileTracingExcludes: ['node_modules'],
   },
 
   // Override the default webpack configuration
