@@ -41,7 +41,7 @@ const Header = () => {
     return () => document.removeEventListener('keydown', handleEscKey);
   }, []);
 
-  // Anthropic-style menu structure
+  // Menu structure
   const menuItems = [
     { 
       label: 'Products', 
@@ -100,9 +100,7 @@ const Header = () => {
     }`}>
       <div 
         aria-hidden="true" 
-        className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent transition-opacity duration-300 ${
-          scrolled ? 'opacity-0' : 'opacity-100'
-        }`}
+        className="absolute bottom-0 left-0 right-0 h-px bg-gray-200 transition-opacity duration-300"
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,7 +119,7 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Desktop Menu - Anthropic Style */}
+          {/* Desktop Menu - Modern Style */}
           <nav className="hidden md:flex md:items-center">
             <ul className="flex space-x-1 lg:space-x-6 items-center">
               {menuItems.map((item) => (
@@ -134,21 +132,23 @@ const Header = () => {
                   {/* Main Navigation Item */}
                   <Link 
                     href={item.href}
-                    className="text-sm font-medium px-2 py-1 rounded-md hover:bg-gray-50 transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+                    className={`text-sm font-medium px-2 py-1 transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 ${
+                      isActive(item.href) ? 'text-black' : 'text-gray-700 hover:text-black'
+                    }`}
                   >
                     {item.label}
                   </Link>
 
-                  {/* Anthropic-style submenu */}
+                  {/* Modern dropdown without arrows */}
                   {item.subMenu && (
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 pt-2 w-60 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
-                      <div className="bg-white rounded-lg shadow-lg ring-1 ring-black/5 overflow-hidden">
-                        <div className="py-2">
+                    <div className="absolute top-full left-0 pt-2 mt-1 min-w-[220px] opacity-0 invisible scale-95 origin-top-left group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-150 ease-out">
+                      <div className="bg-white rounded-md shadow-lg overflow-hidden border border-gray-100">
+                        <div className="py-1">
                           {item.subMenu.map((subItem) => (
                             <Link
                               key={subItem.label}
                               href={subItem.href}
-                              className={`block px-4 py-3 hover:bg-gray-50 transition-colors duration-150 ${
+                              className={`block px-4 py-2.5 hover:bg-gray-50 transition-colors duration-150 ${
                                 isActive(subItem.href) ? 'bg-gray-50 text-black' : 'text-gray-800'
                               }`}
                             >
@@ -166,18 +166,16 @@ const Header = () => {
                           ))}
                         </div>
                       </div>
-                      {/* Caret/arrow pointer - Anthropic style */}
-                      <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 rotate-45 bg-white border-t border-l border-black/5"></div>
                     </div>
                   )}
                 </li>
               ))}
 
               {/* Authentication items */}
-              <li className="ml-3">
+              <li className="ml-6">
                 <div className="h-4 w-px bg-gray-200"></div>
               </li>
-              <li className="ml-4">
+              <li className="ml-6">
                 <Link 
                   href="/dashboard" 
                   className="text-sm font-medium px-3 py-2 text-gray-700 hover:text-black transition-colors duration-150"
@@ -185,7 +183,7 @@ const Header = () => {
                   Dashboard
                 </Link>
               </li>
-              <li className="ml-3">
+              <li className="ml-4">
                 <Link 
                   href="/login" 
                   className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-black bg-transparent hover:bg-gray-50 border border-gray-300 hover:border-black transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
@@ -244,7 +242,7 @@ const Header = () => {
       >
         <div className="px-3 pt-3 pb-4 bg-white border-t border-gray-200 shadow-lg space-y-1">
           {menuItems.map((item) => (
-            <div key={item.label} className="rounded-md overflow-hidden">
+            <div key={item.label} className="rounded-md">
               {/* Main menu item link */}
               <Link
                 href={item.href}
@@ -258,7 +256,7 @@ const Header = () => {
               
               {/* Sub-menu items */}
               {item.subMenu && (
-                <div className="mt-1 ml-3 border-l-2 border-gray-200 pl-3 space-y-1 py-1">
+                <div className="mt-1 ml-3 border-l border-gray-200 pl-3 space-y-1 py-1">
                   {item.subMenu.map((subItem) => (
                     <Link
                       key={subItem.label}
