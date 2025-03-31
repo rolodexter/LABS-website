@@ -1,62 +1,50 @@
-import { Button, Card, Label, TextInput  } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import Link from 'next/link';
 
 export default function Login() {
   return (
-    <div className="container mx-auto px-4 py-8 mt-16 flex justify-center">
-      <Card className="w-full max-w-md bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
-        <h1 className="text-3xl font-bold mb-6 text-black dark:text-white text-center">Login</h1>
-        <form className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <Card className="w-full max-w-md p-8">
+        <h2 className="text-2xl font-bold text-center mb-8">Welcome Back</h2>
+        <form className="space-y-6">
           <div>
-            <Label htmlFor="email" value="Email" className="text-black dark:text-white" />
-            <TextInput
-              id="email"
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <input
               type="email"
-              placeholder="name@company.com"
+              id="email"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
               required
-              className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
             />
           </div>
           <div>
-            <Label htmlFor="password" value="Password" className="text-black dark:text-white" />
-            <TextInput
-              id="password"
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
+            <input
               type="password"
+              id="password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
               required
-              className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
             />
           </div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember"
-                type="checkbox"
-                className="w-4 h-4 bg-white dark:bg-black border-black dark:border-white text-black dark:text-white focus:ring-black dark:focus:ring-white"
-              />
-              <label htmlFor="remember" className="ml-2 text-sm text-black dark:text-white">
-                Remember me
-              </label>
-            </div>
-            <Link 
-              href="/forgot-password" 
-              className="text-sm text-black dark:text-white hover:underline"
-            >
+            <label className="flex items-center">
+              <input type="checkbox" className="h-4 w-4 text-black border-gray-300 rounded" />
+              <span className="ml-2 text-sm text-gray-600">Remember me</span>
+            </label>
+            <Link href="/forgot-password" className="text-sm text-black hover:underline">
               Forgot password?
             </Link>
           </div>
-          <Button 
-            type="submit" 
-            className="w-full bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-          >
+          <Button type="submit" variant="primary" fullWidth>
             Sign in
           </Button>
         </form>
-        <div className="text-center mt-4">
-          <span className="text-black dark:text-white">Don't have an account? </span>
-          <Link 
-            href="/signup" 
-            className="text-black dark:text-white font-semibold hover:underline"
-          >
+        <div className="mt-6 text-center">
+          <span className="text-sm text-gray-600">Don't have an account? </span>
+          <Link href="/register" className="text-sm text-black hover:underline">
             Sign up
           </Link>
         </div>
