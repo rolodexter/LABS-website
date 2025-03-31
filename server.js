@@ -34,6 +34,37 @@ if (!fs.existsSync(logosDir)) {
   try {
     fs.mkdirSync(logosDir, { recursive: true });
     console.log(`Created logos directory at ${logosDir}`);
+    
+    // In production, we might need to copy logo files from another location
+    if (process.env.NODE_ENV === 'production') {
+      console.log('Running in production, checking for logos in static directories');
+      
+      // Possible locations where logo files might be found in production
+      const possibleLogoLocations = [
+        path.join(__dirname, 'public', 'logos'),
+        path.join(__dirname, '.next', 'static', 'logos'),
+        path.join(__dirname, '.next', 'static', 'images', 'logos'),
+        path.join(__dirname, '.next', 'standalone', 'logos')
+      ];
+      
+      // Check each possible location
+      possibleLogoLocations.forEach(location => {
+        if (fs.existsSync(location)) {
+          console.log(`Found logos in ${location}, copying to ${logosDir}`);
+          try {
+            const files = fs.readdirSync(location);
+            files.forEach(file => {
+              const src = path.join(location, file);
+              const dest = path.join(logosDir, file);
+              fs.copyFileSync(src, dest);
+              console.log(`Copied ${file} to logos directory`);
+            });
+          } catch (err) {
+            console.error(`Error copying logo files: ${err.message}`);
+          }
+        }
+      });
+    }
   } catch (err) {
     console.error(`Failed to create logos directory: ${err.message}`);
   }
@@ -64,8 +95,16 @@ app.prepare().then(() => {
     next();
   });
 
-  // Serve static files from the public directory
-  server.use(express.static(path.join(__dirname, 'public')));
+  // Explicitly handle the root route first - ensure Next.js handles it
+  server.get('/', (req, res) => {
+    console.log('Root path requested, handling with Next.js');
+    return handle(req, res);
+  });
+
+  // Serve static files from the public directory, but exclude index.html
+  server.use(express.static(path.join(__dirname, 'public'), {
+    index: false // Prevent serving index.html for directory requests
+  }));
 
   // Serve logos directory directly
   server.use('/logos', express.static(path.join(__dirname, 'logos')));
