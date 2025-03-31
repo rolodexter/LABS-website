@@ -95,13 +95,13 @@ export default function Forums() {
                       {category.topics} topics • {category.posts} posts
                     </div>
                   </div>
-                  <Button
-                    as={Link}
-                    href={`/community/forums/${category.name.toLowerCase().replace(/ /g, '-')}`}
-                    className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-                  >
-                    View Topics
-                  </Button>
+                  <Link href={`/community/forums/${category.name.toLowerCase().replace(/ /g, '-')}`}>
+                    <Button
+                      className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                    >
+                      View Topics
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             ))}
@@ -131,13 +131,13 @@ export default function Forums() {
           </div>
 
           <div className="mt-6">
-            <Button
-              as={Link}
-              href="/community/forums/new"
-              className="w-full bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-            >
-              Start New Topic
-            </Button>
+            <Link href="/community/forums/new">
+              <Button
+                className="w-full bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+              >
+                Start New Topic
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
