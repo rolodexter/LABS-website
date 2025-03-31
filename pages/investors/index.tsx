@@ -84,20 +84,20 @@ export default function InvestorRelations() {
             Driving innovation and value through AI-powered solutions
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button
-              as={Link}
-              href="#financials"
-              className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-            >
-              View Financials
-            </Button>
-            <Button
-              as={Link}
-              href="/contact"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Contact IR Team
-            </Button>
+            <Link href="#financials">
+              <Button
+                className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+              >
+                View Financials
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Contact IR Team
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -140,13 +140,13 @@ export default function InvestorRelations() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 {report.type}
               </p>
-              <Button
-                as="a"
-                href="#"
-                className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                Download PDF
-              </Button>
+              <a href="#">
+                <Button
+                  className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                >
+                  Download PDF
+                </Button>
+              </a>
             </Card>
           ))}
         </div>
@@ -169,13 +169,13 @@ export default function InvestorRelations() {
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
                     {resource.description}
                   </p>
-                  <Button
-                    as={Link}
-                    href="#"
-                    className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-                  >
-                    Learn More
-                  </Button>
+                  <Link href="#">
+                    <Button
+                      className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             ))}
@@ -193,20 +193,20 @@ export default function InvestorRelations() {
             For investor inquiries, please reach out to our dedicated IR team.
           </p>
           <div className="flex justify-center gap-4">
-            <Button
-              as={Link}
-              href="/contact"
-              className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-            >
-              Contact IR Team
-            </Button>
-            <Button
-              as={Link}
-              href="/investors/faq"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              IR FAQ
-            </Button>
+            <Link href="/contact">
+              <Button
+                className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+              >
+                Contact IR Team
+              </Button>
+            </Link>
+            <Link href="/investors/faq">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                IR FAQ
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

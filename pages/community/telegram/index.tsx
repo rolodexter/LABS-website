@@ -39,15 +39,17 @@ export default function Telegram() {
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
           Stay connected with instant updates and community discussions
         </p>
-        <Button
-          as="a"
+        <a
           href="https://t.me/rolo_dexter"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
         >
-          Join Telegram Channel
-        </Button>
+          <Button
+            className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+          >
+            Join Telegram Channel
+          </Button>
+        </a>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 mb-16">
@@ -79,13 +81,13 @@ export default function Telegram() {
         <p className="text-gray-600 dark:text-gray-400 mb-6">
           Please review our community guidelines before joining the channel.
         </p>
-        <Button
-          as={Link}
-          href="/community/guidelines"
-          className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-        >
-          View Guidelines
-        </Button>
+        <Link href="/community/guidelines">
+          <Button
+            className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+          >
+            View Guidelines
+          </Button>
+        </Link>
       </div>
     </div>
   );
