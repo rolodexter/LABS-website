@@ -29,7 +29,6 @@ const ClientPrivyProvider = dynamic(
           appearance: {
             theme: 'light',
             accentColor: '#000000',
-            showModalNavigation: true,
             modal: {
               welcomeMessage: 'Welcome to rolodexterLABS',
               loginButtonText: 'Sign in',
