@@ -78,20 +78,20 @@ export default function CookiePolicy() {
             If you have any questions about our Cookie Policy, please contact us.
           </p>
           <div className="flex gap-4">
-            <Button
-              as={Link}
-              href="/contact"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Contact Us
-            </Button>
-            <Button
-              as={Link}
-              href="/legal/privacy"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Privacy Policy
-            </Button>
+            <Link href="/contact">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Contact Us
+              </Button>
+            </Link>
+            <Link href="/legal/privacy">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Privacy Policy
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
