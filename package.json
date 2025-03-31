@@ -1,14 +1,24 @@
 {
   "name": "rolodexter-labs-website",
   "version": "1.0.0",
-  "description": "rolodexterLABS Maintenance Page",
+  "description": "rolodexterLABS Website",
   "main": "server.js",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
     "start": "node server.js"
   },
   "author": "Joe Maristela",
   "license": "ISC",
   "dependencies": {
-    "express": "4.18.2"
+    "express": "4.18.2",
+    "next": "13.5.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.3"
   }
 }
