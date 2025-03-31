@@ -33,12 +33,38 @@ const nextConfig = {
       },
     });
 
+    // Ensure proper module resolution
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      path: false,
+      crypto: false,
+      stream: false,
+      buffer: false,
+      util: false,
+      url: false,
+      zlib: false,
+      http: false,
+      https: false,
+      os: false,
+      assert: false,
+      constants: false,
+    };
+
     return config;
   },
 
   // This helps ensure consistent builds between environments
   poweredByHeader: false,
   generateEtags: false,
+
+  // Add experimental features to help with module resolution
+  experimental: {
+    esmExternals: false,
+    serverComponentsExternalPackages: ['express'],
+  },
 };
 
 module.exports = nextConfig;

@@ -23,7 +23,8 @@ const app = next({
     compress: true,
     poweredByHeader: false,
     generateEtags: false,
-    reactStrictMode: true
+    reactStrictMode: true,
+    swcMinify: true
   }
 });
 

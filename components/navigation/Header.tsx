@@ -1,15 +1,9 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Navbar } from 'flowbite-react';
 
 const menuItems = [
-  {
-    label: 'Companies',
-    submenu: [
-      { label: 'Partners', href: '/companies/partners' },
-      { label: 'Case Studies', href: '/companies/case-studies' },
-    ],
-  },
   {
     label: 'Products',
     submenu: [
@@ -17,124 +11,164 @@ const menuItems = [
       { label: 'rolodexterGPT', href: '/products/rolodexter-gpt' },
     ],
   },
+  {
+    label: 'Services',
+    submenu: [
+      { label: 'Implementation', href: '/services/implementation' },
+      { label: 'Consulting', href: '/services/consulting' },
+      { label: 'Training', href: '/services/training' },
+    ],
+  },
+  {
+    label: 'Companies',
+    submenu: [
+      { label: 'Partners', href: '/companies/partners' },
+      { label: 'Case Studies', href: '/companies/case-studies' },
+    ],
+  },
 ];
+
+const CustomLink = ({ children, href, ...props }: any) => {
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  );
+};
 
 export default function Header() {
   const router = useRouter();
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  const handleMouseEnter = (label: string) => {
-    setOpenMenu(label);
-  };
-
-  const handleMouseLeave = () => {
-    setOpenMenu(null);
-  };
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-xl font-semibold text-black dark:text-white">
+    <Navbar fluid className="bg-black text-white flex items-center justify-between px-6 py-3">
+      <div className="container mx-auto flex items-center justify-between">
+        <Navbar.Brand as={CustomLink} href="/">
+          <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
             rolodexterLABS
-          </Link>
+          </span>
+        </Navbar.Brand>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => handleMouseEnter(item.label)}
-                onMouseLeave={handleMouseLeave}
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-6">
+          {menuItems.map((item, index) => (
+            <div key={index} className="relative group">
+              <button 
+                className="flex items-center px-4 py-2 font-medium text-white hover:text-gray-300 transition"
               >
-                <button className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100">
-                  {item.label}
-                </button>
-                {openMenu === item.label && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg">
-                    {item.submenu.map((subItem) => (
-                      <Link
-                        key={subItem.href}
-                        href={subItem.href}
-                        className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                      >
-                        {subItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                {item.label}
+                <svg 
+                  className="w-4 h-4 ml-1" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M19 9l-7 7-7-7" 
+                  />
+                </svg>
+              </button>
+
+              <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                {item.submenu.map((subitem, subindex) => (
+                  <Link
+                    key={subindex}
+                    href={subitem.href}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {subitem.label}
+                  </Link>
+                ))}
               </div>
-            ))}
-
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/auth/login"
-                className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition-colors"
-              >
-                Sign Up
-              </Link>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <button
-            className="md:hidden text-black dark:text-white"
-            onClick={() => setOpenMenu(openMenu ? null : 'mobile')}
+        <div className="hidden md:flex items-center space-x-4">
+          <Link 
+            href="/login" 
+            className="px-4 py-2 font-medium text-white hover:text-gray-300 transition">
+            Log In
+          </Link>
+          <Link 
+            href="/signup"
+            className="bg-white text-black border border-black hover:bg-black hover:text-white rounded-md px-4 py-2 transition">
+            Sign Up
+          </Link>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-white"
           >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg 
+              className="w-6 h-6" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {mobileMenuOpen ? (
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M6 18L18 6M6 6l12 12" 
+                />
+              ) : (
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4 6h16M4 12h16M4 18h16" 
+                />
+              )}
             </svg>
           </button>
         </div>
+      </div>
 
-        {/* Mobile menu */}
-        {openMenu === 'mobile' && (
-          <div className="md:hidden py-4">
-            {menuItems.map((item) => (
-              <div key={item.label} className="mb-4">
-                <button
-                  onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)}
-                  className="w-full text-left text-black dark:text-white py-2"
-                >
-                  {item.label}
-                </button>
-                {openMenu === item.label && (
-                  <div className="pl-4 mt-2 space-y-2">
-                    {item.submenu.map((subItem) => (
-                      <Link
-                        key={subItem.href}
-                        href={subItem.href}
-                        className="block text-sm text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
-                      >
-                        {subItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-16 inset-x-0 bg-black border-t border-gray-800 z-50">
+          <div className="px-4 py-2">
+            {menuItems.map((item, index) => (
+              <div key={index} className="py-2">
+                <div className="font-medium text-white mb-2">{item.label}</div>
+                <div className="pl-4">
+                  {item.submenu.map((subitem, subindex) => (
+                    <Link
+                      key={subindex}
+                      href={subitem.href}
+                      className="block py-2 text-sm text-gray-300 hover:text-white"
+                    >
+                      {subitem.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             ))}
-            <div className="space-y-4 mt-6">
-              <Link
-                href="/auth/login"
-                className="block text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
-              >
-                Login
+            <div className="mt-4 pt-4 border-t border-gray-700 flex flex-col space-y-3">
+              <Link 
+                href="/login" 
+                className="py-2 text-white hover:text-gray-300">
+                Log In
               </Link>
-              <Link
-                href="/auth/signup"
-                className="block bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition-colors text-center"
-              >
+              <Link 
+                href="/signup"
+                className="bg-white text-black border border-black hover:bg-black hover:text-white rounded-md px-4 py-2 inline-block w-full text-center">
                 Sign Up
               </Link>
             </div>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      )}
+    </Navbar>
   );
 }
