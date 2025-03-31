@@ -51,8 +51,8 @@ export default function Community() {
             <Card key={event.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
               <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{event.title}</h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                <span className="block">📅 {event.date}</span>
-                <span className="block">📍 {event.location}</span>
+                <span className="block"> {event.date}</span>
+                <span className="block"> {event.location}</span>
               </p>
               <div className="mt-auto">
                 <span className="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
@@ -75,7 +75,7 @@ export default function Community() {
                 <span className="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                   {resource.type}
                 </span>
-                <Button size="sm">Access</Button>
+                <Button size="small">Access</Button>
               </div>
             </Card>
           ))}
