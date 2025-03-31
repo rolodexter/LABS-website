@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Navbar, Dropdown, Button } from 'flowbite-react';
+import { Navbar, Dropdown } from 'flowbite-react';
 
 const menuItems = [
   {
@@ -53,23 +53,16 @@ export default function Header() {
                 key={item.label}
                 label={item.label}
                 inline
-                dismissOnClick={true}
-                className="!bg-white dark:!bg-black"
-                theme={{
-                  floating: {
-                    target: "w-fit !bg-transparent hover:!bg-transparent focus:!ring-0 !border-none",
-                    base: "w-48 !bg-white dark:!bg-black !border !border-gray-200 dark:!border-gray-800 !shadow-lg !rounded-lg",
-                    item: {
-                      base: "!text-black dark:!text-white hover:!bg-gray-100 dark:hover:!bg-gray-800 !rounded-none"
-                    }
-                  }
-                }}
+                trigger="hover"
+                className="bg-white dark:bg-black text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
+                arrowIcon={true}
               >
                 {item.submenu.map((subItem) => (
                   <Dropdown.Item
                     key={subItem.href}
                     as={CustomLink}
                     href={subItem.href}
+                    className="text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     {subItem.label}
                   </Dropdown.Item>
@@ -102,17 +95,7 @@ export default function Header() {
               key={item.label}
               label={item.label}
               inline
-              dismissOnClick={true}
-              className="w-full md:hidden !bg-white dark:!bg-black"
-              theme={{
-                floating: {
-                  target: "w-full !bg-transparent hover:!bg-transparent focus:!ring-0 !border-none text-left",
-                  base: "w-full !bg-white dark:!bg-black !border !border-gray-200 dark:!border-gray-800 !shadow-lg !rounded-lg",
-                  item: {
-                    base: "!text-black dark:!text-white hover:!bg-gray-100 dark:hover:!bg-gray-800 !rounded-none"
-                  }
-                }
-              }}
+              className="w-full md:hidden"
             >
               {item.submenu.map((subItem) => (
                 <Dropdown.Item key={subItem.href} as={CustomLink} href={subItem.href}>

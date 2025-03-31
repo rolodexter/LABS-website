@@ -20,7 +20,9 @@ const app = next({
   port: PORT,
   conf: {
     distDir: '.next',
-    compress: true
+    compress: true,
+    poweredByHeader: false,
+    generateEtags: false
   }
 });
 
@@ -69,7 +71,11 @@ app.prepare().then(() => {
 
   // Health check endpoint
   server.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok' });
+    res.status(200).json({ 
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV
+    });
   });
 
   // Serve logos directory directly
@@ -130,6 +136,15 @@ app.prepare().then(() => {
   // Let Next.js handle all other routes
   server.all('*', (req, res) => {
     return handle(req, res);
+  });
+
+  // Error handling middleware
+  server.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({ 
+      error: 'Internal Server Error',
+      message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   });
 
   // Start the server
