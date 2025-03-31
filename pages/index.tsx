@@ -6,6 +6,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import Login from '@/components/auth/Login';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { Button } from '@/components/ui';
 
 const Home: NextPage = () => {
   const { ready, authenticated } = usePrivy();
@@ -70,18 +71,12 @@ const Home: NextPage = () => {
                 Everyone's an expert at something. At rolodexterLABS, we build systems and technologies that enable individuals and organizations to fully leverage their expertise—combining the breadth of science, technology, and human knowledge to amplify what people do best.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/about" 
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-gray-900 transition-colors duration-200"
-                >
+                <Button href="/about" variant="primary">
                   Discover Our Vision
-                </Link>
-                <Link 
-                  href="/products" 
-                  className="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-black bg-transparent hover:bg-black hover:text-white transition-colors duration-200"
-                >
+                </Button>
+                <Button href="/products" variant="outline">
                   Explore Innovations
-                </Link>
+                </Button>
               </div>
             </div>
           </div>

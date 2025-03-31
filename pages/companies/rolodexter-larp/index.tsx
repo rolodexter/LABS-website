@@ -105,10 +105,10 @@ export default function RolodexterLarp() {
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
           <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Organize an Event</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-lg mb-8">
             Ready to create an unforgettable LARP experience?
           </p>
-          <Button as={Link} href="/contact">
+          <Button href="/contact" variant="primary">
             Get Started
           </Button>
         </div>

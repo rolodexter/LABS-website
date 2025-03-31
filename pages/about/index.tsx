@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Button } from '@/components/ui';
 
 export default function About() {
   const milestones = [
@@ -34,12 +35,9 @@ export default function About() {
             development, and practical applications. Our mission is to make AI accessible,
             ethical, and beneficial for everyone.
           </p>
-          <Link 
-            href="/contact"
-            className="inline-flex items-center px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
-          >
+          <Button href="/contact" variant="primary">
             Get in Touch
-          </Link>
+          </Button>
         </div>
 
         <div className="space-y-6">
