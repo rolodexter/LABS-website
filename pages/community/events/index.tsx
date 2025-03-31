@@ -1,5 +1,5 @@
 import { Button, Card } from '@/components/ui';
-import Badge from '@/components/ui/Badge';
+import Badge from '../../../components/ui/Badge';
 import Link from 'next/link';
 
 export default function Events() {
