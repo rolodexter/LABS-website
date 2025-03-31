@@ -1,17 +1,16 @@
 import { forwardRef, ElementType, ComponentPropsWithRef } from 'react';
 import Link from 'next/link';
+import type { LinkProps } from 'next/link';
 
 type ButtonBaseProps = {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
   as?: ElementType;
+  href?: string;
 };
 
-type ButtonProps<C extends ElementType = 'button'> = ButtonBaseProps & 
-  Omit<ComponentPropsWithRef<C>, keyof ButtonBaseProps> & {
-    href?: string;
-  };
+type ButtonProps = ButtonBaseProps & Omit<ComponentPropsWithRef<'button'>, keyof ButtonBaseProps>;
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((
   { 
@@ -19,7 +18,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((
     variant = 'primary',
     size = 'medium',
     fullWidth = false,
-    as: Component = 'button',
     href,
     className = '',
     ...props
@@ -42,26 +40,25 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((
   const styles = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthStyles} ${className}`;
 
   if (href) {
-    const linkProps = {
-      ...props,
-      href,
-      className: styles
-    };
     return (
-      <Link {...linkProps}>
+      <Link 
+        href={href}
+        className={styles}
+        onClick={props.onClick as LinkProps['onClick']}
+      >
         {children}
       </Link>
     );
   }
 
   return (
-    <Component
+    <button
       ref={ref}
       className={styles}
       {...props}
     >
       {children}
-    </Component>
+    </button>
   );
 });
 
