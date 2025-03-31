@@ -1,4 +1,4 @@
-import { Button, Card, Label, TextInput  } from '@/components/ui';
+import { Button, Card, Input } from '@/components/ui';
 import Link from 'next/link';
 
 export default function Login() {
@@ -8,8 +8,10 @@ export default function Login() {
         <h1 className="text-3xl font-bold mb-6 text-black dark:text-white text-center">Login</h1>
         <form className="space-y-4">
           <div>
-            <Label htmlFor="email" value="Email" className="text-black dark:text-white" />
-            <TextInput
+            <label htmlFor="email" className="block text-sm font-medium mb-2 text-black dark:text-white">
+              Email
+            </label>
+            <Input
               id="email"
               type="email"
               placeholder="name@company.com"
@@ -18,8 +20,10 @@ export default function Login() {
             />
           </div>
           <div>
-            <Label htmlFor="password" value="Password" className="text-black dark:text-white" />
-            <TextInput
+            <label htmlFor="password" className="block text-sm font-medium mb-2 text-black dark:text-white">
+              Password
+            </label>
+            <Input
               id="password"
               type="password"
               required
