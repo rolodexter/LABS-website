@@ -58,7 +58,7 @@ const logoVariations = {
 app.prepare().then(() => {
   const server = express();
 
-  // Improved logging middleware
+  // Basic request logging
   server.use((req, res, next) => {
     console.log(`${new Date().toISOString()} [${req.method}] ${req.url}`);
     next();
@@ -66,6 +66,11 @@ app.prepare().then(() => {
 
   // Serve static files from the public directory
   server.use(express.static(path.join(__dirname, 'public')));
+
+  // Health check endpoint
+  server.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+  });
 
   // Serve logos directory directly
   server.use('/logos', express.static(path.join(__dirname, 'logos')));
