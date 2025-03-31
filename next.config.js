@@ -22,14 +22,6 @@ const nextConfig = {
     ],
   },
 
-  // Force static serving of assets to avoid image optimization issues
-  output: 'standalone',
-
-  // Disable static optimization on pages to ensure proper server-side rendering
-  experimental: {
-    outputFileTracingExcludes: ['node_modules'],
-  },
-
   // Override the default webpack configuration
   webpack: (config, { isServer }) => {
     // Handle image files directly using file-loader
