@@ -4,6 +4,9 @@ node_modules/
 # Environment variables
 .env
 
+# Next.js build output
+.next/
+
 # Logs
 logs
 *.log

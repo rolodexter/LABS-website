@@ -2,27 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom styles */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
 }
 
-.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-rgb: 0, 0, 0;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
 }
 
-html,
 body {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: rgb(var(--background-rgb));
+  min-height: 100vh;
 }
 
 a {
