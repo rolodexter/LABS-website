@@ -70,27 +70,27 @@ export default function TermsOfService() {
             Please review our other policies that govern your use of our services.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button
-              as={Link}
-              href="/legal/privacy"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Privacy Policy
-            </Button>
-            <Button
-              as={Link}
-              href="/legal/cookies"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Cookie Policy
-            </Button>
-            <Button
-              as={Link}
-              href="/legal/security"
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Security Policy
-            </Button>
+            <Link href="/legal/privacy">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Privacy Policy
+              </Button>
+            </Link>
+            <Link href="/legal/cookies">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Cookie Policy
+              </Button>
+            </Link>
+            <Link href="/legal/security">
+              <Button
+                className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Security Policy
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -99,13 +99,13 @@ export default function TermsOfService() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             If you have any questions about our Terms of Service, please contact us.
           </p>
-          <Button
-            as={Link}
-            href="/contact"
-            className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
-          >
-            Contact Us
-          </Button>
+          <Link href="/contact">
+            <Button
+              className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+            >
+              Contact Us
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
