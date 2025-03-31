@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Navbar, Dropdown, Button } from 'flowbite-react';
+import { Navbar as FlowbiteNavbar, Dropdown as FlowbiteDropdown, Button } from 'flowbite-react';
 import Link from 'next/link';
 
 // Custom theme for Flowbite components to enforce black-and-white scheme
@@ -41,6 +41,18 @@ const customTheme = {
       light: "bg-white text-black dark:bg-black dark:text-white border border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-900"
     }
   }
+};
+
+// Create properly typed components with all their subcomponents
+const Navbar = FlowbiteNavbar as typeof FlowbiteNavbar & {
+  Brand: React.FC<any>;
+  Collapse: React.FC<any>;
+  Link: React.FC<any>;
+  Toggle: React.FC<any>;
+};
+
+const Dropdown = FlowbiteDropdown as typeof FlowbiteDropdown & {
+  Item: React.FC<any>;
 };
 
 // Theme toggle component
@@ -140,8 +152,8 @@ const Header = () => {
   return (
     <Navbar
       fluid
-      theme={customTheme.navbar}
-      className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black shadow-sm dark:shadow-gray-800"
+      rounded
+      className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800"
     >
       <Navbar.Brand href="/" as={CustomLink}>
         <span className="self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white">
@@ -149,21 +161,25 @@ const Header = () => {
         </span>
       </Navbar.Brand>
       
-      <div className="flex md:order-2 items-center">
-        <ThemeToggle />
+      <div className="flex md:order-2">
         <Button 
           as={CustomLink} 
           href="/login" 
-          color="light"
-          theme={customTheme.button}
-          className="ml-2 bg-white text-black dark:bg-black dark:text-white border border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-900"
+          className="mr-2 bg-transparent text-black dark:text-white border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900"
         >
           Login
         </Button>
-        <Navbar.Toggle />
+        <Button 
+          as={CustomLink} 
+          href="/signup" 
+          className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-900 dark:hover:bg-gray-100"
+        >
+          Sign Up
+        </Button>
+        <Navbar.Toggle className="ml-2 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900" />
       </div>
       
-      <Navbar.Collapse theme={customTheme.navbar.collapse}>
+      <Navbar.Collapse>
         {menuItems.map((item) => {
           // If item has submenu, create a dropdown
           if (item.subMenu && item.subMenu.length > 0) {
@@ -173,24 +189,25 @@ const Header = () => {
                 href={item.href}
                 as={CustomLink}
                 active={isActive(item.href)}
-                theme={customTheme.navbar.link}
+                className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
               >
                 <Dropdown
                   inline
                   label={item.label}
-                  theme={customTheme.dropdown}
                   placement="bottom"
                   arrowIcon={true}
+                  className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800"
                 >
                   {item.subMenu.map((subItem) => (
                     <Dropdown.Item 
                       key={subItem.label} 
                       href={subItem.href} 
                       as={CustomLink}
-                      className="text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                      active={isActive(subItem.href)}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-900"
                     >
                       <div>
-                        <p className="font-medium">{subItem.label}</p>
+                        <p className="font-medium text-black dark:text-white">{subItem.label}</p>
                         <p className="text-xs text-gray-600 dark:text-gray-400">{subItem.description}</p>
                       </div>
                     </Dropdown.Item>
@@ -207,8 +224,7 @@ const Header = () => {
               href={item.href}
               as={CustomLink}
               active={isActive(item.href)}
-              theme={customTheme.navbar.link}
-              className="text-black dark:text-white hover:border-black dark:hover:border-white"
+              className="text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-100"
             >
               {item.label}
             </Navbar.Link>
