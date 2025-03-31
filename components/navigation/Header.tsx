@@ -112,32 +112,41 @@ const Header = () => {
       label: 'Products', 
       href: '/products',
       subMenu: [
-        { label: 'Data Processing', href: '/products/data-processing', description: 'Advanced ETL solutions for enterprise data' },
-        { label: 'AI Solutions', href: '/products/ai-solutions', description: 'Custom machine learning models and tools' },
-        { label: 'Analytics Tools', href: '/products/analytics', description: 'Business intelligence and data visualization' }
+        { label: 'Models', href: '/products/models', description: 'AI and Machine Learning Models' },
+        { label: 'Applications', href: '/products/applications', description: 'Enterprise Software Solutions' },
+        { label: 'rolodexterVS', href: '/products/rolodexter-vs', description: 'Intelligent Development Environment' },
+        { label: 'rolodexterGPT', href: '/products/rolodexter-gpt', description: 'Advanced Language Model' }
       ] 
     },
     { 
       label: 'Services', 
       href: '/services',
       subMenu: [
-        { label: 'Consulting', href: '/services/consulting', description: 'Strategic AI implementation advice' },
-        { label: 'Implementation', href: '/services/implementation', description: 'Full-service rollout and integration' },
-        { label: 'Training', href: '/services/training', description: 'Team development and upskilling programs' }
+        { label: 'Model Development', href: '/services/model-development', description: 'Custom AI model development services' },
+        { label: 'Model Training', href: '/services/model-training', description: 'Specialized model training and optimization' },
+        { label: 'Workforce Development', href: '/services/workforce-development', description: 'Team upskilling and capability building' },
+        { label: 'Workforce by Scale', href: '/services/workforce-scale', description: 'Scalable team augmentation services' },
+        { label: 'Workforce by Complexity', href: '/services/workforce-complexity', description: 'Expert teams for complex projects' },
+        { label: 'Scale × Complexity', href: '/services/scale-complexity', description: 'Combined scale and complexity solutions' }
       ]
     },
     { 
-      label: 'Research', 
-      href: '/research'
-    },
-    { 
       label: 'Companies', 
-      href: '/companies'
+      href: '/companies',
+      subMenu: [
+        { label: 'rolodexterLABS', href: '/companies/rolodexter-labs', description: 'AI Research and Development' },
+        { label: 'rolodexterLARP', href: '/companies/rolodexter-larp', description: 'Live Action Role-Playing Solutions' },
+        { label: 'Partners', href: '/companies/partners', description: 'Strategic Technology Partners' }
+      ]
     },
     { 
       label: 'Community', 
       href: '/community'
     },
+    { 
+      label: 'Login', 
+      href: '/login'
+    }
   ];
 
   // Custom link component to work with Next.js Link and Flowbite
@@ -162,13 +171,6 @@ const Header = () => {
       </Navbar.Brand>
       
       <div className="flex md:order-2">
-        <Button 
-          as={CustomLink} 
-          href="/login" 
-          className="mr-2 bg-transparent text-black dark:text-white border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900"
-        >
-          Login
-        </Button>
         <Button 
           as={CustomLink} 
           href="/signup" 

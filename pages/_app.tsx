@@ -1,15 +1,14 @@
 // Import Tailwind first to ensure base layer is available
-import '../styles/globals.css';
+import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
-import Layout from '../components/Layout';
+import Header from '@/components/navigation/Header';
+import Footer from '@/components/navigation/Footer';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   // Check user preference for dark mode
   useEffect(() => {
-    // Check localStorage or system preference for dark mode
-    if (localStorage.theme === 'dark' || 
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
@@ -17,10 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Component {...pageProps} />
+      </main>
+      <Footer />
+    </div>
   );
 }
-
-export default MyApp;
