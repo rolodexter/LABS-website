@@ -37,13 +37,13 @@ export default function Companies() {
                 </span>
               </div>
             </div>
-            <Button
-              as={Link}
-              href={company.href}
-              className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Learn More
-            </Button>
+            <Link href={company.href}>
+              <Button
+                className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                Learn More
+              </Button>
+            </Link>
           </Card>
         ))}
       </div>
@@ -53,13 +53,13 @@ export default function Companies() {
         <p className="text-gray-600 dark:text-gray-400 mb-6">
           Discover our network of strategic technology partners and collaborators.
         </p>
-        <Button
-          as={Link}
-          href="/companies/partners"
-          className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-        >
-          View Partners
-        </Button>
+        <Link href="/companies/partners">
+          <Button
+            className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+          >
+            View Partners
+          </Button>
+        </Link>
       </div>
     </div>
   );
