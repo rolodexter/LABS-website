@@ -14,7 +14,7 @@ export default function Signup() {
                 id="firstName"
                 type="text"
                 required
-                className="w-full"
+                className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
               />
             </div>
             <div>
@@ -23,7 +23,7 @@ export default function Signup() {
                 id="lastName"
                 type="text"
                 required
-                className="w-full"
+                className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
               />
             </div>
           </div>
@@ -34,7 +34,7 @@ export default function Signup() {
               type="email"
               placeholder="name@company.com"
               required
-              className="w-full"
+              className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
             />
           </div>
           <div>
@@ -43,7 +43,7 @@ export default function Signup() {
               id="password"
               type="password"
               required
-              className="w-full"
+              className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
             />
           </div>
           <div>
@@ -52,7 +52,7 @@ export default function Signup() {
               id="confirmPassword"
               type="password"
               required
-              className="w-full"
+              className="w-full bg-white dark:bg-black text-black dark:text-white border-black dark:border-white focus:ring-black dark:focus:ring-white"
             />
           </div>
           <div className="flex items-start">
@@ -60,30 +60,36 @@ export default function Signup() {
               <input
                 id="terms"
                 type="checkbox"
-                className="w-4 h-4 text-black dark:text-white border-gray-300 dark:border-gray-600 rounded focus:ring-black dark:focus:ring-white"
+                className="w-4 h-4 bg-white dark:bg-black border-black dark:border-white text-black dark:text-white focus:ring-black dark:focus:ring-white"
                 required
               />
             </div>
             <div className="ml-3">
-              <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
+              <label htmlFor="terms" className="text-sm text-black dark:text-white">
                 I agree to the{' '}
-                <Link href="/terms" className="text-black dark:text-white hover:underline">
+                <Link href="/terms" className="font-semibold hover:underline">
                   Terms of Service
                 </Link>
                 {' '}and{' '}
-                <Link href="/privacy" className="text-black dark:text-white hover:underline">
+                <Link href="/privacy" className="font-semibold hover:underline">
                   Privacy Policy
                 </Link>
               </label>
             </div>
           </div>
-          <Button type="submit" className="w-full">
+          <Button 
+            type="submit" 
+            className="w-full bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+          >
             Create account
           </Button>
         </form>
         <div className="text-center mt-4">
-          <span className="text-gray-600 dark:text-gray-400">Already have an account? </span>
-          <Link href="/login" className="text-black dark:text-white hover:underline">
+          <span className="text-black dark:text-white">Already have an account? </span>
+          <Link 
+            href="/login" 
+            className="text-black dark:text-white font-semibold hover:underline"
+          >
             Login
           </Link>
         </div>

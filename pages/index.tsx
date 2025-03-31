@@ -7,8 +7,8 @@ const Home: NextPage = () => {
   return (
     <div className="min-h-screen w-full bg-white">
       <Head>
-        <title>rolodexterLABS | AI-Powered Solutions</title>
-        <meta name="description" content="rolodexterLABS - Pioneering AI solutions for tomorrow's challenges" />
+        <title>Executive Functioning Intelligence</title>
+        <meta name="description" content="Beyond large models. Beyond computation. Enabling strategic decisions, orchestrated innovation, and intelligent automation that transform industries." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -24,27 +24,24 @@ const Home: NextPage = () => {
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 md:pr-12">
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8">
-                  <span className="text-4xl font-black">rolodexterLABS</span>
-                </h2>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-6">
-                  Pioneering the Future of AI
+                  Executive Functioning Intelligence
                 </h1>
                 <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
-                  Creating intelligent solutions that transform industries and enhance human capabilities through cutting-edge artificial intelligence.
+                  Beyond large models. Beyond computation. Enabling strategic decisions, orchestrated innovation, and intelligent automation that transform industries.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link 
                     href="/products" 
                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-gray-800 transition-colors duration-200"
                   >
-                    Explore Solutions
+                    Explore
                   </Link>
                   <Link 
-                    href="/research" 
+                    href="/companies/partners" 
                     className="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-black bg-transparent hover:bg-gray-50 transition-colors duration-200"
                   >
-                    View Research
+                    Partner
                   </Link>
                 </div>
               </div>
