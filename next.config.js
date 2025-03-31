@@ -2,9 +2,23 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [],
-    unoptimized: process.env.NODE_ENV === 'production',
+    unoptimized: true,
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
   },
+  // Ensure the assetPrefix is empty for Railway deployment
+  assetPrefix: '',
 };
 
 module.exports = nextConfig;
