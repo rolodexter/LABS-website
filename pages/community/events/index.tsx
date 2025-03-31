@@ -1,4 +1,5 @@
-import { Button, Card, Badge  } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
+import Badge from '@/components/ui/Badge';
 import Link from 'next/link';
 
 export default function Events() {
@@ -56,20 +57,20 @@ export default function Events() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-16">
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">Community Events</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">
+    <div className="max-w-7xl mx-auto px-6 py-24">
+      <div className="mb-16">
+        <h1 className="text-4xl font-bold mb-4">Community Events</h1>
+        <p className="text-xl text-gray-600">
           Connect, learn, and grow with the rolodexter community
         </p>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="flex flex-wrap gap-2">
           {eventTypes.map((type) => (
             <Button
               key={type}
-              className="bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              variant="outline"
             >
               {type}
             </Button>
@@ -77,41 +78,41 @@ export default function Events() {
         </div>
       </div>
 
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-8 text-black dark:text-white">Upcoming Events</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mb-24">
+        <h2 className="text-2xl font-bold mb-8">Upcoming Events</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {upcomingEvents.map((event) => (
-            <Card key={event.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+            <Card key={event.title} variant="hover" padding="lg">
               <div className="flex flex-col h-full">
                 <div>
-                  <div className="flex justify-between items-start mb-4">
-                    <Badge className="bg-black dark:bg-white text-white dark:text-black">
+                  <div className="flex justify-between items-start mb-6">
+                    <Badge variant="default" size="md">
                       {event.type}
                     </Badge>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <Badge variant="outline" size="sm">
                       {event.status}
-                    </span>
+                    </Badge>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-black dark:text-white">
+                  <h3 className="text-xl font-bold mb-2">
                     {event.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-gray-600 mb-6">
                     {event.description}
                   </p>
                 </div>
                 <div className="mt-auto">
-                  <div className="mb-4">
-                    <p className="text-gray-600 dark:text-gray-400">
+                  <div className="mb-6 space-y-2">
+                    <p className="text-gray-600">
                       <strong>Date:</strong> {event.date}
                     </p>
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="text-gray-600">
                       <strong>Location:</strong> {event.location}
                     </p>
                   </div>
                   <Button
-                    as={Link}
                     href={`/community/events/${event.title.toLowerCase().replace(/ /g, '-')}`}
-                    className="w-full bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+                    variant="primary"
+                    fullWidth
                   >
                     Register Now
                   </Button>
@@ -122,24 +123,24 @@ export default function Events() {
         </div>
       </div>
 
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-8 text-black dark:text-white">Past Events</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mb-24">
+        <h2 className="text-2xl font-bold mb-8">Past Events</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {pastEvents.map((event) => (
-            <Card key={event.title} className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+            <Card key={event.title} variant="hover" padding="lg">
               <div className="flex flex-col h-full">
                 <div>
-                  <Badge className="mb-4 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+                  <Badge variant="outline" size="md" className="mb-6">
                     {event.type}
                   </Badge>
-                  <h3 className="text-xl font-bold mb-2 text-black dark:text-white">
+                  <h3 className="text-xl font-bold mb-2">
                     {event.title}
                   </h3>
-                  <div className="mb-4">
-                    <p className="text-gray-600 dark:text-gray-400">
+                  <div className="mb-6 space-y-2">
+                    <p className="text-gray-600">
                       <strong>Date:</strong> {event.date}
                     </p>
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="text-gray-600">
                       <strong>Location:</strong> {event.location}
                     </p>
                   </div>
@@ -147,9 +148,9 @@ export default function Events() {
                 {event.recordings && (
                   <div className="mt-auto">
                     <Button
-                      as={Link}
                       href={`/community/events/${event.title.toLowerCase().replace(/ /g, '-')}/recordings`}
-                      className="w-full bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                      variant="outline"
+                      fullWidth
                     >
                       View Recordings
                     </Button>
@@ -161,19 +162,18 @@ export default function Events() {
         </div>
       </div>
 
-      <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg text-center">
-        <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Host Your Own Event</h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-6">
+      <Card variant="hover" padding="lg" className="text-center">
+        <h2 className="text-2xl font-bold mb-4">Host Your Own Event</h2>
+        <p className="text-gray-600 mb-8">
           Interested in organizing a community event? We'd love to help!
         </p>
         <Button
-          as={Link}
           href="/community/events/host"
-          className="bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white"
+          variant="primary"
         >
           Learn More
         </Button>
-      </div>
+      </Card>
     </div>
   );
 }
