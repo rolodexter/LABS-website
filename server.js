@@ -15,7 +15,9 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(PORT, () => {
+  // Listen on all network interfaces (0.0.0.0) instead of just localhost
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`> Ready on http://localhost:${PORT}`);
+    console.log(`> NODE_ENV: ${process.env.NODE_ENV}`);
   });
 });
