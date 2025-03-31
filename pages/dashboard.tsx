@@ -56,14 +56,19 @@ export default function Dashboard(): ReactElement {
             <h2 className="text-xl font-semibold text-gray-800">Connected Accounts</h2>
             <div className="flex flex-wrap gap-4">
               {user.linkedAccounts.map((account) => (
-                <div key={account.address} className="flex items-center space-x-2 bg-gray-50 p-3 rounded">
+                <div key={account.type} className="flex items-center space-x-2 bg-gray-50 p-3 rounded">
                   {account.type === 'email' && (
-                    <Image src="/icons/email.svg" alt="Email" width={20} height={20} />
+                    <>
+                      <Image src="/icons/email.svg" alt="Email" width={20} height={20} />
+                      <span className="text-sm text-gray-600">{(account as any).email}</span>
+                    </>
                   )}
                   {account.type === 'wallet' && (
-                    <Image src="/icons/wallet.svg" alt="Wallet" width={20} height={20} />
+                    <>
+                      <Image src="/icons/wallet.svg" alt="Wallet" width={20} height={20} />
+                      <span className="text-sm text-gray-600">{(account as any).address}</span>
+                    </>
                   )}
-                  <span className="text-sm text-gray-600">{account.address}</span>
                 </div>
               ))}
             </div>
