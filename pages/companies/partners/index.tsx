@@ -97,9 +97,11 @@ export default function Partners() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Interested in partnering with us? Let's explore collaboration opportunities.
           </p>
-          <Button as={Link} href="/contact">
-            Contact Us
-          </Button>
+          <Link href="/contact">
+            <Button>
+              Contact Us
+            </Button>
+          </Link>
         </div>
 
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
@@ -107,9 +109,11 @@ export default function Partners() {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Access documentation and resources for our partners.
           </p>
-          <Button as={Link} href="/docs/partners" color="light">
-            View Resources
-          </Button>
+          <Link href="/docs/partners">
+            <Button color="light">
+              View Resources
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
