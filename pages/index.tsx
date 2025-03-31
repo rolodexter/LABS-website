@@ -1,6 +1,7 @@
 import Head from 'next/head';
+import type { NextPage } from 'next';
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white">
       <Head>
@@ -17,4 +18,6 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export default Home;
