@@ -42,8 +42,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((
   const styles = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthStyles} ${className}`;
 
   if (href) {
+    const linkProps = {
+      ...props,
+      href,
+      className: styles
+    };
     return (
-      <Link href={href} className={styles} {...props}>
+      <Link {...linkProps}>
         {children}
       </Link>
     );
