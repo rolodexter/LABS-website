@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "node server.js",
     "lint": "next lint"
   },
   "author": "Joe Maristela",
@@ -26,11 +26,11 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^13.5.6"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^13.5.6",
     "file-loader": "^6.2.0"
   },
   "engines": {

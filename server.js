@@ -22,7 +22,8 @@ const app = next({
     distDir: '.next',
     compress: true,
     poweredByHeader: false,
-    generateEtags: false
+    generateEtags: false,
+    reactStrictMode: true
   }
 });
 
@@ -74,7 +75,8 @@ app.prepare().then(() => {
     res.status(200).json({ 
       status: 'ok',
       timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV
+      environment: process.env.NODE_ENV,
+      uptime: process.uptime()
     });
   });
 
