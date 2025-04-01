@@ -3,7 +3,6 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import { PresentationChartBarIcon, Cog6ToothIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { usePrivy } from '@privy-io/react-auth';
-import Login from '@/components/auth/Login';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui';
@@ -36,14 +35,6 @@ const Home: NextPage = () => {
       description: 'Coordinate and leverage diverse expertise to solve complex challenges efficiently.'
     }
   ];
-
-  if (!ready || !authenticated) {
-    return (
-      <div>
-        <Login />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen w-full bg-white text-black">
@@ -100,7 +91,7 @@ const Home: NextPage = () => {
                   <div className="p-3 rounded-lg bg-gray-50">
                     <item.icon className="w-6 h-6 text-black" />
                   </div>
-                  <h3 className="text-xl font-bold text-black">{item.title}</h3>
+                  <h3 className="text-xl font-semibold text-black">{item.title}</h3>
                   <p className="text-gray-600">{item.description}</p>
                 </div>
               ))}
