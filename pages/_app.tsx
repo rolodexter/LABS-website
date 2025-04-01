@@ -22,9 +22,22 @@ const ClientPrivyProvider = dynamic(
   () => Promise.resolve(({ children }: { children: ReactNode }) => {
     const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
     
+    // Debug log
+    console.log('Environment variables:', {
+      NEXT_PUBLIC_PRIVY_APP_ID: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
+      NODE_ENV: process.env.NODE_ENV
+    });
+    
     if (!appId) {
       console.error('NEXT_PUBLIC_PRIVY_APP_ID is not defined');
-      return children;
+      // Return layout without Privy
+      return (
+        <div className="min-h-screen flex flex-col bg-white">
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
+      );
     }
 
     return (
