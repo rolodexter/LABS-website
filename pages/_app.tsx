@@ -21,9 +21,15 @@ type AppPropsWithLayout = AppProps & {
 const ClientPrivyProvider = dynamic(
   () => Promise.resolve(({ children }: { children: ReactNode }) => {
     const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
+    
+    if (!appId) {
+      console.error('NEXT_PUBLIC_PRIVY_APP_ID is not defined');
+      return children;
+    }
+
     return (
       <PrivyProvider
-        appId={appId!}
+        appId={appId}
         config={{
           loginMethods: ['email', 'google'],
           appearance: {
@@ -60,7 +66,22 @@ export default function AppWithLayout({ Component, pageProps }: AppPropsWithLayo
   const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong. Please try again later.</div>}>
+    <ErrorBoundary fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="max-w-md w-full px-6 py-8 text-center">
+          <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
+          <p className="text-gray-600 mb-6">
+            Please try again later or contact support if the issue persists.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors duration-200"
+          >
+            Refresh page
+          </button>
+        </div>
+      </div>
+    }>
       <ClientPrivyProvider>
         {getLayout(<Component {...pageProps} />)}
       </ClientPrivyProvider>
