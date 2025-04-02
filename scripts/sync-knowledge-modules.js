@@ -120,6 +120,51 @@ async function upsertModule(client, moduleData) {
   ]);
 }
 
+// Process module relationships
+async function syncModuleRelationships(client, moduleData) {
+  // Sync dependencies
+  if (Array.isArray(moduleData.dependencies)) {
+    // Delete existing dependencies
+    await client.query(
+      'DELETE FROM module_dependencies WHERE module_slug = $1',
+      [moduleData.slug]
+    );
+
+    // Insert new dependencies
+    for (const dependencySlug of moduleData.dependencies) {
+      try {
+        await client.query(
+          'INSERT INTO module_dependencies (module_slug, dependency_slug) VALUES ($1, $2)',
+          [moduleData.slug, dependencySlug]
+        );
+      } catch (error) {
+        console.warn(`Warning: Could not add dependency ${dependencySlug} for ${moduleData.slug}: ${error.message}`);
+      }
+    }
+  }
+
+  // Sync tags
+  if (Array.isArray(moduleData.tags)) {
+    // Delete existing tags
+    await client.query(
+      'DELETE FROM module_tags WHERE module_slug = $1',
+      [moduleData.slug]
+    );
+
+    // Insert new tags
+    for (const tag of moduleData.tags) {
+      try {
+        await client.query(
+          'INSERT INTO module_tags (module_slug, tag) VALUES ($1, $2)',
+          [moduleData.slug, tag]
+        );
+      } catch (error) {
+        console.warn(`Warning: Could not add tag ${tag} for ${moduleData.slug}: ${error.message}`);
+      }
+    }
+  }
+}
+
 // Mark deleted modules as inactive
 async function markDeletedModules(client, existingSlugs) {
   const query = `
@@ -153,6 +198,9 @@ async function syncKnowledgeModules() {
         const result = await upsertModule(client, moduleData);
         if (result.rowCount > 0) {
           stats[result.command === 'INSERT' ? 'added' : 'updated']++;
+          
+          // Sync relationships after successful module upsert
+          await syncModuleRelationships(client, moduleData);
         }
       } catch (error) {
         stats.errors.push({ file, error: error.message });
