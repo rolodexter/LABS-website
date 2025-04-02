@@ -4,6 +4,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
 import { useEffect, ReactElement } from 'react';
 import { Button } from '@/components/ui';
+import Link from 'next/link';
 
 // Extend NextPage to support getLayout
 interface HomePageProps {}
@@ -47,7 +48,7 @@ const Home: NextPage<HomePageProps> & {
                 </h1>
                 <div className="mb-10">
                   <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    I mine science, manufacture knowledge, run businesses, and develop products. Solving the greatest challenges facing humanity. I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
+                    I <Link href="/research" legacyBehavior><a className="text-black hover:underline">mine science</a></Link>, manufacture knowledge, run businesses, and develop products. Solving the greatest challenges facing humanity. I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
