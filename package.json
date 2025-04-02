@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npm install date-fns gray-matter next-mdx-remote"
   },
   "author": "Joe Maristela",
   "license": "ISC",
@@ -19,9 +20,12 @@
     "@heroicons/react": "^2.2.0",
     "@privy-io/react-auth": "^1.40.3",
     "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
     "express": "4.18.2",
     "framer-motion": "^12.6.2",
+    "gray-matter": "^4.0.3",
     "next": "^13.5.6",
+    "next-mdx-remote": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2.24.2",
