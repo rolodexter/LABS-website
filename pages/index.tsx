@@ -4,10 +4,15 @@ import type { NextPage } from 'next';
 import { PresentationChartBarIcon, Cog6ToothIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, ReactElement } from 'react';
 import { Button } from '@/components/ui';
 
-const Home: NextPage = () => {
+// Extend NextPage to support getLayout
+interface HomePageProps {}
+
+const Home: NextPage<HomePageProps> & {
+  getLayout?: (page: ReactElement) => ReactElement;
+} = () => {
   const { ready, authenticated } = usePrivy();
   const router = useRouter();
 
@@ -100,6 +105,13 @@ const Home: NextPage = () => {
         </section>
       </main>
     </div>
+  );
+};
+
+// Add custom layout function for the homepage
+Home.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <div>{page}</div>
   );
 };
 

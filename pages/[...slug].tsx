@@ -38,9 +38,7 @@ export default function KnowledgePage({ frontMatter, mdxSource }: KnowledgePageP
 // This prevents the duplicate footer issue
 KnowledgePage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {page}
-    </div>
+    <div>{page}</div>
   );
 };
 

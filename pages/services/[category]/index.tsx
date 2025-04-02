@@ -25,47 +25,45 @@ export default function ServiceCategoryPage({ category, modules }: CategoryPageP
   const formattedCategory = category.charAt(0).toUpperCase() + category.slice(1);
   
   return (
-    <>
+    <div className="max-w-6xl mx-auto px-4 py-12">
       <Head>
         <title>{formattedCategory} Services | rolodexterLABS</title>
         <meta name="description" content={`rolodexterLABS ${category} services`} />
       </Head>
       
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-2">{formattedCategory} Services</h1>
-          <p className="text-xl text-gray-600">
-            rolodexterLABS professional services and capabilities
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((module) => (
-            <Link 
-              href={`/services/${category}/${module.slug}`} 
-              key={module.slug}
-              className="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
-            >
-              <h2 className="text-xl font-semibold mb-2">{module.title}</h2>
-              <p className="text-gray-600 mb-4 line-clamp-3">{module.summary}</p>
-              
-              <div className="flex justify-between items-center text-sm">
-                <div className="text-gray-500">
-                  {module.last_updated && format(new Date(module.last_updated), 'MMM d, yyyy')}
-                </div>
-                
-                {module.agent_author && module.agent_author.length > 0 && (
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-gray-500">by</span>
-                    <span className="font-medium">{module.agent_author[0]}</span>
-                  </div>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold mb-2">{formattedCategory} Services</h1>
+        <p className="text-xl text-gray-600">
+          rolodexterLABS professional services and capabilities
+        </p>
       </div>
-    </>
+      
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {modules.map((module) => (
+          <Link 
+            href={`/services/${category}/${module.slug}`} 
+            key={module.slug}
+            className="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
+          >
+            <h2 className="text-xl font-semibold mb-2">{module.title}</h2>
+            <p className="text-gray-600 mb-4 line-clamp-3">{module.summary}</p>
+            
+            <div className="flex justify-between items-center text-sm">
+              <div className="text-gray-500">
+                {module.last_updated && format(new Date(module.last_updated), 'MMM d, yyyy')}
+              </div>
+              
+              {module.agent_author && module.agent_author.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <span className="text-xs text-gray-500">by</span>
+                  <span className="font-medium">{module.agent_author[0]}</span>
+                </div>
+              )}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -73,9 +71,7 @@ export default function ServiceCategoryPage({ category, modules }: CategoryPageP
 // This prevents the duplicate footer issue
 ServiceCategoryPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {page}
-    </div>
+    <div>{page}</div>
   );
 };
 

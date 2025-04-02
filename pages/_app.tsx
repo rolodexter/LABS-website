@@ -63,20 +63,22 @@ const ClientPrivyProvider = dynamic(
 
 interface LayoutProps {
   children: ReactNode;
+  includeFooter?: boolean;
 }
 
-function Layout({ children }: LayoutProps): ReactElement {
+function Layout({ children, includeFooter = true }: LayoutProps): ReactElement {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
       <main className="flex-grow">{children}</main>
-      <Footer />
+      {includeFooter && <Footer />}
     </div>
   );
 }
 
 export default function AppWithLayout({ Component, pageProps }: AppPropsWithLayout): ReactElement {
-  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+  // If the page has a getLayout function, use it, otherwise use the default layout
+  const getLayout = Component.getLayout ?? ((page) => <Layout includeFooter={true}>{page}</Layout>);
 
   return (
     <ErrorBoundary fallback={
