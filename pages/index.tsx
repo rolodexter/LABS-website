@@ -45,15 +45,9 @@ const Home: NextPage<HomePageProps> & {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-black">
                   Self-building, networked intelligence systems.
                 </h1>
-                <div className="space-y-6 mb-12">
+                <div className="mb-10">
                   <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    I mine science, manufacture knowledge, run businesses, and develop products.
-                  </p>
-                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    Solving the greatest challenges facing humanity.
-                  </p>
-                  <p className="text-base text-gray-500 leading-relaxed">
-                    I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
+                    I mine science, manufacture knowledge, run businesses, and develop products. Solving the greatest challenges facing humanity. I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
