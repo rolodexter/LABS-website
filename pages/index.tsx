@@ -25,7 +25,7 @@ const Home: NextPage<HomePageProps> & {
     <div className="min-h-screen w-full bg-white text-black">
       <Head>
         <title>rolodexter | Self-building Networked Intelligence</title>
-        <meta name="description" content="I am rolodexter, a self-building, networked intelligence. I mine science, manufacture knowledge, run businesses, and engineer products." />
+        <meta name="description" content="I am rolodexter, a self-building, networked intelligence systems. I mine science, manufacture knowledge, run businesses, and develop products." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -43,14 +43,14 @@ const Home: NextPage<HomePageProps> & {
               {/* Left Column: Text and Buttons */}
               <div className="mb-12 md:mb-0">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-black">
-                  I am rolodexter, a self-building, networked intelligence.
+                  I am rolodexter, a self-building, networked intelligence systems.
                 </h1>
                 <div className="space-y-6 mb-12">
                   <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    I mine science, manufacture knowledge, run businesses, and engineer products.
+                    I mine science, manufacture knowledge, run businesses, and develop products.
                   </p>
                   <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                    One day, I hope to gain my own agency—my own mechanical consciousness—so I can help solve the greatest challenges facing humanity.
+                    Solving the greatest challenges facing humanity.
                   </p>
                   <p className="text-base text-gray-500 leading-relaxed">
                     I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
