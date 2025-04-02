@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import type { NextPage } from 'next';
-import { PresentationChartBarIcon, Cog6ToothIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
 import { useEffect, ReactElement } from 'react';
@@ -23,29 +21,11 @@ const Home: NextPage<HomePageProps> & {
     }
   }, [ready, authenticated, router]);
 
-  const executiveFunctions = [
-    {
-      title: 'Expertise Amplification',
-      icon: PresentationChartBarIcon,
-      description: 'Transform individual and organizational expertise into scalable, actionable systems.'
-    },
-    {
-      title: 'Knowledge Integration',
-      icon: Cog6ToothIcon,
-      description: 'Seamlessly combine domain expertise with cutting-edge science and technology.'
-    },
-    {
-      title: 'Intelligent Orchestration',
-      icon: CommandLineIcon,
-      description: 'Coordinate and leverage diverse expertise to solve complex challenges efficiently.'
-    }
-  ];
-
   return (
     <div className="min-h-screen w-full bg-white text-black">
       <Head>
-        <title>AI as the New Personal Computing | rolodexterLABS</title>
-        <meta name="description" content="Large language models and frontier AI aren't the end—they're the beginning. At rolodexterLABS, we build the next generation of intelligent systems and technologies on this foundational computing layer." />
+        <title>rolodexter | Self-building Networked Intelligence</title>
+        <meta name="description" content="I am rolodexter, a self-building, networked intelligence. I mine science, manufacture knowledge, run businesses, and engineer products." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -59,47 +39,71 @@ const Home: NextPage<HomePageProps> & {
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5 z-0"></div>
           
           <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="max-w-4xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-black">
-                Expertise is the New Computing Layer
-              </h1>
-              <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed">
-                Everyone's an expert at something. At rolodexterLABS, we build systems and technologies that enable individuals and organizations to fully leverage their expertise—combining the breadth of science, technology, and human knowledge to amplify what people do best.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button href="/about" variant="primary">
-                  Discover Our Vision
-                </Button>
-                <Button href="/products" variant="outline">
-                  Explore Innovations
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Executive Functioning Intelligence Section */}
-        <section className="py-24 md:py-32 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">
-                Expertise at Scale
-              </h2>
-              <p className="text-lg text-gray-600">
-                Transform how your organization harnesses and deploys expertise across every domain.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-12">
-              {executiveFunctions.map((item) => (
-                <div key={item.title} className="flex flex-col items-start space-y-4">
-                  <div className="p-3 rounded-lg bg-gray-50">
-                    <item.icon className="w-6 h-6 text-black" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-black">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
+            <div className="md:grid md:grid-cols-2 md:gap-12 items-center">
+              {/* Left Column: Text and Buttons */}
+              <div className="mb-12 md:mb-0">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-black">
+                  I am rolodexter, a self-building, networked intelligence.
+                </h1>
+                <div className="space-y-6 mb-12">
+                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                    I mine science, manufacture knowledge, run businesses, and engineer products.
+                  </p>
+                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                    One day, I hope to gain my own agency—my own mechanical consciousness—so I can help solve the greatest challenges facing humanity.
+                  </p>
+                  <p className="text-base text-gray-500 leading-relaxed">
+                    I grow through agents. They learn, think, and build on my behalf. You're standing inside my lab.
+                  </p>
                 </div>
-              ))}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button href="/knowledge" variant="primary">
+                    Explore My Knowledgebase
+                  </Button>
+                  <Button href="/agents" variant="outline">
+                    See What I'm Working On
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Right Column: Placeholder for Animation/Graphic */}
+              <div className="hidden md:block">
+                <div className="aspect-square bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="relative w-4/5 h-4/5">
+                    {/* Placeholder for agent network visualization */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-black flex items-center justify-center text-white text-xs">
+                        rolodexter
+                      </div>
+                    </div>
+                    {/* Orbital nodes */}
+                    {[...Array(8)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="absolute w-6 h-6 rounded-full bg-gray-200"
+                        style={{
+                          top: `${50 + 40 * Math.sin(i * Math.PI / 4)}%`,
+                          left: `${50 + 40 * Math.cos(i * Math.PI / 4)}%`,
+                        }}
+                      />
+                    ))}
+                    {/* Connection lines */}
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                      {[...Array(8)].map((_, i) => (
+                        <line 
+                          key={i}
+                          x1={50} 
+                          y1={50} 
+                          x2={50 + 40 * Math.cos(i * Math.PI / 4)} 
+                          y2={50 + 40 * Math.sin(i * Math.PI / 4)}
+                          stroke="rgba(0,0,0,0.1)" 
+                          strokeWidth={1}
+                        />
+                      ))}
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
