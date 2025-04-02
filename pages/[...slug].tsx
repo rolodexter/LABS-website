@@ -7,6 +7,7 @@ import {
   getSerializedKnowledgeModule, 
   getKnowledgeModulePath 
 } from '@/lib/knowledge';
+import { ReactElement } from 'react';
 
 interface KnowledgePageProps {
   frontMatter: any;
@@ -32,6 +33,16 @@ export default function KnowledgePage({ frontMatter, mdxSource }: KnowledgePageP
     </>
   );
 }
+
+// Define a custom layout for knowledge pages that doesn't include a footer
+// This prevents the duplicate footer issue
+KnowledgePage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+      {page}
+    </div>
+  );
+};
 
 export const getStaticProps: GetStaticProps<KnowledgePageProps, Params> = async ({ params }) => {
   if (!params?.slug || params.slug.length < 2) {

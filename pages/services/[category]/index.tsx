@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { getKnowledgeModulesByCategory, getAllKnowledgeModules } from '@/lib/knowledge';
+import { ReactElement } from 'react';
 
 interface CategoryPageProps {
   category: string;
@@ -67,6 +68,16 @@ export default function ServiceCategoryPage({ category, modules }: CategoryPageP
     </>
   );
 }
+
+// Define a custom layout for category pages that doesn't include a footer
+// This prevents the duplicate footer issue
+ServiceCategoryPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+      {page}
+    </div>
+  );
+};
 
 export const getStaticProps: GetStaticProps<CategoryPageProps, Params> = async ({ params }) => {
   if (!params?.category) {
