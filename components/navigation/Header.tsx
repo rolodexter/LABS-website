@@ -7,8 +7,9 @@ const menuItems = [
   {
     label: 'Products',
     submenu: [
-      { label: 'rolodexterVS', href: '/products/rolodexter-vs' },
-      { label: 'rolodexterGPT', href: '/products/rolodexter-gpt' },
+      { label: 'rolodexterVS', href: '/products/rolodexterVS' },
+      { label: 'LinuxAI', href: '/products/linuxAI' },
+      { label: 'All Products', href: '/products' },
     ],
   },
   {

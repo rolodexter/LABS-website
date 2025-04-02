@@ -36,8 +36,9 @@ export default function Footer() {
         { label: 'GitHub', href: 'https://github.com/rolodexter' },
         { label: 'Documentation', href: '/docs' },
         { label: 'API Reference', href: '/docs/api' },
-        { label: 'rolodexterGPT', href: '/products/rolodexter-gpt' },
-        { label: 'rolodexterVS', href: '/products/rolodexter-vs' }
+        { label: 'Products', href: '/products' },
+        { label: 'rolodexterVS', href: '/products/rolodexterVS' },
+        { label: 'LinuxAI', href: '/products/linuxAI' }
       ]
     },
     {
