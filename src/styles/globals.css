@@ -59,3 +59,94 @@ html {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Animation keyframes */
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Custom animation classes */
+.animate-dash {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #3B82F6, #A855F7);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-black text-white hover:bg-black/90 transition-colors duration-200;
+}
+
+.btn-outline {
+  @apply border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200;
+}
+
+/* Responsive typography */
+@media (min-width: 768px) {
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+}
+
+/* Improved focus styles */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
