@@ -1,0 +1,24 @@
+@keyframes matrix {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-matrix {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-matrix pre {
+  animation: matrix 10s linear infinite;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+}
