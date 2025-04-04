@@ -14,7 +14,7 @@ export default function ProductCard({
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-lg bg-black border border-gray-800 hover:border-gray-700"
+      className="relative overflow-hidden rounded-lg bg-white border border-black hover:border-gray-900"
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
@@ -25,7 +25,7 @@ export default function ProductCard({
         {isHovered && backgroundEffect && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
+            animate={{ opacity: 0.05 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 pointer-events-none"
           >
@@ -38,8 +38,8 @@ export default function ProductCard({
         <div className="grid md:grid-cols-2 gap-6">
           {/* Content Side */}
           <div>
-            <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-            <p className="text-gray-400 mb-4">{description}</p>
+            <h3 className="text-xl font-semibold text-black mb-3">{title}</h3>
+            <p className="text-gray-600 mb-4">{description}</p>
             
             <AnimatePresence>
               {isHovered && (
@@ -47,7 +47,7 @@ export default function ProductCard({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
-                  className="text-sm text-gray-300"
+                  className="text-sm text-gray-500"
                 >
                   {details}
                 </motion.div>
@@ -67,7 +67,7 @@ export default function ProductCard({
                 />
               </div>
             ) : codeSnippet ? (
-              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto">
+              <div className="bg-black rounded-lg p-4 font-mono text-sm text-white overflow-x-auto">
                 <pre>{codeSnippet}</pre>
               </div>
             ) : null}

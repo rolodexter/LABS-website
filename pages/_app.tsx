@@ -44,14 +44,47 @@ const ClientPrivyProvider = dynamic(
       <PrivyProvider
         appId={appId}
         config={{
-          loginMethods: ['email', 'google'],
+          loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'],
+          supportedChains: [
+            { id: 1, name: 'Ethereum' },
+            { id: 137, name: 'Polygon' },
+            { id: 42161, name: 'Arbitrum' },
+            { id: 10, name: 'Optimism' },
+            { id: 8453, name: 'Base' }
+          ],
           appearance: {
             theme: 'light',
-            accentColor: '#000000'
+            accentColor: '#000000',
+            logo: '/logos/logotype-black.png',
+            showWalletLoginFirst: false
+          },
+          embeddedWallets: {
+            createOnLogin: 'users-without-wallets'
           }
         }}
-        onSuccess={(user) => {
+        onSuccess={async (user) => {
           console.log('Successfully authenticated:', user);
+          // Save user data to database
+          try {
+            const response = await fetch('/api/users/sync', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                privyId: user.id,
+                email: user.email?.address,
+                walletAddress: user.wallet?.address,
+                linkedAccounts: user.linkedAccounts
+              }),
+            });
+
+            if (!response.ok) {
+              console.error('Failed to sync user data with database');
+            }
+          } catch (error) {
+            console.error('Error syncing user with database:', error);
+          }
         }}
       >
         {children}

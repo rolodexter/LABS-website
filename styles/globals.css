@@ -35,16 +35,16 @@ a {
     @apply text-black bg-white;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-black;
+    @apply text-black dark:text-white;
   }
   p {
-    @apply text-gray-600;
+    @apply text-gray-600 dark:text-gray-400;
   }
 }
 
 /* Transition effects */
 .transition-colors {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
