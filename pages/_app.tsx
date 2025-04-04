@@ -45,7 +45,7 @@ const ClientPrivyProvider = dynamic(
         appId={appId}
         config={{
           loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'],
-          supportedChains: [
+          chains: [
             { id: 1, name: 'Ethereum' },
             { id: 137, name: 'Polygon' },
             { id: 42161, name: 'Arbitrum' },
