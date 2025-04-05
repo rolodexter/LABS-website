@@ -12,7 +12,7 @@ import CodeBlock from '@/components/mdx/CodeBlock';
 import InlineCode from '@/components/mdx/InlineCode';
 
 // MDX components
-const components = {
+const components: Record<string, React.ComponentType<any>> = {
   h1: (props: any) => <h1 className="text-4xl font-bold mt-8 mb-6 text-black" {...props} />,
   h2: (props: any) => <h2 className="text-3xl font-bold mt-10 mb-5 text-black border-b border-gray-200 pb-2" {...props} />,
   h3: (props: any) => <h3 className="text-2xl font-bold mt-8 mb-4 text-black" {...props} />,
@@ -25,13 +25,13 @@ const components = {
   blockquote: (props: any) => <blockquote className="border-l-4 border-black pl-4 italic my-6 text-gray-800" {...props} />,
   hr: () => <hr className="my-10 border-t border-gray-200" />,
   // Use our custom components for code blocks and inline code
-  code: CodeBlock,
+  code: (props: React.HTMLAttributes<HTMLElement>) => <CodeBlock {...(props as any)} />,
   pre: (props: any) => {
     // Extract the children and pass them to CodeBlock
     return <div {...props} />;
   },
   // Special handling for inline code with backticks
-  inlineCode: InlineCode,
+  inlineCode: (props: React.HTMLAttributes<HTMLElement>) => <InlineCode {...(props as any)} />,
   // Special handling for rolodexter product names that appear in backticks
   'rolodexterGPT': (props: any) => (
     <span className="font-semibold bg-black text-white px-2 py-0.5 rounded text-sm">
