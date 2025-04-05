@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Dashboard(): ReactElement {
-  const { ready, authenticated, user, logout, connectWallet, linkEmail, linkGoogle, linkTwitter } = usePrivy();
+  const { ready, authenticated, user, logout, connectWallet, linkEmail, linkGoogle, linkTwitter, linkGithub } = usePrivy();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('profile');
 
@@ -163,7 +163,7 @@ export default function Dashboard(): ReactElement {
                       <span className="text-sm font-medium">Connect Google</span>
                     </button>
                     <button 
-                      onClick={() => user.linkGithub()}
+                      onClick={() => linkGithub()}
                       className="flex items-center justify-center p-4 border border-gray-300 rounded-md hover:bg-gray-50"
                     >
                       <span className="text-sm font-medium">Connect GitHub</span>
