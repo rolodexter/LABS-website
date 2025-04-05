@@ -311,8 +311,7 @@ export default function Home() {
       primarySection={primarySection}
       secondarySections={secondarySections}
       fullWidthSections={fullWidthSections}
-    >
-      {/* Additional content could go here if needed */}
-    </MagazineLayout>
+      children={<div className="hidden">{/* Required children prop */}</div>}
+    />
   );
 }
