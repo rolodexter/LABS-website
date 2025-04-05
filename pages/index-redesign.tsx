@@ -7,7 +7,6 @@ import Image from 'next/image';
 import DailyFocus from '@/components/home/DailyFocus';
 import ArticleGrid from '@/components/articles/ArticleGrid';
 import FeaturedArticle from '@/components/articles/FeaturedArticle';
-import CategoryNav from '@/components/navigation/CategoryNav';
 import SearchBar from '@/components/ui/SearchBar';
 
 // Types
@@ -147,7 +146,6 @@ export default function Home() {
               <Link href="/" className="font-serif text-2xl font-bold">
                 rolodexterLABS
               </Link>
-              <CategoryNav />
             </div>
             <SearchBar />
           </div>
