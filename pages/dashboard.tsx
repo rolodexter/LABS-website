@@ -24,7 +24,7 @@ export default function Dashboard(): ReactElement {
     );
   }
 
-  const renderAccountIcon = (type) => {
+  const renderAccountIcon = (type: string) => {
     switch (type) {
       case 'email':
         return '/icons/email.svg';
