@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Dashboard(): ReactElement {
+function Dashboard(): ReactElement {
   const { ready, authenticated, user, logout, connectWallet, linkEmail, linkGoogle, linkTwitter, linkGithub } = usePrivy();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('profile');
@@ -202,3 +202,12 @@ export default function Dashboard(): ReactElement {
     </div>
   );
 }
+
+// Add custom layout function to prevent duplicate footer
+Dashboard.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <div>{page}</div>
+  );
+};
+
+export default Dashboard;
