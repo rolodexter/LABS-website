@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface InlineCodeProps {
+type InlineCodeProps = React.HTMLAttributes<HTMLElement> & {
   children: React.ReactNode;
-}
+};
 
 const InlineCode: React.FC<InlineCodeProps> = ({ children, ...props }) => {
   return (
