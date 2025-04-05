@@ -140,7 +140,7 @@ export default function Search({ allContent }: SearchProps) {
                     summary={item.meta.summary}
                     excerpt={item.excerpt || ''}
                     lastUpdated={item.meta.last_updated}
-                    readingTime={item.readingTime}
+                    readingTime={`${item.readingTime} min read`}
                     tags={item.meta.tags || []}
                     complexity={item.meta.complexity}
                     agent_author={item.meta.agent_author}
