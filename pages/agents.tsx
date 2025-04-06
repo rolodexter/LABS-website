@@ -7,6 +7,20 @@ import productsData from '@/data/products.json';
 import Badge from '@/components/ui/Badge';
 import type { NextPageWithLayout } from '@/types/next';
 
+// Map status values to those expected by Badge component
+const mapStatus = (status: string): "available" | "development" | "planned" | undefined => {
+  switch (status) {
+    case "Stable":
+      return "available";
+    case "In Development":
+      return "development";
+    case "Planned":
+      return "planned";
+    default:
+      return undefined;
+  }
+};
+
 // Type for service data
 type ServiceStatus = 'Stable' | 'In Development' | 'Planned';
 type Service = {
@@ -209,7 +223,7 @@ const AgentsPage: NextPageWithLayout = () => {
                           className="inline-flex items-center space-x-1 text-sm hover:underline"
                         >
                           <span>{service.title}</span>
-                          <Badge status={service.status} size="sm">{service.status}</Badge>
+                          <Badge status={mapStatus(service.status)} size="sm">{service.status}</Badge>
                         </Link>
                       </li>
                     ))
