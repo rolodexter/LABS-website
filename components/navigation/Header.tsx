@@ -40,35 +40,76 @@ const servicesByCategory = servicesData.reduce<Record<string, typeof servicesDat
   return acc;
 }, {});
 
-// Create product submenu with only top-level categories
+// Create product submenu with only Operating Systems and Workers categories
 const productSubmenu: SubMenuItem[] = [
+  // Header for Products section
+  { label: 'Products', href: '', className: 'font-bold text-xs uppercase tracking-wide opacity-70 cursor-default' },
+  
   // Only show top-level categories: Operating Systems and Workers
-  // Get unique families for filtering
-  ...Array.from(new Set(productsData.map(product => product.family)))
-    .filter(family => family === 'Operating Systems' || family === 'Workers')
-    .sort((a, b) => a.localeCompare(b))
-    .map(family => ({
-      label: family,
-      href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
-      className: 'font-semibold'
-    })),
-  { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' },
+  ...Object.entries(productsByFamily)
+    .filter(([family]) => family === 'Operating Systems' || family === 'Workers')
+    .sort((a, b) => {
+      // Sort by priority
+      const priorityA = a[1][0]?.priority || 999;
+      const priorityB = b[1][0]?.priority || 999;
+      return priorityA - priorityB;
+    })
+    .flatMap(([family, products]) => {
+      // Get icon for this family
+      const icon = products[0]?.icon || '';
+      // Check if any products in this family are in development
+      const hasInDevelopment = products.some(product => product.status === 'development');
+      
+      return [
+        // Family header with icon
+        { 
+          label: `${icon} ${family}`, 
+          href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
+          className: `text-sm font-medium ${hasInDevelopment ? 'flex items-center' : ''}`
+        }
+      ];
+    }),
+  { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' }
 ];
 
-// Create service submenu with category grouping and status indicators
+// Create service submenu with the four specified categories and appropriate icons
 const serviceSubmenu: SubMenuItem[] = [
-  // Sort categories and include all services with status indication
-  ...Object.entries(servicesByCategory).sort((a, b) => a[0].localeCompare(b[0])).flatMap(([category, services]) => [
-    // Category header as a disabled item (for UI organization)
-    { label: `${category}`, href: '', className: 'font-semibold text-sm opacity-70 cursor-default' },
-    // Services within category
-    ...services.map(service => ({ 
-      label: service.status !== 'Stable' ? `${service.title} (In Development)` : service.title,
-      href: service.path,
-      className: service.status !== 'Stable' ? 'text-gray-500 italic' : ''
-    }))
-  ]),
-  { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' },
+  // Header for Services section
+  { label: 'Services', href: '', className: 'font-bold text-xs uppercase tracking-wide opacity-70 cursor-default' },
+  
+  // Show only the four specified categories with icons, ordered by priority
+  ...Object.entries(servicesByCategory)
+    .filter(([category]) => ['Blockchains', 'Models', 'Science', 'Work'].includes(category))
+    .sort((a, b) => {
+      // Get the first service from each category to check priority
+      const priorityA = a[1][0]?.priority || 999;
+      const priorityB = b[1][0]?.priority || 999;
+      return priorityA - priorityB;
+    })
+    .flatMap(([category, services]) => {
+      // Get the icon from the first service in this category
+      const icon = services[0]?.icon || '';
+      // Check if any services in this category are in development
+      const hasInDevelopment = services.some(service => service.status === 'development');
+      // Get badge if any service has one
+      const badge = services.find(service => service.badge)?.badge;
+      
+      return [
+        // Category header with icon
+        { 
+          label: `${icon} ${category}`, 
+          href: `/services#${category.toLowerCase()}`,
+          className: `text-sm ${badge ? 'flex items-center' : 'font-medium'}`,
+          // If this category has services in development or with badges, show it
+          ...(badge && {
+            rightElement: <span className="ml-2 px-1.5 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">{badge}</span>
+          }),
+          // Optional styling for in-development categories
+          style: hasInDevelopment && !badge ? { opacity: 0.8 } : {}
+        }
+      ];
+    }),
+  { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' }
 ];
 
 const menuItems: MenuItem[] = [

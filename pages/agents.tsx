@@ -115,10 +115,14 @@ const createAgentData = (): Agent[] => {
   
   // Connect agents with their linked services
   return agentBase.map(agent => {
-    // Find all services linked to this agent
+    // Find all services linked to this agent from the four main categories
     // Only include services with a non-null linkedAgent that matches this agent.id
     const linkedServices = servicesData
-      .filter(service => typeof service.linkedAgent === 'string' && service.linkedAgent === agent.id)
+      .filter(service => 
+        typeof service.linkedAgent === 'string' && 
+        service.linkedAgent === agent.id &&
+        ['Blockchains', 'Models', 'Science', 'Work'].includes(service.category)
+      )
       .map(service => ({
         ...service,
         // Ensure service.status is of type ServiceStatus

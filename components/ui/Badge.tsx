@@ -1,9 +1,9 @@
 import { HTMLAttributes, forwardRef } from 'react';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'outline' | 'stable' | 'development' | 'planned';
+  variant?: 'default' | 'outline' | 'available' | 'development' | 'planned';
   size?: 'sm' | 'md';
-  status?: 'Stable' | 'In Development' | 'Planned';
+  status?: 'available' | 'development' | 'planned';
 }
 
 const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
@@ -18,7 +18,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
   const variants = {
     default: 'bg-gray-100 text-gray-800',
     outline: 'border border-black text-black',
-    stable: 'bg-black text-white',
+    available: 'bg-black text-white',
     development: 'bg-gray-500 text-white',
     planned: 'bg-gray-300 text-gray-800'
   };
@@ -32,13 +32,13 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
   let statusVariant = variant;
   if (status) {
     switch(status) {
-      case 'Stable':
-        statusVariant = 'stable';
+      case 'available':
+        statusVariant = 'available';
         break;
-      case 'In Development':
+      case 'development':
         statusVariant = 'development';
         break;
-      case 'Planned':
+      case 'planned':
         statusVariant = 'planned';
         break;
       default:
