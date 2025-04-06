@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import servicesData from '@/data/services.json';
 import Badge from '@/components/ui/Badge';
+import type { NextPageWithLayout } from '@/types/next';
 
 // Agent data structure
 type Agent = {
@@ -107,7 +108,7 @@ const agents: Agent[] = [
   }
 ];
 
-export default function AgentsPage(): ReactElement {
+const AgentsPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
@@ -194,9 +195,11 @@ export default function AgentsPage(): ReactElement {
       </div>
     </>
   );
-}
+};
 
 // Add custom layout function to prevent duplicate footer
 AgentsPage.getLayout = function getLayout(page: ReactElement) {
   return page;
 };
+
+export default AgentsPage;

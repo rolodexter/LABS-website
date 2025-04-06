@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import ServiceCard from '@/components/ui/ServiceCard';
 import servicesData from '@/data/services.json';
+import type { NextPageWithLayout } from '@/types/next';
 import { getAllKnowledgeModules } from '@/lib/knowledge';
 
 type ServiceStatus = 'Stable' | 'In Development' | 'Planned';
@@ -25,7 +26,7 @@ interface ServicesPageProps {
   }>;
 }
 
-const Services = ({ categories }: ServicesPageProps) => {
+const Services: NextPageWithLayout<ServicesPageProps> = ({ categories }) => {
   // Group services by category
   const servicesByCategory = servicesData.reduce<Record<string, Service[]>>((acc, service) => {
     const { category } = service;

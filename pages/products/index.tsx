@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
-import { NextPage } from 'next';
 import ProductCard from '@/components/ui/ProductCard';
 import productsData from '@/data/products.json';
+import type { NextPageWithLayout } from '@/types/next';
 
 type ProductStatus = 'Stable' | 'In Development' | 'Planned';
 
@@ -14,7 +14,7 @@ type Product = {
   description?: string;
 };
 
-const Products: NextPage = () => {
+const Products: NextPageWithLayout = () => {
   // Group products by category
   const productsByCategory = productsData.reduce<Record<string, Product[]>>((acc, product) => {
     const { category } = product;
@@ -86,40 +86,3 @@ Products.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Products;
-                <Button as={Link} href={product.href} className="w-full">
-                  Learn More
-                </Button>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Workers */}
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 text-black border-b pb-2">Workers</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {workers.map((product) => (
-              <Card key={product.title} className="bg-white border border-gray-200 hover:border-black transition-colors">
-                <div className="text-4xl mb-4">{product.icon}</div>
-                <h3 className="text-2xl font-bold mb-2 text-black">{product.title}</h3>
-                <p className="mb-6 text-gray-600">{product.description}</p>
-                {!product.comingSoon ? (
-                  <Button as={Link} href={product.href} className="w-full">
-                    Learn More
-                  </Button>
-                ) : (
-                  <p className="text-sm text-gray-500 italic">Coming Soon</p>
-                )}
-              </Card>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Add custom layout function for the products page to prevent duplicate footer
-Products.getLayout = function getLayout(page: ReactElement) {
-  return page;
-};
