@@ -1,6 +1,6 @@
 import { usePrivy } from '@privy-io/react-auth';
-import Button from '@/components/ui/Button';
 import { MouseEvent } from 'react';
+import Link from 'next/link';
 
 export function LoginButton() {
   const { login, logout, authenticated, ready } = usePrivy();
@@ -10,6 +10,7 @@ export function LoginButton() {
   }
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (authenticated) {
       logout();
     } else {
@@ -18,11 +19,11 @@ export function LoginButton() {
   };
 
   return (
-    <Button
-      variant={authenticated ? 'outline' : 'primary'}
+    <button 
       onClick={handleClick}
+      className="text-sm text-gray-400 hover:text-black transition-colors"
     >
-      {authenticated ? 'Sign Out' : 'Sign In'}
-    </Button>
+      {authenticated ? 'Sign Out' : 'Login'}
+    </button>
   );
 }

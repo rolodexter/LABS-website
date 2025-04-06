@@ -69,26 +69,17 @@ const Home: NextPage<HomePageProps> & {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
-              {ready && !authenticated ? (
-                <button 
-                  onClick={() => login()}
-                  className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
-                >
-                  Get Started
-                </button>
-              ) : (
-                <Link 
-                  href="/dashboard" 
-                  className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
-                >
-                  Go to Dashboard
-                </Link>
-              )}
+              <Link 
+                href="/products" 
+                className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
+              >
+                Explore Products
+              </Link>
               <Link 
                 href="/docs" 
                 className="px-8 py-4 bg-white border border-black text-black rounded-md font-medium text-lg hover:bg-gray-50 transition-colors"
               >
-                Explore Documentation
+                Read Documentation
               </Link>
             </div>
           </div>
