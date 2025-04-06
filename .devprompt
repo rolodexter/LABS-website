@@ -1,0 +1,74 @@
+## RUNTIME PROMPT FOR roldexterVS
+
+You're resuming work on the public website for **rolodexterLABS**: [https://www.rolodexterlabs.com](https://www.rolodexterlabs.com). This is a Railway-deployed Next.js app.
+
+### 🎯 IMMEDIATE OBJECTIVES
+
+1. **Fix Dashboard Bug**  
+   - Current build fails due to `user.email` typing mismatch.  
+   - Update logic so all fallback values are guaranteed strings.  
+   - Also ensure dashboard doesn't break if user is undefined.
+
+2. **Hide Dashboard Link**
+   - Move dashboard access out of main view.
+   - Replace with a **very subtle "Login" link** in the **upper-right corner** of the site, preferably inside the top nav.
+   - Visitors should not feel like they're expected to sign in — they're here to *learn about rolodexterLABS*, not use a product.
+
+3. **Fix the Footer**
+   - There's a **duplicate footer** rendering on some pages.
+   - Ensure the footer is rendered exactly once on each route.
+
+4. **Enforce Black-on-White Theme**
+   - The entire site should feel like reading a well-designed technical document.
+   - Use **black text on white background** as default. Remove green or dark backgrounds unless explicitly used for cards or charts.
+
+5. **Enable Login**
+   - Ensure that the **Privy-based login system** appears when "Login" is clicked.
+   - Login options should include: Web3 Wallet, Google, GitHub, Social Logins.
+   - No redirect required — modal or top-right dropdown is fine.
+
+---
+
+### 🧠 CONTENT PRIORITY — PRODUCTS & SERVICES
+
+Build out a landing section (or route like `/products`) showcasing these **core offerings** from rolodexterLABS:
+
+1. **Synthetic Discovery**  
+   → Autonomous AI agents for scientific and philosophical breakthroughs  
+   → Recursive knowledge generation, drug simulations, strategy engines
+
+2. **Metascience Audits**  
+   → Reproducibility testing, epistemic reliability scoring, incentive modeling
+
+3. **rolodexterIDE + rolodexterGPT**  
+   → Technical agent tools for developers, researchers, and strategists
+
+4. **KnowledgeOps**  
+   → Research pipelines, citation graphing, open science compliance
+
+5. **Operating Systems**  
+   → LinuxAI and other AI-native OS builds designed for agent ecosystems
+
+6. **Creative and Executive Agent Tools**  
+   → Workflow augmentation for artists, executives, and analysts
+
+Reference the corresponding Markdown docs like `Synthetic Discovery.md`, `Metascience.md`, etc., already in the repo.
+
+---
+
+### 🧼 LINTING + DEPLOY
+
+- Disable **Husky** and any pre-push Git hooks temporarily.
+- You must **commit and push** your changes to GitHub.
+- This will automatically trigger a Railway build. We need it **live ASAP** for stakeholder review.
+
+---
+
+### ✅ CHECKLIST
+
+- [ ] Fix build error in `dashboard.tsx`
+- [ ] Hide dashboard behind subtle "Login"
+- [ ] Fix duplicate footers
+- [ ] Enforce black-on-white sitewide
+- [ ] Enable working login flow
+- [ ] Push to GitHub for deployment
