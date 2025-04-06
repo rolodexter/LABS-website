@@ -1,58 +1,76 @@
 [
   {
-    "slug": "rolodexterVS",
+    "slug": "rolodextervs",
     "title": "rolodexterVS",
     "category": "Workers",
+    "family": "Workers",
     "status": "Stable",
+    "priority": 1,
     "path": "/products/rolodexterVS"
   },
   {
-    "slug": "LinuxAI",
+    "slug": "linuxai",
     "title": "LinuxAI",
     "category": "Operating Systems",
+    "family": "Operating Systems",
     "status": "Stable",
+    "priority": 1,
     "path": "/products/linuxAI"
   },
   {
-    "slug": "rolodexterGPT",
+    "slug": "rolodextergpt",
     "title": "rolodexterGPT",
     "category": "Agents",
+    "family": "Agents",
+    "isAgent": true,
     "status": "In Development",
-    "path": "/products/rolodexterGPT"
+    "priority": 1,
+    "path": "/agents/rolodexterGPT"
   },
   {
-    "slug": "rolodexterGIT",
+    "slug": "rolodextergit",
     "title": "rolodexterGIT",
     "category": "Workers",
+    "family": "Workers",
     "status": "In Development",
+    "priority": 2,
     "path": "/products/rolodexterGIT"
   },
   {
-    "slug": "rolodexterIDE",
+    "slug": "rolodexteride",
     "title": "rolodexterIDE",
     "category": "Agents",
+    "family": "Agents",
+    "isAgent": true,
     "status": "In Development",
-    "path": "/products/rolodexterIDE"
+    "priority": 2,
+    "path": "/agents/rolodexterIDE"
   },
   {
     "slug": "knowledge-workers",
     "title": "Knowledge Workers",
     "category": "Workers",
+    "family": "Workers",
     "status": "In Development",
+    "priority": 3,
     "path": "/products/knowledge-workers"
   },
   {
     "slug": "creative-workers",
     "title": "Creative Workers",
     "category": "Workers",
+    "family": "Workers",
     "status": "In Development",
+    "priority": 4,
     "path": "/products/creative-workers"
   },
   {
     "slug": "executive-workers",
     "title": "Executive Workers",
     "category": "Workers", 
+    "family": "Workers",
     "status": "In Development",
+    "priority": 5,
     "path": "/products/executive-workers"
   }
 ]

@@ -11,6 +11,7 @@ import servicesData from '@/data/services.json';
 type SubMenuItem = {
   label: string;
   href: string;
+  className?: string;
 };
 
 type MenuItem = {
@@ -19,13 +20,13 @@ type MenuItem = {
   submenu?: SubMenuItem[];
 };
 
-// Group products by category for better organization
-const productsByCategory = productsData.reduce<Record<string, typeof productsData>>((acc, product) => {
-  const { category } = product;
-  if (!acc[category]) {
-    acc[category] = [];
+// Group products by family for better organization
+const productsByFamily = productsData.reduce<Record<string, typeof productsData>>((acc, product) => {
+  const { family } = product;
+  if (!acc[family]) {
+    acc[family] = [];
   }
-  acc[category].push(product);
+  acc[family].push(product);
   return acc;
 }, {});
 
@@ -39,19 +40,18 @@ const servicesByCategory = servicesData.reduce<Record<string, typeof servicesDat
   return acc;
 }, {});
 
-// Create product submenu with category grouping and status indicators
+// Create product submenu with only top-level categories
 const productSubmenu: SubMenuItem[] = [
-  // Sort categories and include all products with status indication
-  ...Object.entries(productsByCategory).sort((a, b) => a[0].localeCompare(b[0])).flatMap(([category, products]) => [
-    // Category header as a disabled item (for UI organization)
-    { label: `${category}`, href: '', className: 'font-semibold text-sm opacity-70 cursor-default' },
-    // Products within category
-    ...products.map(product => ({ 
-      label: product.status !== 'Stable' ? `${product.title} (In Development)` : product.title,
-      href: product.path,
-      className: product.status !== 'Stable' ? 'text-gray-500 italic' : ''
-    }))
-  ]),
+  // Only show top-level categories: Operating Systems and Workers
+  // Get unique families for filtering
+  ...Array.from(new Set(productsData.map(product => product.family)))
+    .filter(family => family === 'Operating Systems' || family === 'Workers')
+    .sort((a, b) => a.localeCompare(b))
+    .map(family => ({
+      label: family,
+      href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
+      className: 'font-semibold'
+    })),
   { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' },
 ];
 

@@ -9,19 +9,25 @@ type Product = {
   slug: string;
   title: string;
   category: string;
+  family: string;
   status: ProductStatus;
+  priority: number;
   path: string;
+  isAgent?: boolean;
   description?: string;
 };
 
 const Products: NextPageWithLayout = () => {
-  // Group products by category
-  const productsByCategory = productsData.reduce<Record<string, Product[]>>((acc, product) => {
-    const { category } = product;
-    if (!acc[category]) {
-      acc[category] = [];
+  // Filter out agents and only show products
+  const filteredProducts = productsData.filter(product => !product.isAgent);
+  
+  // Group products by family and sort by priority
+  const productsByFamily = filteredProducts.reduce<Record<string, Product[]>>((acc, product) => {
+    const { family } = product;
+    if (!acc[family]) {
+      acc[family] = [];
     }
-    acc[category].push({
+    acc[family].push({
       ...product,
       status: product.status as ProductStatus, // Type assertion to ensure proper status type
       description: getProductDescription(product.slug)
@@ -56,12 +62,13 @@ const Products: NextPageWithLayout = () => {
           </p>
         </div>
         
-        {/* Display products by category */}
-        {Object.entries(productsByCategory).map(([category, products]) => (
-          <div key={category} className="max-w-6xl mx-auto mb-16">
-            <h2 className="text-2xl font-bold mb-6 text-black border-b pb-2">{category}</h2>
+        {/* Display products by family */}
+        {Object.entries(productsByFamily).map(([family, products]) => (
+          <div key={family} className="max-w-6xl mx-auto mb-16" id={family.toLowerCase().replace(/ /g, '-')}>
+            <h2 className="text-2xl font-bold mb-6 text-black border-b pb-2">{family}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => (
+              {/* Sort products by priority within each family */}
+              {[...products].sort((a, b) => a.priority - b.priority).map((product) => (
                 <ProductCard 
                   key={product.slug}
                   title={product.title}
