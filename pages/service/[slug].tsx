@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ReactElement } from 'react';
 import servicesData from '@/data/services.json';
 import Badge from '@/components/ui/Badge';
-import { getServiceMarkdownContent } from '@/lib/services';
+import { getServiceContent } from '@/lib/services';
 
 interface ServiceProps {
   service: {
@@ -18,7 +18,7 @@ interface ServiceProps {
     linkedAgent?: string;
     icon?: string;
     badge?: string | null;
-    content?: string;
+    content?: string | null;
   };
 }
 
@@ -56,6 +56,12 @@ export default function ServicePage({ service }: ServiceProps) {
       </Head>
       
       <div className="container mx-auto max-w-4xl">
+        {/* Debug information */}
+        <div className="bg-gray-100 p-4 mb-8 text-xs font-mono overflow-auto" style={{ display: process.env.NODE_ENV === 'development' ? 'block' : 'none' }}>
+          <p>Debug: Service slug loaded: {service.slug}</p>
+          <p>Path: {service.path}</p>
+          <p>Content available: {service.content ? 'Yes' : 'No'}</p>
+        </div>
         <div className="flex items-center mb-8">
           <Link 
             href="/services" 
@@ -133,19 +139,28 @@ export const getStaticProps: GetStaticProps<ServiceProps, Params> = async ({ par
   
   // Try to get markdown content if available
   let content = null;
-  if (service.contentPath) {
-    try {
-      const mdContent = await getServiceMarkdownContent(service.contentPath);
-      content = mdContent.htmlContent;
-    } catch (error) {
-      console.error(`Error loading markdown for ${service.slug}:`, error);
+  try {
+    const serviceContent = await getServiceContent(service.slug);
+    if (serviceContent) {
+      content = serviceContent.content;
     }
+  } catch (error) {
+    console.error(`Error loading markdown for ${service.slug}:`, error);
   }
   
+  // Ensure the service object strictly matches our ServiceProps interface
   return {
     props: {
       service: {
-        ...service,
+        id: service.id,
+        slug: service.slug,
+        title: service.title,
+        category: service.category,
+        status: service.status,
+        path: service.path,
+        linkedAgent: service.linkedAgent,
+        icon: service.icon,
+        badge: service.badge || null,
         content: content
       }
     }
