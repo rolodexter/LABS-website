@@ -19,7 +19,7 @@ type Product = {
 
 const Products: NextPageWithLayout = () => {
   // Filter out agents and only show products
-  const filteredProducts = productsData.filter(product => !product.isAgent);
+  const filteredProducts = productsData.filter(product => !('isAgent' in product) || !product.isAgent);
   
   // Group products by family and sort by priority
   const productsByFamily = filteredProducts.reduce<Record<string, Product[]>>((acc, product) => {
