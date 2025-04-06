@@ -19,26 +19,56 @@ type MenuItem = {
   submenu?: SubMenuItem[];
 };
 
-// Filter only stable products and services for the navigation
-const stableProducts = productsData.filter(p => p.status === 'Stable');
-const stableServices = servicesData.filter(s => s.status === 'Stable');
+// Group products by category for better organization
+const productsByCategory = productsData.reduce<Record<string, typeof productsData>>((acc, product) => {
+  const { category } = product;
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(product);
+  return acc;
+}, {});
 
-// Convert products data to submenu format
+// Group services by category
+const servicesByCategory = servicesData.reduce<Record<string, typeof servicesData>>((acc, service) => {
+  const { category } = service;
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(service);
+  return acc;
+}, {});
+
+// Create product submenu with category grouping and status indicators
 const productSubmenu: SubMenuItem[] = [
-  ...stableProducts.map(product => ({ 
-    label: product.title, 
-    href: product.path 
-  })),
-  { label: 'All Products', href: '/products' },
+  // Sort categories and include all products with status indication
+  ...Object.entries(productsByCategory).sort((a, b) => a[0].localeCompare(b[0])).flatMap(([category, products]) => [
+    // Category header as a disabled item (for UI organization)
+    { label: `${category}`, href: '', className: 'font-semibold text-sm opacity-70 cursor-default' },
+    // Products within category
+    ...products.map(product => ({ 
+      label: product.status !== 'Stable' ? `${product.title} (In Development)` : product.title,
+      href: product.path,
+      className: product.status !== 'Stable' ? 'text-gray-500 italic' : ''
+    }))
+  ]),
+  { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' },
 ];
 
-// Convert services data to submenu format
+// Create service submenu with category grouping and status indicators
 const serviceSubmenu: SubMenuItem[] = [
-  ...stableServices.map(service => ({ 
-    label: service.title, 
-    href: service.path 
-  })),
-  { label: 'All Services', href: '/services' },
+  // Sort categories and include all services with status indication
+  ...Object.entries(servicesByCategory).sort((a, b) => a[0].localeCompare(b[0])).flatMap(([category, services]) => [
+    // Category header as a disabled item (for UI organization)
+    { label: `${category}`, href: '', className: 'font-semibold text-sm opacity-70 cursor-default' },
+    // Services within category
+    ...services.map(service => ({ 
+      label: service.status !== 'Stable' ? `${service.title} (In Development)` : service.title,
+      href: service.path,
+      className: service.status !== 'Stable' ? 'text-gray-500 italic' : ''
+    }))
+  ]),
+  { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' },
 ];
 
 const menuItems: MenuItem[] = [
@@ -65,9 +95,33 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-function CustomLink({ children, href, ...props }: any) {
+interface CustomLinkProps {
+  children: React.ReactNode;
+  href: string;
+  className?: string;
+  onClick?: () => void;
+  [key: string]: any;
+}
+
+function CustomLink({ children, href, className, ...props }: CustomLinkProps) {
+  // Don't navigate if the href is empty (used for category headers)
+  const handleClick = (e: React.MouseEvent) => {
+    if (!href) {
+      e.preventDefault();
+      return;
+    }
+    if (props.onClick) props.onClick();
+  };
+
+  // Combine classNames into a single prop
+  const allProps = {
+    ...props,
+    className,
+    onClick: handleClick
+  };
+
   return (
-    <Link href={href} {...props}>
+    <Link href={href || '#'} {...allProps}>
       {children}
     </Link>
   );

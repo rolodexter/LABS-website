@@ -3,8 +3,9 @@ import Head from 'next/head';
 import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import type { NextPageWithLayout } from '@/types/next';
 
-export default function ConsolePage(): ReactElement {
+const ConsolePage: NextPageWithLayout = () => {
   const { ready, authenticated, user } = usePrivy();
   const router = useRouter();
   const [inputValue, setInputValue] = useState('');
@@ -159,4 +160,11 @@ Use the web interface at /docs for a more user-friendly experience.
       </div>
     </>
   );
-}
+};
+
+// Add custom layout function to prevent duplicate footer
+ConsolePage.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default ConsolePage;

@@ -1,19 +1,20 @@
-import React from 'react'
+import React from 'react';
+import type { ReactElement } from 'react';
+import UnderDevelopment from '@/components/ui/UnderDevelopment';
+import type { NextPageWithLayout } from '@/types/next';
 
-// Optional: use custom layout to prevent double footer
-CareersPage.getLayout = function getLayout(page: React.ReactElement) {
-  return <>{page}</>
-}
-
-export default function CareersPage() {
+const CareersPage: NextPageWithLayout = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white text-black dark:bg-black dark:text-white">
-      <div className="text-center p-10 border border-gray-300 dark:border-white/10 rounded-lg shadow-sm">
-        <h1 className="text-2xl font-bold mb-4">Careers Page Coming Soon</h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          We're building something extraordinary. Check back later for open roles!
-        </p>
-      </div>
-    </div>
-  )
-}
+    <UnderDevelopment 
+      title="Join rolodexterLABS" 
+      message="I'm currently building systems that require uncommon talent. Check back soon for specific roles and opportunities."
+    />
+  );
+};
+
+// Custom layout to prevent duplicate footer
+CareersPage.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default CareersPage;

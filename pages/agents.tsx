@@ -3,20 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import servicesData from '@/data/services.json';
+import productsData from '@/data/products.json';
 import Badge from '@/components/ui/Badge';
 import type { NextPageWithLayout } from '@/types/next';
-
-// Agent data structure
-type Agent = {
-  id: string;
-  name: string;
-  role: string;
-  description: string;
-  capabilities: string[];
-  avatar?: string;
-  product?: string;
-  status?: 'active' | 'in-development';
-};
 
 // Type for service data
 type ServiceStatus = 'Stable' | 'In Development' | 'Planned';
@@ -29,84 +18,130 @@ type Service = {
   linkedAgent?: string;
 };
 
-// Updated agent data
-const agents: Agent[] = [
-  {
-    id: 'rolodexterGPT',
-    name: 'rolodexterGPT',
-    role: 'Research & Knowledge Orchestrator',
-    description: 'Specialized in research synthesis, network coordination, and knowledge integration across domains. Designed to operate as the central coordination layer for multi-agent systems.',
-    capabilities: [
-      'Multi-agent orchestration',
-      'Memory-augmented generation',
-      'Research-to-report conversion',
-      'AI coordination layer for knowledge agents',
-      'Context-aware information retrieval'
-    ],
-    product: 'rolodexterGPT',
-    status: 'active'
-  },
-  {
-    id: 'rolodexterVS',
-    name: 'rolodexterVS',
-    role: 'Developer & Code Intelligence',
-    description: 'Developer-focused agent designed to manage source code, scripts, deployment, and task automation. Integrates directly with VS Code and development environments.',
-    capabilities: [
-      'Code scaffolding and prompt injection',
-      'Terminal control and debugging',
-      'GitHub repo operations',
-      'Documentation generation',
-      'Code analysis and optimization'
-    ],
-    product: 'rolodexterVS',
-    status: 'active'
-  },
-  {
-    id: 'rolodexterDATA',
-    name: 'rolodexterDATA',
-    role: 'Data & Statistical Intelligence',
-    description: 'Specialized in data processing, statistical analysis, and model validation. Helps extract insights from complex datasets and translates them into actionable intelligence.',
-    capabilities: [
-      'Statistical processing and validation',
-      'Model evaluation frameworks',
-      'Analytics pipeline management',
-      'Data visualization generation',
-      'Pattern recognition systems'
-    ],
-    product: 'Knowledge Workers',
-    status: 'in-development'
-  },
-  {
-    id: 'rolodexterKNOW',
-    name: 'rolodexterKNOW',
-    role: 'Knowledge Management Specialist',
-    description: 'Focused on knowledge base structuring, ontology alignment, and taxonomy curation. Builds robust knowledge systems and maintains information architectures.',
-    capabilities: [
-      'Ontology development and maintenance',
-      'Taxonomy creation and curation',
-      'Knowledge graph construction',
-      'Citation management',
-      'Research corpus organization'
-    ],
-    product: 'Knowledge Workers',
-    status: 'in-development'
-  },
-  {
-    id: 'rolodexterCREATIVE',
-    name: 'rolodexterCREATIVE',
-    role: 'Creative & Interface Agent',
-    description: 'Front-facing UI/UX generation, narrative explanation, and visualization specialist. Bridges complex systems with intuitive human interfaces.',
-    capabilities: [
-      'UI/UX prototyping and generation',
-      'Narrative composition and editing',
-      'Visual design systems',
-      'Information visualization',
-      'Content transformation'
-    ],
-    product: 'Creative Workers',
-    status: 'in-development'
-  }
-];
+// Type for product data
+type ProductStatus = 'Stable' | 'In Development' | 'Planned';
+type Product = {
+  slug: string;
+  title: string;
+  category: string;
+  status: ProductStatus;
+  path: string;
+};
+
+// Agent data structure
+type Agent = {
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  capabilities: string[];
+  avatar?: string;
+  product?: string;
+  status?: 'active' | 'in-development';
+  // Reference to linked services
+  linkedServices?: Service[];
+};
+
+// Process agents with their linked services
+const createAgentData = (): Agent[] => {
+  const agentBase: Agent[] = [
+    {
+      id: 'rolodexterGPT',
+      name: 'rolodexterGPT',
+      role: 'Research & Knowledge Orchestrator',
+      description: 'Specialized in research synthesis, network coordination, and knowledge integration across domains. Designed to operate as the central coordination layer for multi-agent systems.',
+      capabilities: [
+        'Multi-agent orchestration',
+        'Memory-augmented generation',
+        'Research synthesis',
+        'Knowledge mapping'
+      ],
+      status: 'active'
+    },
+    {
+      id: 'rolodexterVS',
+      name: 'rolodexterVS',
+      role: 'Developer & Engineering Agent',
+      description: 'Full-stack software development and engineering agent with specialized capabilities for code generation, debugging, and optimization across programming languages.',
+      capabilities: [
+        'Code generation and refactoring',
+        'Software architecture design',
+        'Code explanation and documentation',
+        'Testing and debugging'
+      ],
+      product: 'rolodexterVS',
+      status: 'active'
+    },
+    {
+      id: 'rolodexterEX',
+      name: 'rolodexterEX',
+      role: 'Executive Functions Agent',
+      description: 'Specialized in planning, decision-making, and strategic execution. Helps manage complex projects and workflows by creating structured approaches to ambiguous problems.',
+      capabilities: [
+        'Strategic planning',
+        'Decision analysis',
+        'Resource allocation',
+        'Risk assessment and mitigation'
+      ],
+      status: 'active'
+    },
+    {
+      id: 'rolodexterCR',
+      name: 'rolodexterCR',
+      role: 'Creative & Design Agent',
+      description: 'Focused on creative content generation, design collaboration, and multimedia production. Bridges conceptual thinking with practical execution.',
+      capabilities: [
+        'Visual design collaboration',
+        'Content creation and editing',
+        'Brand voice development',
+        'Product design ideation'
+      ],
+      status: 'in-development'
+    },
+    {
+      id: 'rolodexterKNOW',
+      name: 'rolodexterKNOW',
+      role: 'Knowledge & Documentation Agent',
+      description: 'Manages information architecture, documentation, and knowledge organization. Ensures consistency and accessibility across information systems.',
+      capabilities: [
+        'Documentation generation',
+        'Knowledge graph development',
+        'Information architecture',
+        'Learning resource creation'
+      ],
+      status: 'in-development'
+    }
+  ];
+  
+  // Connect agents with their linked services
+  return agentBase.map(agent => {
+    // Find all services linked to this agent
+    // Only include services with a non-null linkedAgent that matches this agent.id
+    const linkedServices = servicesData
+      .filter(service => typeof service.linkedAgent === 'string' && service.linkedAgent === agent.id)
+      .map(service => ({
+        ...service,
+        // Ensure service.status is of type ServiceStatus
+        status: service.status as ServiceStatus,
+        // Ensure linkedAgent is never null to satisfy TypeScript
+        linkedAgent: service.linkedAgent || undefined
+      }));
+    
+    // Find the product if referenced
+    const linkedProduct = agent.product ? 
+      productsData.find(product => product.slug === agent.product) : 
+      undefined;
+    
+    // Return enriched agent data
+    return {
+      ...agent,
+      linkedServices: linkedServices.length > 0 ? linkedServices : undefined,
+    };
+  });
+};
+
+// Generate agents with linked services
+const agents: Agent[] = createAgentData();
 
 const AgentsPage: NextPageWithLayout = () => {
   return (
@@ -159,25 +194,26 @@ const AgentsPage: NextPageWithLayout = () => {
               )}
               
               {/* Display linked services */}
-              {agent.id && (
-                <div className="mt-6 border-t pt-4">
-                  <h3 className="text-sm font-semibold mb-2">Connected Services</h3>
-                  <div className="space-y-2">
-                    {servicesData
-                      .filter(service => service.linkedAgent === agent.id)
-                      .map(service => (
-                        <Link href={`/services/${service.path}`} key={service.slug}
-                              className="flex items-center justify-between p-2 border border-gray-100 rounded hover:border-black transition-colors">
-                          <span className="font-medium">{service.title}</span>
-                          <Badge status={service.status as ServiceStatus} size="sm">{service.status}</Badge>
+              <div className="mt-4">
+                <h3 className="text-sm font-medium mb-2">Available Services:</h3>
+                <ul className="space-y-1">
+                  {agent.linkedServices ? (
+                    agent.linkedServices.map(service => (
+                      <li key={service.slug}>
+                        <Link 
+                          href={service.path}
+                          className="inline-flex items-center space-x-1 text-sm hover:underline"
+                        >
+                          <span>{service.title}</span>
+                          <Badge status={service.status} size="sm">{service.status}</Badge>
                         </Link>
-                      ))}
-                    {servicesData.filter(service => service.linkedAgent === agent.id).length === 0 && (
-                      <p className="text-sm text-gray-500 italic">No connected services yet</p>
-                    )}
-                  </div>
-                </div>
-              )}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-sm text-gray-500 italic">Services coming soon</li>
+                  )}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

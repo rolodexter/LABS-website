@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { NextPageWithLayout } from '@/types/next';
 
-function Dashboard(): ReactElement {
+const Dashboard: NextPageWithLayout = () => {
   const { ready, authenticated, user, login, logout } = usePrivy();
   const router = useRouter();
   
@@ -98,9 +99,7 @@ function Dashboard(): ReactElement {
 
 // Add custom layout function to prevent duplicate footer
 Dashboard.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <div>{page}</div>
-  );
+  return page;
 };
 
 export default Dashboard;
