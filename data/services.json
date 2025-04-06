@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "metascience",
+    "title": "Metascience Services",
+    "category": "Research",
+    "status": "Stable",
+    "linkedAgent": "rolodexterGPT",
+    "path": "/services/metascience"
+  },
+  {
+    "slug": "worker-design",
+    "title": "Worker Design",
+    "category": "Development",
+    "status": "Stable",
+    "linkedAgent": "rolodexterVS",
+    "path": "/services/worker-design"
+  },
+  {
+    "slug": "model-development",
+    "title": "Model Development",
+    "category": "Development",
+    "status": "Stable",
+    "linkedAgent": "rolodexterGPT",
+    "path": "/services/model-development"
+  },
+  {
+    "slug": "documentation-memory",
+    "title": "Documentation & Memory",
+    "category": "Knowledge",
+    "status": "In Development",
+    "linkedAgent": "rolodexterKNOW",
+    "path": "/services/documentation-memory"
+  },
+  {
+    "slug": "privacy-epistemic",
+    "title": "Privacy & Epistemic Assurance",
+    "category": "Security",
+    "status": "In Development",
+    "linkedAgent": null,
+    "path": "/services/privacy-epistemic"
+  }
+]

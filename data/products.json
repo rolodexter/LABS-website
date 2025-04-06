@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "rolodexterVS",
+    "title": "rolodexterVS",
+    "category": "Workers",
+    "status": "Stable",
+    "path": "/products/rolodexterVS"
+  },
+  {
+    "slug": "LinuxAI",
+    "title": "LinuxAI",
+    "category": "Operating Systems",
+    "status": "Stable",
+    "path": "/products/linuxAI"
+  },
+  {
+    "slug": "rolodexterGPT",
+    "title": "rolodexterGPT",
+    "category": "Agents",
+    "status": "In Development",
+    "path": "/products/rolodexterGPT"
+  },
+  {
+    "slug": "rolodexterGIT",
+    "title": "rolodexterGIT",
+    "category": "Workers",
+    "status": "In Development",
+    "path": "/products/rolodexterGIT"
+  },
+  {
+    "slug": "rolodexterIDE",
+    "title": "rolodexterIDE",
+    "category": "Agents",
+    "status": "In Development",
+    "path": "/products/rolodexterIDE"
+  },
+  {
+    "slug": "knowledge-workers",
+    "title": "Knowledge Workers",
+    "category": "Workers",
+    "status": "In Development",
+    "path": "/products/knowledge-workers"
+  },
+  {
+    "slug": "creative-workers",
+    "title": "Creative Workers",
+    "category": "Workers",
+    "status": "In Development",
+    "path": "/products/creative-workers"
+  },
+  {
+    "slug": "executive-workers",
+    "title": "Executive Workers",
+    "category": "Workers", 
+    "status": "In Development",
+    "path": "/products/executive-workers"
+  }
+]

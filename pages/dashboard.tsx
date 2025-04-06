@@ -50,7 +50,7 @@ function Dashboard(): ReactElement {
         </div>
         
         <div className="bg-[#111] border border-white/10 rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">Welcome, {user?.email?.address || user?.twitter?.username || user?.github?.username || 'User'}</h2>
+          <h2 className="text-xl font-bold mb-4">Welcome, {user?.email?.address || (typeof user?.email === 'string' ? user?.email : '') || user?.twitter?.username || user?.github?.username || 'User'}</h2>
           <p className="text-gray-300">Your personalized dashboard is now available.</p>
         </div>
         <div className="grid md:grid-cols-2 gap-6">

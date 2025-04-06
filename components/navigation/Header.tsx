@@ -3,27 +3,62 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { LoginButton } from '@/components/auth/LoginButton';
 
-const menuItems = [
+// Import product and service data
+import productsData from '@/data/products.json';
+import servicesData from '@/data/services.json';
+
+// Define menu item types for better TypeScript support
+type SubMenuItem = {
+  label: string;
+  href: string;
+};
+
+type MenuItem = {
+  label: string;
+  href?: string;
+  submenu?: SubMenuItem[];
+};
+
+// Filter only stable products and services for the navigation
+const stableProducts = productsData.filter(p => p.status === 'Stable');
+const stableServices = servicesData.filter(s => s.status === 'Stable');
+
+// Convert products data to submenu format
+const productSubmenu: SubMenuItem[] = [
+  ...stableProducts.map(product => ({ 
+    label: product.title, 
+    href: product.path 
+  })),
+  { label: 'All Products', href: '/products' },
+];
+
+// Convert services data to submenu format
+const serviceSubmenu: SubMenuItem[] = [
+  ...stableServices.map(service => ({ 
+    label: service.title, 
+    href: service.path 
+  })),
+  { label: 'All Services', href: '/services' },
+];
+
+const menuItems: MenuItem[] = [
   {
     label: 'Products',
-    submenu: [
-      { label: 'rolodexterVS', href: '/products/rolodexterVS' },
-      { label: 'LinuxAI', href: '/products/linuxAI' },
-      { label: 'All Products', href: '/products' },
-    ],
+    submenu: productSubmenu,
   },
   {
     label: 'Services',
-    submenu: [
-      { label: 'Implementation', href: '/services/implementation' },
-      { label: 'Consulting', href: '/services/consulting' },
-      { label: 'Training', href: '/services/training' },
-    ],
+    submenu: serviceSubmenu,
+  },
+  {
+    label: 'Agents',
+    href: '/agents',
   },
   {
     label: 'Company',
     submenu: [
       { label: 'About', href: '/about' },
+      { label: 'Research', href: '/research' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact', href: '/contact' },
     ],
@@ -60,10 +95,16 @@ export default function Header() {
                 onMouseEnter={() => setActiveSubmenu(item.label)}
                 onMouseLeave={() => setActiveSubmenu(null)}
               >
-                <button className="text-gray-600 hover:text-black">
-                  {item.label}
-                </button>
-                {activeSubmenu === item.label && (
+                {item.href ? (
+                  <CustomLink href={item.href} className="text-gray-600 hover:text-black">
+                    {item.label}
+                  </CustomLink>
+                ) : (
+                  <button className="text-gray-600 hover:text-black">
+                    {item.label}
+                  </button>
+                )}
+                {activeSubmenu === item.label && item.submenu && (
                   <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-lg shadow-lg py-2">
                     {item.submenu.map((subItem) => (
                       <CustomLink
@@ -106,13 +147,22 @@ export default function Header() {
           <div className="md:hidden mt-4">
             {menuItems.map((item) => (
               <div key={item.label} className="py-2">
-                <button
-                  onClick={() => setActiveSubmenu(activeSubmenu === item.label ? null : item.label)}
-                  className="text-gray-600 hover:text-black w-full text-left"
-                >
-                  {item.label}
-                </button>
-                {activeSubmenu === item.label && (
+                {item.href ? (
+                  <CustomLink 
+                    href={item.href} 
+                    className="text-gray-600 hover:text-black block w-full text-left"
+                  >
+                    {item.label}
+                  </CustomLink>
+                ) : (
+                  <button
+                    onClick={() => setActiveSubmenu(activeSubmenu === item.label ? null : item.label)}
+                    className="text-gray-600 hover:text-black w-full text-left"
+                  >
+                    {item.label}
+                  </button>
+                )}
+                {activeSubmenu === item.label && item.submenu && (
                   <div className="mt-2 pl-4">
                     {item.submenu.map((subItem) => (
                       <CustomLink

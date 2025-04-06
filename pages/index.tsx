@@ -181,29 +181,25 @@ const Home: NextPage<HomePageProps> & {
         </section>
 
         {/* Call to Action */}
-        <section className="py-24 px-6">
+        <section className="py-24 px-6 bg-white border-t border-gray-200">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-6">Ready to get started?</h2>
+            <h2 className="text-3xl font-bold mb-6">Self-building, networked intelligence systems</h2>
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Sign up for rolodexterLABS to access our AI agents, knowledge base, 
-              and specialized tools for research and information management.
+              I build knowledge-forward tools and systems, using frontier AI as a foundation rather than an endpoint. My focus is on manufacturing knowledge at scale and producing intelligence systems that can <Link href="/research" className="underline hover:text-black transition-colors">mine science</Link> for novel insights.
             </p>
             
-            {ready && !authenticated ? (
-              <button 
-                onClick={() => login()}
-                className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
-              >
-                Sign Up Now
-              </button>
-            ) : (
-              <Link 
-                href="/dashboard" 
-                className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
-              >
-                Go to Dashboard
-              </Link>
-            )}
+            <Link 
+              href="/docs" 
+              className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors mr-4"
+            >
+              Explore Documentation
+            </Link>
+            <Link 
+              href="/products" 
+              className="px-8 py-4 bg-white border border-black text-black rounded-md font-medium text-lg hover:bg-gray-50 transition-colors"
+            >
+              View Products
+            </Link>
           </div>
         </section>
       </main>

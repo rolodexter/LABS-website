@@ -1,8 +1,9 @@
 import { HTMLAttributes, forwardRef } from 'react';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'outline';
+  variant?: 'default' | 'outline' | 'stable' | 'development' | 'planned';
   size?: 'sm' | 'md';
+  status?: 'Stable' | 'In Development' | 'Planned';
 }
 
 const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
@@ -16,7 +17,10 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
   
   const variants = {
     default: 'bg-gray-100 text-gray-800',
-    outline: 'border border-black text-black'
+    outline: 'border border-black text-black',
+    stable: 'bg-black text-white',
+    development: 'bg-gray-500 text-white',
+    planned: 'bg-gray-300 text-gray-800'
   };
 
   const sizes = {
@@ -24,7 +28,25 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
     md: 'px-3 py-1 text-sm'
   };
 
-  const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+  // If status is provided, use it to determine the variant
+  let statusVariant = variant;
+  if (status) {
+    switch(status) {
+      case 'Stable':
+        statusVariant = 'stable';
+        break;
+      case 'In Development':
+        statusVariant = 'development';
+        break;
+      case 'Planned':
+        statusVariant = 'planned';
+        break;
+      default:
+        statusVariant = variant;
+    }
+  }
+
+  const classes = `${baseStyles} ${variants[statusVariant as keyof typeof variants]} ${sizes[size]} ${className}`;
 
   return (
     <span
