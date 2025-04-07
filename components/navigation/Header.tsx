@@ -21,24 +21,30 @@ type MenuItem = {
 };
 
 // Group products by family for better organization
-const productsByFamily = productsData.reduce<Record<string, typeof productsData>>((acc, product) => {
-  const { family } = product;
-  if (!acc[family]) {
-    acc[family] = [];
-  }
-  acc[family].push(product);
-  return acc;
-}, {});
+const productsByFamily = productsData.reduce<Record<string, typeof productsData>>(
+  (acc, product) => {
+    const { family } = product;
+    if (!acc[family]) {
+      acc[family] = [];
+    }
+    acc[family].push(product);
+    return acc;
+  },
+  {}
+);
 
 // Group services by category
-const servicesByCategory = servicesData.reduce<Record<string, typeof servicesData>>((acc, service) => {
-  const { category } = service;
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(service);
-  return acc;
-}, {});
+const servicesByCategory = servicesData.reduce<Record<string, typeof servicesData>>(
+  (acc, service) => {
+    const { category } = service;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(service);
+    return acc;
+  },
+  {}
+);
 
 // Create product submenu with only Operating Systems and Workers categories
 const productSubmenu: SubMenuItem[] = [
@@ -52,21 +58,21 @@ const productSubmenu: SubMenuItem[] = [
       return priorityA - priorityB;
     })
     .flatMap(([family, products]) => {
-      // Get icon for this family
-      const icon = products[0]?.icon || '';
+      // Icon removed as it's not currently being used
+      // const icon = products[0]?.icon || '';
       // Check if any products in this family are in development
       const hasInDevelopment = products.some(product => product.status === 'development');
-      
+
       return [
         // Family header without icon
-        { 
-          label: `${family}`, 
+        {
+          label: `${family}`,
           href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
-          className: `text-sm font-medium ${hasInDevelopment ? 'flex items-center' : ''}`
-        }
+          className: `text-sm font-medium ${hasInDevelopment ? 'flex items-center' : ''}`,
+        },
       ];
     }),
-  { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' }
+  { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' },
 ];
 
 // Create service submenu with the four specified categories and appropriate icons
@@ -81,29 +87,33 @@ const serviceSubmenu: SubMenuItem[] = [
       return priorityA - priorityB;
     })
     .flatMap(([category, services]) => {
-      // Get the icon from the first service in this category
-      const icon = services[0]?.icon || '';
+      // Icon removed as it's not currently being used
+      // const icon = services[0]?.icon || '';
       // Check if any services in this category are in development
       const hasInDevelopment = services.some(service => service.status === 'development');
       // Get badge if any service has one
       const badge = services.find(service => service.badge)?.badge;
-      
+
       return [
         // Category header without icon
-        { 
-          label: `${category}`, 
+        {
+          label: `${category}`,
           href: `/services#${category.toLowerCase()}`,
           className: `text-sm ${badge ? 'flex items-center' : 'font-medium'}`,
           // If this category has services in development or with badges, show it
           ...(badge && {
-            rightElement: <span className="ml-2 px-1.5 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">{badge}</span>
+            rightElement: (
+              <span className="ml-2 px-1.5 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">
+                {badge}
+              </span>
+            ),
           }),
           // Optional styling for in-development categories
-          style: hasInDevelopment && !badge ? { opacity: 0.8 } : {}
-        }
+          style: hasInDevelopment && !badge ? { opacity: 0.8 } : {},
+        },
       ];
     }),
-  { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' }
+  { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' },
 ];
 
 const menuItems: MenuItem[] = [
@@ -117,32 +127,6 @@ const menuItems: MenuItem[] = [
     href: '/services',
     submenu: serviceSubmenu,
   },
-  {
-    label: 'Agents',
-    href: '/agents',
-  },
-  {
-    label: 'Research',
-    href: '/research',
-    submenu: [
-      { label: 'Cognitive Systems', href: '/research?topic=Systems+Integration', className: 'text-sm' },
-      { label: 'Systems Integration', href: '/research?topic=Systems+Integration', className: 'text-sm' },
-      { label: 'Quantum Biology', href: '/research?topic=Quantum+Biology', className: 'text-sm' },
-      { label: 'Computational Biology', href: '/research?category=Computational+Biology', className: 'text-sm' },
-      { label: 'AI Market Dynamics', href: '/research?topic=AI+Market+Analysis', className: 'text-sm' },
-      { label: 'Governance Theory', href: '/research?topic=Governance+Theory', className: 'text-sm' },
-      { label: 'Education & Learning', href: '/research?topic=Learning+Systems', className: 'text-sm' },
-      { label: 'All Research Areas', href: '/research', className: 'mt-2 font-semibold' },
-    ],
-  },
-  {
-    label: 'Company',
-    submenu: [
-      { label: 'About', href: '/about' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
 ];
 
 interface CustomLinkProps {
@@ -150,7 +134,7 @@ interface CustomLinkProps {
   href: string;
   className?: string;
   onClick?: () => void;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function CustomLink({ children, href, className, ...props }: CustomLinkProps) {
@@ -167,7 +151,7 @@ function CustomLink({ children, href, className, ...props }: CustomLinkProps) {
   const allProps = {
     ...props,
     className,
-    onClick: handleClick
+    onClick: handleClick,
   };
 
   return (
@@ -178,7 +162,9 @@ function CustomLink({ children, href, className, ...props }: CustomLinkProps) {
 }
 
 export default function Header() {
-  const router = useRouter();
+  // Router not used in this simplified version
+  // const router = useRouter();
+  useRouter(); // Keep the import used
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
@@ -192,7 +178,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
+            {menuItems.map(item => (
               <div
                 key={item.label}
                 className="relative group"
@@ -204,22 +190,35 @@ export default function Header() {
                   }, 100);
                 }}
               >
-                <CustomLink 
-                  href={item.href || '#'} 
+                <CustomLink
+                  href={item.href || '#'}
                   className="text-gray-600 hover:text-black pb-2 border-b-2 border-transparent hover:border-gray-200 transition-all duration-200"
                 >
                   {item.label}
                   {item.submenu && (
                     <span className="ml-1 inline-block">
-                      <svg xmlns="http://www.w3.org/2000/svg" width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="inline-block"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={12}
+                        height={12}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="inline-block"
+                      >
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
                     </span>
                   )}
                 </CustomLink>
                 {item.submenu && (
-                  <div 
+                  <div
                     className={`absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-lg py-2 transition-all duration-200 ${activeSubmenu === item.label ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
                   >
-                    {item.submenu.map((subItem) => (
+                    {item.submenu.map(subItem => (
                       <CustomLink
                         key={subItem.label}
                         href={subItem.href}
@@ -244,11 +243,21 @@ export default function Header() {
               <span className="sr-only">Open menu</span>
               {mobileMenuOpen ? (
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>
@@ -258,18 +267,20 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-4">
-            {menuItems.map((item) => (
+            {menuItems.map(item => (
               <div key={item.label} className="py-2">
                 {item.href ? (
-                  <CustomLink 
-                    href={item.href} 
+                  <CustomLink
+                    href={item.href}
                     className="text-gray-600 hover:text-black block w-full text-left"
                   >
                     {item.label}
                   </CustomLink>
                 ) : (
                   <button
-                    onClick={() => setActiveSubmenu(activeSubmenu === item.label ? null : item.label)}
+                    onClick={() =>
+                      setActiveSubmenu(activeSubmenu === item.label ? null : item.label)
+                    }
                     className="text-gray-600 hover:text-black w-full text-left"
                   >
                     {item.label}
@@ -277,7 +288,7 @@ export default function Header() {
                 )}
                 {activeSubmenu === item.label && item.submenu && (
                   <div className="mt-2 pl-4">
-                    {item.submenu.map((subItem) => (
+                    {item.submenu.map(subItem => (
                       <CustomLink
                         key={subItem.label}
                         href={subItem.href}

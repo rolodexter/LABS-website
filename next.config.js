@@ -1,12 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Experimental features configuration
+  experimental: {
+    // Temporarily disable trace file generation to resolve build freezes
+    outputFileTracing: false,
+    // Help with module resolution
+    esmExternals: false,
+    serverComponentsExternalPackages: ['express'],
+  },
   reactStrictMode: true,
-  
+
   // Disable ESLint during builds to prevent deployment blocking
   eslint: {
     ignoreDuringBuilds: true,
   },
-  
+
   // Disable image optimization in production to avoid localhost connection issues
   images: {
     unoptimized: true,
@@ -70,11 +78,7 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
 
-  // Add experimental features to help with module resolution
-  experimental: {
-    esmExternals: false,
-    serverComponentsExternalPackages: ['express'],
-  },
+  // Module resolution configured in experimental above
 
   // Enable proper output configuration for standalone server
   output: 'standalone',

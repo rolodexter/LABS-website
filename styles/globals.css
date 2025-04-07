@@ -9,8 +9,8 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  color: #000000;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -34,11 +34,16 @@ a {
   html {
     @apply text-black bg-white;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply text-black dark:text-white;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-black;
   }
   p {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-black;
   }
 }
 
