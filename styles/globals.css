@@ -15,8 +15,13 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #333333; /* Dark gray for links */
   text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #000000;
 }
 
 * {
@@ -40,10 +45,18 @@ a {
   h4,
   h5,
   h6 {
-    @apply text-black;
+    @apply text-black font-semibold;
   }
   p {
-    @apply text-black;
+    @apply text-black leading-relaxed;
+  }
+  button {
+    @apply bg-white text-black border border-gray-300 hover:border-black transition-colors;
+  }
+  input,
+  textarea,
+  select {
+    @apply border border-gray-300 focus:border-black focus:ring-0 text-black bg-white;
   }
 }
 

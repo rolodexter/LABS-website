@@ -3,9 +3,14 @@ import Head from 'next/head';
 import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
-import { marked } from 'marked';
+import { marked, MarkedOptions } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
-import type { NextPageWithLayout, GetStaticPropsResult } from '@/types/next';
+import type { GetStaticPropsResult } from 'next';
+
+// Define NextPageWithLayout type locally
+type NextPageWithLayout<P = Record<string, unknown>> = React.FC<P> & {
+  getLayout?: (page: ReactElement) => ReactElement;
+};
 
 interface AboutPageProps {
   content: string;
@@ -74,19 +79,15 @@ export const getStaticProps = async (): Promise<GetStaticPropsResult<AboutPagePr
     const filePath = path.join(process.cwd(), 'content', 'intake', 'About.md');
     const fileContent = fs.readFileSync(filePath, 'utf8');
 
-    // Set up marked options for proper heading, code, and list rendering
+    // Set up marked options for proper rendering
     marked.setOptions({
-      headerIds: true,
       gfm: true,
       breaks: false,
       pedantic: false,
-      smartLists: true,
-      smartypants: true,
-      mangle: false,
     });
 
     // Convert markdown to HTML
-    const content = marked(fileContent);
+    const content = marked.parse(fileContent) as string;
 
     return {
       props: {

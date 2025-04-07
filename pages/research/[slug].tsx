@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import type { NextPageWithLayout } from '@/types/next';
 import researchIndex from '@/data/research-index.json';
 import { marked } from 'marked';
+import DOMPurify from 'isomorphic-dompurify';
 
 type ResearchItem = {
   slug: string;
@@ -42,6 +43,13 @@ const ResearchArticle: NextPageWithLayout = () => {
         })
         .then(data => {
           if (data.content) {
+            // Set up marked options for proper rendering
+            marked.setOptions({
+              gfm: true,
+              breaks: false,
+              pedantic: false,
+            });
+
             // Process the markdown content to HTML using marked
             try {
               const result = marked(data.content);
@@ -49,7 +57,9 @@ const ResearchArticle: NextPageWithLayout = () => {
               if (result instanceof Promise) {
                 result
                   .then(processedContent => {
-                    setContent(processedContent);
+                    // Sanitize the HTML to prevent XSS attacks and strip any unwanted tags
+                    const sanitizedContent = DOMPurify.sanitize(processedContent);
+                    setContent(sanitizedContent);
                     setLoading(false);
                   })
                   .catch(error => {
@@ -57,7 +67,9 @@ const ResearchArticle: NextPageWithLayout = () => {
                     setLoading(false);
                   });
               } else {
-                setContent(result);
+                // Sanitize the HTML to prevent XSS attacks and strip any unwanted tags
+                const sanitizedContent = DOMPurify.sanitize(result);
+                setContent(sanitizedContent);
                 setLoading(false);
               }
             } catch (error) {
@@ -177,10 +189,22 @@ const ResearchArticle: NextPageWithLayout = () => {
             </div>
           )}
           <div
-            className="prose max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg
-                      prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                      prose-p:text-black prose-p:leading-relaxed
-                      prose-img:rounded-lg prose-img:shadow-md"
+            className="prose max-w-none 
+                      prose-headings:font-semibold prose-headings:text-black prose-headings:mb-4
+                      prose-h1:text-3xl prose-h1:mt-8 prose-h1:border-b prose-h1:border-gray-200 prose-h1:pb-2
+                      prose-h2:text-2xl prose-h2:mt-6
+                      prose-h3:text-xl prose-h3:mt-5
+                      prose-h4:text-lg prose-h4:mt-4
+                      prose-a:text-gray-700 prose-a:no-underline hover:prose-a:underline
+                      prose-p:text-black prose-p:leading-relaxed prose-p:my-4
+                      prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+                      prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+                      prose-li:my-2
+                      prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic
+                      prose-img:rounded-lg prose-img:shadow-md prose-img:my-6
+                      prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                      prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:my-4
+                      "
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </div>
