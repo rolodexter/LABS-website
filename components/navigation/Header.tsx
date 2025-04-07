@@ -164,14 +164,14 @@ function LoginIcon({ className }: { className?: string }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth={2}
+      strokeLinecap={'round'}
+      strokeLinejoin={'round'}
       className={className}
     >
-      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-      <polyline points="10 17 15 12 10 7" />
-      <line x1="15" y1="12" x2="3" y2="12" />
+      <path d={'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4'} />
+      <polyline points={'10 17 15 12 10 7'} />
+      <line x1={15} y1={12} x2={3} y2={12} />
     </svg>
   );
 }
@@ -249,11 +249,11 @@ export default function Header() {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                          strokeLinecap={'round'}
+                          strokeLinejoin={'round'}
                           className="inline-block"
                         >
-                          <polyline points="6 9 12 15 18 9"></polyline>
+                          <polyline points={'6 9 12 15 18 9'}></polyline>
                         </svg>
                       </span>
                     )}
@@ -296,19 +296,19 @@ export default function Header() {
               {mobileMenuOpen ? (
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    strokeLinecap={'round'}
+                    strokeLinejoin={'round'}
                     strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
+                    d={'M6 18L18 6M6 6l12 12'}
                   />
                 </svg>
               ) : (
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    strokeLinecap={'round'}
+                    strokeLinejoin={'round'}
                     strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
+                    d={'M4 6h16M4 12h16M4 18h16'}
                   />
                 </svg>
               )}
