@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { LoginButton } from '@/components/auth/LoginButton';
@@ -46,75 +46,70 @@ const servicesByCategory = servicesData.reduce<Record<string, typeof servicesDat
   {}
 );
 
-// Create product submenu with only Operating Systems and Workers categories
+// Create product submenu with specified categories
 const productSubmenu: SubMenuItem[] = [
-  // Only show top-level categories: Operating Systems and Workers
-  ...Object.entries(productsByFamily)
-    .filter(([family]) => family === 'Operating Systems' || family === 'Workers')
-    .sort((a, b) => {
-      // Sort by priority
-      const priorityA = a[1][0]?.priority || 999;
-      const priorityB = b[1][0]?.priority || 999;
-      return priorityA - priorityB;
-    })
-    .flatMap(([family, products]) => {
-      // Icon removed as it's not currently being used
-      // const icon = products[0]?.icon || '';
-      // Check if any products in this family are in development
-      const hasInDevelopment = products.some(product => product.status === 'development');
-
-      return [
-        // Family header without icon
-        {
-          label: `${family}`,
-          href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
-          className: `text-sm font-medium ${hasInDevelopment ? 'flex items-center' : ''}`,
-        },
-      ];
-    }),
+  // Executive Tools
+  {
+    label: 'Executive Tools',
+    href: '/products#executive-tools',
+    className: 'text-sm font-medium',
+  },
+  // Data Agents
+  {
+    label: 'Data Agents',
+    href: '/products#data-agents',
+    className: 'text-sm font-medium',
+  },
+  // Model Interfaces
+  {
+    label: 'Model Interfaces',
+    href: '/products#model-interfaces',
+    className: 'text-sm font-medium',
+  },
+  // Intelligence Mesh
+  {
+    label: 'Intelligence Mesh',
+    href: '/products#intelligence-mesh',
+    className: 'text-sm font-medium',
+  },
+  // All Products link
   { label: 'All Products', href: '/products', className: 'mt-2 font-semibold' },
 ];
 
-// Create service submenu with the four specified categories and appropriate icons
+// Create service submenu with specified categories
 const serviceSubmenu: SubMenuItem[] = [
-  // Show only the four specified categories with icons, ordered by priority
-  ...Object.entries(servicesByCategory)
-    .filter(([category]) => ['Blockchains', 'Models', 'Science', 'Work'].includes(category))
-    .sort((a, b) => {
-      // Get the first service from each category to check priority
-      const priorityA = a[1][0]?.priority || 999;
-      const priorityB = b[1][0]?.priority || 999;
-      return priorityA - priorityB;
-    })
-    .flatMap(([category, services]) => {
-      // Icon removed as it's not currently being used
-      // const icon = services[0]?.icon || '';
-      // Check if any services in this category are in development
-      const hasInDevelopment = services.some(service => service.status === 'development');
-      // Get badge if any service has one
-      const badge = services.find(service => service.badge)?.badge;
-
-      return [
-        // Category header without icon
-        {
-          label: `${category}`,
-          href: `/services#${category.toLowerCase()}`,
-          className: `text-sm ${badge ? 'flex items-center' : 'font-medium'}`,
-          // If this category has services in development or with badges, show it
-          ...(badge && {
-            rightElement: (
-              <span className="ml-2 px-1.5 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full">
-                {badge}
-              </span>
-            ),
-          }),
-          // Optional styling for in-development categories
-          style: hasInDevelopment && !badge ? { opacity: 0.8 } : {},
-        },
-      ];
-    }),
+  // Deployment & Integration
+  {
+    label: 'Deployment & Integration',
+    href: '/services#deployment-integration',
+    className: 'text-sm font-medium',
+  },
+  // Custom Research
+  {
+    label: 'Custom Research',
+    href: '/services#custom-research',
+    className: 'text-sm font-medium',
+  },
+  // Data Assetization Strategy
+  {
+    label: 'Data Assetization Strategy',
+    href: '/services#data-assetization',
+    className: 'text-sm font-medium',
+  },
+  // All Services link
   { label: 'All Services', href: '/services', className: 'mt-2 font-semibold' },
 ];
+
+// Tooltip microcopy for menu items
+type MenuTooltip = {
+  [key: string]: string;
+};
+
+const menuTooltips: MenuTooltip = {
+  Products: 'Explore our intelligent executive tools',
+  Services: 'Transform infrastructure with agentic design',
+  Login: 'Access your rolodexter console',
+};
 
 const menuItems: MenuItem[] = [
   {
@@ -161,15 +156,63 @@ function CustomLink({ children, href, className, ...props }: CustomLinkProps) {
   );
 }
 
+// Login icon component
+function LoginIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      <polyline points="10 17 15 12 10 7" />
+      <line x1="15" y1="12" x2="3" y2="12" />
+    </svg>
+  );
+}
+
+// Simple tooltip component
+function Tooltip({ content, children }: { content: string; children: React.ReactNode }) {
+  return (
+    <div className="group relative">
+      {children}
+      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+        {content}
+      </div>
+    </div>
+  );
+}
+
 export default function Header() {
   // Router not used in this simplified version
-  // const router = useRouter();
   useRouter(); // Keep the import used
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  // Add scroll listener for sticky header effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="fixed w-full bg-white border-b border-gray-100 z-50 transition-all duration-200">
+    <header
+      className={`sticky top-0 w-full bg-white z-50 transition-all duration-200 ${hasScrolled ? 'shadow-sm' : 'border-b border-gray-100'}`}
+    >
       <nav className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <CustomLink href="/" className="text-xl font-bold">
@@ -190,33 +233,36 @@ export default function Header() {
                   }, 100);
                 }}
               >
-                <CustomLink
-                  href={item.href || '#'}
-                  className="text-gray-600 hover:text-black pb-2 border-b-2 border-transparent hover:border-gray-200 transition-all duration-200"
-                >
-                  {item.label}
-                  {item.submenu && (
-                    <span className="ml-1 inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={12}
-                        height={12}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="inline-block"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </span>
-                  )}
-                </CustomLink>
+                <Tooltip content={menuTooltips[item.label]}>
+                  <CustomLink
+                    href={item.href || '#'}
+                    className="text-gray-600 hover:text-black pb-2 border-b-2 border-transparent hover:border-gray-200 transition-all duration-200"
+                  >
+                    {item.label}
+                    {item.submenu && (
+                      <span className="ml-1 inline-block">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={12}
+                          height={12}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="inline-block"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </span>
+                    )}
+                  </CustomLink>
+                </Tooltip>
+
                 {item.submenu && (
                   <div
-                    className={`absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-lg py-2 transition-all duration-200 ${activeSubmenu === item.label ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+                    className={`absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-lg py-2 transition-all duration-300 ${activeSubmenu === item.label ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
                   >
                     {item.submenu.map(subItem => (
                       <CustomLink
@@ -231,7 +277,13 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <LoginButton />
+
+            <Tooltip content={menuTooltips['Login']}>
+              <div className="flex items-center space-x-1 bg-black text-white px-3 py-1.5 rounded-full hover:bg-gray-800 transition-colors duration-200">
+                <LoginIcon className="w-4 h-4" />
+                <LoginButton />
+              </div>
+            </Tooltip>
           </div>
 
           {/* Mobile Navigation */}
@@ -301,7 +353,8 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <div className="py-2">
+            <div className="py-2 flex items-center space-x-1">
+              <LoginIcon className="w-4 h-4" />
               <LoginButton />
             </div>
           </div>
