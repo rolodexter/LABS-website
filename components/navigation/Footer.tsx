@@ -33,11 +33,13 @@ export default function Footer() {
     {
       title: 'Research',
       links: [
-        { label: 'AI Ethics', href: '/research/ai-ethics' },
-        { label: 'Privacy-Preserving ML', href: '/research/privacy-preserving-ml' },
-        { label: 'Cognitive Systems', href: '/research/cognitive-systems' },
-        { label: 'Economic Simulation', href: '/research/economic-simulation' },
-        { label: 'Metascience', href: '/research/metascience' }
+        { label: 'Cognitive Systems', href: '/research?topic=Systems+Integration' },
+        { label: 'Systems Integration', href: '/research?topic=Systems+Integration' },
+        { label: 'Quantum Biology', href: '/research?topic=Quantum+Biology' },
+        { label: 'AI Market Dynamics', href: '/research?topic=AI+Market+Analysis' },
+        { label: 'Governance Theory', href: '/research?topic=Governance+Theory' },
+        { label: 'Education & Learning', href: '/research?topic=Learning+Systems' },
+        { label: 'Computational Biology', href: '/research?category=Computational+Biology' }
       ]
     },
     {
