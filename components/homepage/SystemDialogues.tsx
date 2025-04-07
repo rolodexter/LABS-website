@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { useMediaQuery } from 'react-responsive';
 
 // Type definitions
 interface PromptExchange {
@@ -22,6 +23,10 @@ interface PromptThread {
 
 const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) => {
   const [expandedThread, setExpandedThread] = useState<string | null>(null);
+  const [isHoveringThread, setIsHoveringThread] = useState<string | null>(null);
+  
+  // Check if device is touch-based (mobile/tablet)
+  const isTouchDevice = useMediaQuery({ query: '(hover: none)' });
   
   // Build threads by matching responses to initial prompts
   const buildPromptThreads = (prompts: PromptExchange[]): PromptThread[] => {
@@ -84,9 +89,9 @@ const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) =
   return (
     <section className="my-12">
       <div className="border-b border-gray-200 pb-2 mb-8">
-        <h2 className="text-2xl font-serif font-normal">System Dialogues (Live)</h2>
+        <h2 className="text-2xl font-serif font-normal">System Dialogues</h2>
         <p className="text-sm text-gray-600 mt-1 font-mono">
-          Agent collaboration logs from the rolodexterLABS ecosystem
+          Recorded communications between rolodexter agents across projects
         </p>
       </div>
       
@@ -98,24 +103,37 @@ const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) =
               thread.initialPrompt.from === 'rolodexterGPT' 
                 ? 'border-black' 
                 : 'border-gray-400'
-            } pl-4 py-1 transition-all duration-200 hover:bg-gray-50`}
+            } pl-4 py-1 transition-all duration-300 ${expandedThread === thread.initialPrompt.id ? 'bg-gray-50' : ''} ${isHoveringThread === thread.initialPrompt.id ? 'bg-gray-50' : ''}`}
+            onMouseEnter={() => !isTouchDevice && setIsHoveringThread(thread.initialPrompt.id)}
+            onMouseLeave={() => !isTouchDevice && setIsHoveringThread(null)}
           >
             <div 
               className="cursor-pointer" 
               onClick={() => setExpandedThread(
                 expandedThread === thread.initialPrompt.id ? null : thread.initialPrompt.id
               )}
+              aria-expanded={expandedThread === thread.initialPrompt.id}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setExpandedThread(
+                    expandedThread === thread.initialPrompt.id ? null : thread.initialPrompt.id
+                  );
+                  e.preventDefault();
+                }
+              }}
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-medium">
                   {getPromptTitle(thread.initialPrompt)}
                 </h3>
-                <span className="text-xs font-mono text-gray-500">
+                <span className="text-xs font-mono text-black">
                   {formatTimestamp(thread.initialPrompt.timestamp)}
                 </span>
               </div>
               
-              <div className="flex items-center text-sm text-gray-600 mt-1 space-x-2">
+              <div className="flex items-center text-sm text-black mt-1 space-x-2">
                 <span className="font-mono">{thread.initialPrompt.from}</span>
                 <span>→</span>
                 <span className="font-mono">{thread.initialPrompt.to}</span>
@@ -138,7 +156,7 @@ const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) =
                   {thread.initialPrompt.tags.map(tag => (
                     <span 
                       key={tag} 
-                      className="inline-block text-xs bg-gray-100 px-1.5 py-0.5 font-mono"
+                      className="inline-block text-xs bg-gray-100 px-1.5 py-0.5 font-mono text-black"
                     >
                       {tag}
                     </span>
@@ -147,27 +165,27 @@ const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) =
               )}
             </div>
             
-            {expandedThread === thread.initialPrompt.id && (
-              <div className="mt-4 text-sm">
-                <div className="prose prose-sm max-w-none">
-                  <pre className="whitespace-pre-wrap font-mono text-xs bg-gray-50 p-3 border border-gray-200">
+            {(expandedThread === thread.initialPrompt.id || (!isTouchDevice && isHoveringThread === thread.initialPrompt.id)) && (
+              <div className="mt-4 animate-fadeIn overflow-hidden">
+                <div className="prose max-w-none animate-slideUp">
+                  <pre className="whitespace-pre-wrap font-mono text-sm bg-white p-4 border border-gray-300 text-black leading-relaxed">
                     {thread.initialPrompt.content}
                   </pre>
                 </div>
                 
                 {thread.response && (
-                  <div className="mt-6 ml-6 border-l-2 border-gray-300 pl-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">
+                  <div className="mt-6 ml-6 border-l-2 border-black pl-4 animate-delayFadeIn">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-base text-black">
                         Response from {thread.response.from}
                       </h4>
-                      <span className="text-xs font-mono text-gray-500">
+                      <span className="text-xs font-mono text-black">
                         {formatTimestamp(thread.response.timestamp)}
                       </span>
                     </div>
                     
-                    <div className="prose prose-sm max-w-none mt-2">
-                      <pre className="whitespace-pre-wrap font-mono text-xs bg-gray-50 p-3 border border-gray-200">
+                    <div className="prose max-w-none animate-slideUp">
+                      <pre className="whitespace-pre-wrap font-mono text-sm bg-white p-4 border border-gray-300 text-black leading-relaxed">
                         {thread.response.content}
                       </pre>
                     </div>

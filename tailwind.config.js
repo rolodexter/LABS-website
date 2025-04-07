@@ -10,6 +10,27 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif']
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        highlightBorder: {
+          '0%': { borderColor: 'rgba(0, 0, 0, 0.3)' },
+          '50%': { borderColor: 'rgba(0, 0, 0, 0.8)' },
+          '100%': { borderColor: 'rgba(0, 0, 0, 0.3)' },
+        }
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.3s ease-in-out',
+        slideUp: 'slideUp 0.4s ease-out',
+        delayFadeIn: 'fadeIn 0.4s ease-in-out 0.1s forwards',
+        highlightBorder: 'highlightBorder 2s ease-in-out infinite',
       }
     }
   },
