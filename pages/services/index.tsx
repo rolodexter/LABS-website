@@ -123,7 +123,7 @@ const Services: NextPageWithLayout<ServicesPageProps> = ({ categories, markdownC
               {categories.map((category) => (
                 <Link 
                   key={category.name} 
-                  href={`/services/${category.path}`}
+                  href={`/knowledge/${category.path}`}
                   className="block p-6 border border-gray-200 rounded-lg hover:border-black transition-colors"
                 >
                   <h3 className="text-xl font-semibold mb-2 text-black capitalize">

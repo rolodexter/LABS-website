@@ -41,7 +41,7 @@ export default function ServiceCategoryPage({ category, modules }: CategoryPageP
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {modules.map((module) => (
           <Link 
-            href={`/services/${category}/${module.slug}`} 
+            href={`/service/${module.slug}`} 
             key={module.slug}
             className="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
           >

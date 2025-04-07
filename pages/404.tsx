@@ -14,9 +14,9 @@ export default function Custom404() {
   
   // Popular routes to suggest
   const popularRoutes = [
-    { name: 'Workflow as a Service', path: '/services/waas' },
-    { name: 'Model Development', path: '/services/model-development' },
-    { name: 'Metascience', path: '/services/metascience' },
+    { name: 'Workflow as a Service', path: '/service/waas' },
+    { name: 'Model Development', path: '/service/model-development' },
+    { name: 'Metascience', path: '/service/metascience' },
     { name: 'All Services', path: '/services' },
     { name: 'All Products', path: '/products' }
   ];

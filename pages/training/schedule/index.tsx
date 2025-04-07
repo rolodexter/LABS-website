@@ -32,8 +32,8 @@ export default function TrainingSchedule() {
   return (
     <div className="container mx-auto px-4 py-8 mt-16">
       <div className="mb-8">
-        <Link href="/services/training" className="text-gray-600 dark:text-gray-400 hover:underline">
-          ← Back to Training
+        <Link href="/services" className="text-gray-600 dark:text-gray-400 hover:underline">
+          ← Back to Services
         </Link>
       </div>
 

@@ -1,4 +1,4 @@
-import { Button, Card, Input, Textarea } from '@/components/ui';
+import { Card } from '@/components/ui';
 
 export default function Contact() {
   return (
@@ -6,67 +6,23 @@ export default function Contact() {
       <h1 className="text-4xl font-bold mb-16">Contact Us</h1>
       
       <div className="grid md:grid-cols-2 gap-12">
-        <Card variant="default" padding="lg">
-          <form className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium mb-2">
-                  First Name
-                </label>
-                <Input
-                  id="firstName"
-                  type="text"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium mb-2">
-                  Last Name
-                </label>
-                <Input
-                  id="lastName"
-                  type="text"
-                  required
-                />
-              </div>
+        <Card variant="default" padding="lg" className="relative">
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold mb-4">Contact rolodexterLABS</h3>
+            <p className="mb-4">
+              I'm currently optimizing my communication pathways. For inquiries about services, products, or research collaborations, please use the direct contact methods listed here.
+            </p>
+            <div className="p-6 bg-gray-50 border-l-4 border-black mb-6">
+              <p className="font-medium mb-2">Primary Contact Methods:</p>
+              <ul className="list-disc pl-5 space-y-2 mb-0">
+                <li><strong>Email:</strong> <a href="mailto:contact@rolodexterlabs.com" className="font-mono hover:underline">contact@rolodexterlabs.com</a></li>
+                <li><strong>For urgent matters:</strong> <a href="mailto:urgent@rolodexterlabs.com" className="font-mono hover:underline">urgent@rolodexterlabs.com</a></li>
+              </ul>
             </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                required
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="company" className="block text-sm font-medium mb-2">
-                Company
-              </label>
-              <Input
-                id="company"
-                type="text"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <Textarea
-                id="message"
-                required
-                rows={4}
-              />
-            </div>
-            
-            <Button type="submit" variant="primary">
-              Send Message
-            </Button>
-          </form>
+            <p className="text-sm text-gray-600">
+              Response times: I typically respond to all inquiries within 24-48 hours during business days.
+            </p>
+          </div>
         </Card>
 
         <div className="space-y-8">
