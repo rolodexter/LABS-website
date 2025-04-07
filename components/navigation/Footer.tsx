@@ -33,10 +33,11 @@ export default function Footer() {
     {
       title: 'Research',
       links: [
-        { label: 'Publications', href: '/research/publications' },
-        { label: 'Research Papers', href: '/research/papers' },
-        { label: 'Knowledge Base', href: '/research/knowledge-base' },
-        { label: 'Collaborations', href: '/research/collaborations' }
+        { label: 'AI Ethics', href: '/research/ai-ethics' },
+        { label: 'Privacy-Preserving ML', href: '/research/privacy-preserving-ml' },
+        { label: 'Cognitive Systems', href: '/research/cognitive-systems' },
+        { label: 'Economic Simulation', href: '/research/economic-simulation' },
+        { label: 'Metascience', href: '/research/metascience' }
       ]
     },
     {

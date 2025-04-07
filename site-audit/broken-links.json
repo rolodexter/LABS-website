@@ -60,9 +60,9 @@
     {
       "path": "/case-studies/manufacturing-process-optimization",
       "referenced_from": ["/case-studies"],
-      "placeholder_created": false,
+      "placeholder_created": true,
       "priority": "medium",
-      "status": "needs_placeholder"
+      "status": "placeholder"
     }
   ],
   "next_steps": [

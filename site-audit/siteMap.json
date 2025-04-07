@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "created": "2025-04-07",
+    "lastUpdated": "2025-04-07",
+    "purpose": "Site structure documentation including placeholder pages and 404 tracking"
+  },
+  "mainSections": [
+    {
+      "name": "Home",
+      "route": "/",
+      "status": "live",
+      "subpages": []
+    },
+    {
+      "name": "Products",
+      "route": "/products",
+      "status": "live",
+      "subpages": []
+    },
+    {
+      "name": "Services",
+      "route": "/services",
+      "status": "live",
+      "subpages": [
+        {
+          "name": "Model Training",
+          "route": "/services/model-training",
+          "status": "live"
+        },
+        {
+          "name": "Infrastructure",
+          "route": "/services/infrastructure",
+          "status": "live"
+        }
+      ]
+    },
+    {
+      "name": "Research",
+      "route": "/research",
+      "status": "live",
+      "subpages": [
+        {
+          "name": "AI Ethics",
+          "route": "/research/ai-ethics",
+          "status": "placeholder"
+        },
+        {
+          "name": "Privacy-Preserving ML",
+          "route": "/research/privacy-preserving-ml",
+          "status": "placeholder"
+        },
+        {
+          "name": "Cognitive Systems",
+          "route": "/research/cognitive-systems",
+          "status": "placeholder"
+        },
+        {
+          "name": "Economic Simulation",
+          "route": "/research/economic-simulation",
+          "status": "placeholder"
+        },
+        {
+          "name": "Metascience",
+          "route": "/research/metascience",
+          "status": "placeholder"
+        }
+      ]
+    },
+    {
+      "name": "Documentation",
+      "route": "/docs",
+      "status": "live",
+      "subpages": [
+        {
+          "name": "Infrastructure",
+          "route": "/docs/infrastructure",
+          "status": "placeholder"
+        },
+        {
+          "name": "API",
+          "route": "/docs/api",
+          "status": "placeholder"
+        },
+        {
+          "name": "Models",
+          "route": "/docs/models",
+          "status": "placeholder"
+        },
+        {
+          "name": "Partners",
+          "route": "/docs/partners",
+          "status": "placeholder"
+        },
+        {
+          "name": "Applications",
+          "route": "/docs/applications",
+          "status": "placeholder"
+        }
+      ]
+    },
+    {
+      "name": "Knowledge",
+      "route": "/knowledge",
+      "status": "live",
+      "subpages": [
+        {
+          "name": "Ecosystem",
+          "route": "/knowledge/ecosystem",
+          "status": "placeholder"
+        }
+      ]
+    },
+    {
+      "name": "Case Studies",
+      "route": "/case-studies",
+      "status": "live",
+      "subpages": [
+        {
+          "name": "AI Transformation at Global Bank",
+          "route": "/case-studies/ai-transformation-at-global-bank",
+          "status": "placeholder"
+        },
+        {
+          "name": "Healthcare Analytics Platform",
+          "route": "/case-studies/healthcare-analytics-platform",
+          "status": "placeholder"
+        },
+        {
+          "name": "Manufacturing Process Optimization",
+          "route": "/case-studies/manufacturing-process-optimization",
+          "status": "404",
+          "action": "needs_placeholder"
+        }
+      ]
+    },
+    {
+      "name": "About",
+      "route": "/about",
+      "status": "live",
+      "subpages": []
+    },
+    {
+      "name": "Careers",
+      "route": "/careers",
+      "status": "live",
+      "subpages": []
+    },
+    {
+      "name": "Contact",
+      "route": "/contact",
+      "status": "live",
+      "subpages": []
+    }
+  ],
+  "navigationComponents": {
+    "header": {
+      "status": "reviewed",
+      "issues": []
+    },
+    "footer": {
+      "status": "reviewed",
+      "issues": [
+        {
+          "description": "Links to research areas have been updated to match the new research domain structure",
+          "resolved": true
+        }
+      ]
+    },
+    "dropdowns": {
+      "status": "reviewed",
+      "issues": [
+        {
+          "description": "Research dropdown updated with domain-specific research areas",
+          "resolved": true
+        }
+      ]
+    }
+  },
+  "brokenLinks": {
+    "external": [],
+    "internal": [
+      {
+        "url": "/research/collaborations",
+        "referencedFrom": ["Previous footer"],
+        "status": "404",
+        "resolution": "Link removed from footer"
+      },
+      {
+        "url": "/research/publications",
+        "referencedFrom": ["Previous footer"],
+        "status": "404",
+        "resolution": "Link removed from footer"
+      },
+      {
+        "url": "/research/papers",
+        "referencedFrom": ["Previous footer"],
+        "status": "404",
+        "resolution": "Link removed from footer"
+      },
+      {
+        "url": "/research/knowledge-base",
+        "referencedFrom": ["Previous footer"],
+        "status": "404",
+        "resolution": "Link removed from footer"
+      }
+    ]
+  },
+  "nextSteps": [
+    "Create placeholder page for /case-studies/manufacturing-process-optimization",
+    "Perform a comprehensive review of all pages to ensure no duplicate footers exist",
+    "Review all navigation links to ensure they point to live or placeholder pages",
+    "Begin content development for high-priority placeholder pages"
+  ]
+}
