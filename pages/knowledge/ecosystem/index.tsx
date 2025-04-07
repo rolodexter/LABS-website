@@ -88,7 +88,7 @@ export default function KnowledgeEcosystem() {
 }`}
             </pre>
             <div className="mt-6">
-              <Button as={Link} href="https://github.com/rolodexter/knowledge-schema" size="sm">
+              <Button as={Link} href="https://github.com/rolodexter/knowledge-schema" size="small">
                 View Full Schema
               </Button>
             </div>
