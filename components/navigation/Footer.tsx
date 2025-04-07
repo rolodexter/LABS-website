@@ -31,15 +31,14 @@ export default function Footer() {
       ],
     },
     {
-      title: 'Research',
+      title: 'Popular Research',
       links: [
-        { label: 'Cognitive Systems', href: '/research?topic=Systems+Integration' },
         { label: 'Systems Integration', href: '/research?topic=Systems+Integration' },
-        { label: 'Quantum Biology', href: '/research?topic=Quantum+Biology' },
-        { label: 'AI Market Dynamics', href: '/research?topic=AI+Market+Analysis' },
-        { label: 'Governance Theory', href: '/research?topic=Governance+Theory' },
-        { label: 'Education & Learning', href: '/research?topic=Learning+Systems' },
         { label: 'Computational Biology', href: '/research?category=Computational+Biology' },
+        { label: 'AI Market Analysis', href: '/research?topic=AI+Market+Analysis' },
+        { label: 'Quantum Biology', href: '/research?topic=Quantum+Biology' },
+        { label: 'Scientific AI', href: '/research?topic=Scientific+AI' },
+        { label: 'All Research Areas', href: '/research' },
       ],
     },
     {
