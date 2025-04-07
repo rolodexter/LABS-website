@@ -1,7 +1,9 @@
 import { Button, Card  } from '@/components/ui';
 import Link from 'next/link';
+import { ReactElement } from 'react';
+import type { NextPageWithLayout } from '@/types/next';
 
-export default function CookiePolicy() {
+const CookiePolicy: NextPageWithLayout = () => {
   const sections = [
     {
       title: 'What Are Cookies',
@@ -98,3 +100,10 @@ export default function CookiePolicy() {
     </div>
   );
 }
+
+// Add custom layout function to prevent duplicate footer
+CookiePolicy.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default CookiePolicy;

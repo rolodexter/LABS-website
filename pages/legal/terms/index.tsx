@@ -1,7 +1,9 @@
 import { Button, Card  } from '@/components/ui';
 import Link from 'next/link';
+import { ReactElement } from 'react';
+import type { NextPageWithLayout } from '@/types/next';
 
-export default function TermsOfService() {
+const TermsOfService: NextPageWithLayout = () => {
   const sections = [
     {
       title: 'Terms of Use',
@@ -111,3 +113,10 @@ export default function TermsOfService() {
     </div>
   );
 }
+
+// Add custom layout function to prevent duplicate footer
+TermsOfService.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default TermsOfService;

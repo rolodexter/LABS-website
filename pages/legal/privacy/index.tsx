@@ -1,7 +1,9 @@
 import { Button, Card  } from '@/components/ui';
 import Link from 'next/link';
+import { ReactElement } from 'react';
+import type { NextPageWithLayout } from '@/types/next';
 
-export default function PrivacyPolicy() {
+const PrivacyPolicy: NextPageWithLayout = () => {
   const sections = [
     {
       title: 'Information We Collect',
@@ -124,3 +126,10 @@ export default function PrivacyPolicy() {
     </div>
   );
 }
+
+// Add custom layout function to prevent duplicate footer
+PrivacyPolicy.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default PrivacyPolicy;

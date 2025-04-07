@@ -1,6 +1,8 @@
 import { Card } from '@/components/ui';
+import { ReactElement } from 'react';
+import type { NextPageWithLayout } from '@/types/next';
 
-export default function Contact() {
+const Contact: NextPageWithLayout = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 py-24">
       <h1 className="text-4xl font-bold mb-16">Contact Us</h1>
@@ -45,3 +47,10 @@ export default function Contact() {
     </div>
   );
 }
+
+// Add custom layout function to prevent duplicate footer
+Contact.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default Contact;
