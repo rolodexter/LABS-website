@@ -17,8 +17,8 @@ export default function Footer() {
         { label: 'Careers', href: '/careers' },
         { label: 'Blog', href: 'https://rolodexterlabs.substack.com/' },
         { label: 'Press', href: '/press' },
-        { label: 'Contact', href: '/contact' }
-      ]
+        { label: 'Contact', href: '/contact' },
+      ],
     },
     {
       title: 'Community',
@@ -27,8 +27,8 @@ export default function Footer() {
         { label: 'Events', href: 'https://lu.ma/rolodexterLABS' },
         { label: 'Discord', href: 'https://discord.gg/rolodexter' },
         { label: 'Telegram', href: 'https://t.me/rolodexter' },
-        { label: 'Twitter', href: 'https://twitter.com/rolodexter' }
-      ]
+        { label: 'Twitter', href: 'https://x.com/joemaristela' },
+      ],
     },
     {
       title: 'Research',
@@ -39,8 +39,8 @@ export default function Footer() {
         { label: 'AI Market Dynamics', href: '/research?topic=AI+Market+Analysis' },
         { label: 'Governance Theory', href: '/research?topic=Governance+Theory' },
         { label: 'Education & Learning', href: '/research?topic=Learning+Systems' },
-        { label: 'Computational Biology', href: '/research?category=Computational+Biology' }
-      ]
+        { label: 'Computational Biology', href: '/research?category=Computational+Biology' },
+      ],
     },
     {
       title: 'Investors & Partners',
@@ -49,8 +49,8 @@ export default function Footer() {
         { label: 'Partnerships', href: '/partners' },
         { label: 'Ecosystem', href: '/ecosystem' },
         { label: 'Governance', href: '/governance' },
-        { label: 'Whitepaper', href: '/whitepaper' }
-      ]
+        { label: 'Whitepaper', href: '/whitepaper' },
+      ],
     },
     {
       title: 'Legal',
@@ -58,22 +58,22 @@ export default function Footer() {
         { label: 'Terms of Service', href: '/legal/terms' },
         { label: 'Privacy Policy', href: '/legal/privacy' },
         { label: 'Cookie Policy', href: '/legal/cookies' },
-        { label: 'Security & Compliance', href: '/legal/security' }
-      ]
-    }
+        { label: 'Security & Compliance', href: '/legal/security' },
+      ],
+    },
   ];
 
   return (
     <footer className="bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 mt-16">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {footerSections.map((section) => (
+          {footerSections.map(section => (
             <div key={section.title}>
               <h3 className="text-sm font-semibold mb-4 text-black dark:text-white">
                 {section.title}
               </h3>
               <ul className="space-y-2">
-                {section.links.map((link) => (
+                {section.links.map(link => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -87,7 +87,7 @@ export default function Footer() {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
@@ -95,8 +95,10 @@ export default function Footer() {
             </p>
             <div className="flex space-x-6">
               <Link
-                href="https://twitter.com/rolodexter"
+                href="https://x.com/joemaristela"
                 className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Twitter
               </Link>
