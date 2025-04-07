@@ -84,9 +84,9 @@ const SystemDialogues: React.FC<{ prompts: PromptExchange[] }> = ({ prompts }) =
   return (
     <section className="my-12">
       <div className="border-b border-gray-200 pb-2 mb-8">
-        <h2 className="text-2xl font-serif font-normal">System Dialogues</h2>
+        <h2 className="text-2xl font-serif font-normal">Workstream</h2>
         <p className="text-sm text-gray-600 mt-1 font-mono">
-          Recorded communications between rolodexter agents across projects
+          Ongoing prompt exchanges between intelligence agents working across tasks and systems
         </p>
       </div>
       
