@@ -31,17 +31,6 @@ export default function Footer() {
       ]
     },
     {
-      title: 'Developers',
-      links: [
-        { label: 'GitHub', href: 'https://github.com/rolodexter' },
-        { label: 'Documentation', href: '/docs' },
-        { label: 'API Reference', href: '/docs/api' },
-        { label: 'Products', href: '/products' },
-        { label: 'rolodexterVS', href: '/products/rolodexterVS' },
-        { label: 'LinuxAI', href: '/products/linuxAI' }
-      ]
-    },
-    {
       title: 'Research',
       links: [
         { label: 'Publications', href: '/research/publications' },
