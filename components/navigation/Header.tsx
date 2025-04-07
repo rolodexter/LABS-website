@@ -61,9 +61,9 @@ const productSubmenu: SubMenuItem[] = [
       const hasInDevelopment = products.some(product => product.status === 'development');
       
       return [
-        // Family header with icon
+        // Family header without icon
         { 
-          label: `${icon} ${family}`, 
+          label: `${family}`, 
           href: `/products#${family.toLowerCase().replace(/ /g, '-')}`,
           className: `text-sm font-medium ${hasInDevelopment ? 'flex items-center' : ''}`
         }
@@ -95,9 +95,9 @@ const serviceSubmenu: SubMenuItem[] = [
       const badge = services.find(service => service.badge)?.badge;
       
       return [
-        // Category header with icon
+        // Category header without icon
         { 
-          label: `${icon} ${category}`, 
+          label: `${category}`, 
           href: `/services#${category.toLowerCase()}`,
           className: `text-sm ${badge ? 'flex items-center' : 'font-medium'}`,
           // If this category has services in development or with badges, show it
@@ -115,10 +115,12 @@ const serviceSubmenu: SubMenuItem[] = [
 const menuItems: MenuItem[] = [
   {
     label: 'Products',
+    href: '/products',
     submenu: productSubmenu,
   },
   {
     label: 'Services',
+    href: '/services',
     submenu: serviceSubmenu,
   },
   {
@@ -174,7 +176,7 @@ export default function Header() {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
   return (
-    <header className="fixed w-full bg-white border-b border-gray-100 z-50">
+    <header className="fixed w-full bg-white border-b border-gray-100 z-50 transition-all duration-200">
       <nav className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <CustomLink href="/" className="text-xl font-bold">
@@ -186,26 +188,35 @@ export default function Header() {
             {menuItems.map((item) => (
               <div
                 key={item.label}
-                className="relative"
+                className="relative group"
                 onMouseEnter={() => setActiveSubmenu(item.label)}
-                onMouseLeave={() => setActiveSubmenu(null)}
+                onMouseLeave={() => {
+                  // Add a small delay before closing the menu
+                  setTimeout(() => {
+                    setActiveSubmenu(null);
+                  }, 100);
+                }}
               >
-                {item.href ? (
-                  <CustomLink href={item.href} className="text-gray-600 hover:text-black">
-                    {item.label}
-                  </CustomLink>
-                ) : (
-                  <button className="text-gray-600 hover:text-black">
-                    {item.label}
-                  </button>
-                )}
-                {activeSubmenu === item.label && item.submenu && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-lg shadow-lg py-2">
+                <CustomLink 
+                  href={item.href || '#'} 
+                  className="text-gray-600 hover:text-black pb-2 border-b-2 border-transparent hover:border-gray-200 transition-all duration-200"
+                >
+                  {item.label}
+                  {item.submenu && (
+                    <span className="ml-1 inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </span>
+                  )}
+                </CustomLink>
+                {item.submenu && (
+                  <div 
+                    className={`absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-lg py-2 transition-all duration-200 ${activeSubmenu === item.label ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+                  >
                     {item.submenu.map((subItem) => (
                       <CustomLink
                         key={subItem.label}
                         href={subItem.href}
-                        className="block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50"
+                        className={`block px-4 py-2 text-gray-600 hover:text-black hover:bg-gray-50 transition-colors duration-150 ${subItem.className || ''}`}
                       >
                         {subItem.label}
                       </CustomLink>
