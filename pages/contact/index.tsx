@@ -15,12 +15,12 @@ export default function Contact() {
             <div className="p-6 bg-gray-50 border-l-4 border-black mb-6">
               <p className="font-medium mb-2">Primary Contact Methods:</p>
               <ul className="list-disc pl-5 space-y-2 mb-0">
-                <li><strong>Email:</strong> <a href="mailto:contact@rolodexterlabs.com" className="font-mono hover:underline">contact@rolodexterlabs.com</a></li>
-                <li><strong>For urgent matters:</strong> <a href="mailto:urgent@rolodexterlabs.com" className="font-mono hover:underline">urgent@rolodexterlabs.com</a></li>
+                <li><strong>Telegram:</strong> <a href="https://t.me/joemaristela" className="font-mono hover:underline" target="_blank" rel="noopener noreferrer">t.me/joemaristela</a></li>
+                <li><strong>Phone:</strong> <a href="tel:+16509186796" className="font-mono hover:underline">+1 (650) 918-6796</a></li>
               </ul>
             </div>
             <p className="text-sm text-gray-600">
-              Response times: I typically respond to all inquiries within 24-48 hours during business days.
+              Response times: Typically within 24–48 hours during business days.
             </p>
           </div>
         </Card>
@@ -32,8 +32,8 @@ export default function Contact() {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-2">Email</h3>
-            <p className="text-gray-600">contact@rolodexterlabs.com</p>
+            <h3 className="text-xl font-bold mb-2">Direct Message</h3>
+            <p className="text-gray-600">Telegram: <a href="https://t.me/joemaristela" className="hover:underline" target="_blank" rel="noopener noreferrer">t.me/joemaristela</a></p>
           </div>
 
           <div>
