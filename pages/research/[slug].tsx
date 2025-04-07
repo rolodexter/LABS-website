@@ -161,4 +161,22 @@ ResearchArticle.getLayout = function getLayout(page: ReactElement) {
   return page;
 };
 
+// Temporarily disable static generation to debug build issues
+export async function getStaticProps() {
+  return {
+    props: {
+      title: 'Placeholder',
+      content: 'Temporarily disabled to test build performance'
+    }
+  }
+}
+
+// Temporarily return empty paths to prevent static generation
+export async function getStaticPaths() {
+  return {
+    paths: [], // Empty for now to prevent static generation
+    fallback: true // Use true to allow client-side rendering for any path
+  }
+}
+
 export default ResearchArticle;
