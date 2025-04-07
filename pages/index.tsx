@@ -8,7 +8,6 @@ import { usePrivy } from '@privy-io/react-auth';
 import SystemDialogues from '../components/homepage/SystemDialogues';
 import TaskStatusBoard from '../components/homepage/TaskStatusBoard';
 import ProjectStatus from '../components/homepage/ProjectStatus';
-import SystemSnapshot from '../components/homepage/SystemSnapshot';
 
 // Import markdown utilities
 import { getHomepageData } from '../lib/markdown';
@@ -17,14 +16,13 @@ interface HomePageProps {
   tasks: any[];
   projects: any[];
   prompts: any[];
-  syncPromptContent: string;
 }
 
 
 
 const Home: NextPage<HomePageProps> & {
   getLayout?: (page: ReactElement) => ReactElement;
-} = ({ tasks, projects, prompts, syncPromptContent }) => {
+} = ({ tasks, projects, prompts }) => {
   const { ready, authenticated, login } = usePrivy();
 
   return (
@@ -60,8 +58,6 @@ const Home: NextPage<HomePageProps> & {
             <ProjectStatus projects={projects} />
           </div>
           
-          {/* System Snapshot Section */}
-          <SystemSnapshot syncPromptContent={syncPromptContent} />
           </div>
       </main>
     </div>
@@ -80,7 +76,6 @@ export const getStaticProps: GetStaticProps = async () => {
       tasks,
       projects,
       prompts,
-      syncPromptContent: syncPrompt.content,
     },
     // Revalidate every minute to keep content fresh
     revalidate: 60,
