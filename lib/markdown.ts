@@ -2,6 +2,36 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
+/**
+ * Sanitize an object by converting all Date objects to ISO strings
+ * to prevent Next.js serialization errors
+ */
+function sanitizeForNextJs(obj: any): any {
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
+  
+  if (obj instanceof Date) {
+    return obj.toISOString();
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => sanitizeForNextJs(item));
+  }
+  
+  if (typeof obj === 'object') {
+    const result: Record<string, any> = {};
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        result[key] = sanitizeForNextJs(obj[key]);
+      }
+    }
+    return result;
+  }
+  
+  return obj;
+}
+
 // Paths
 const SYSTEM_DIR = path.join(process.cwd(), 'content/system');
 const TASKS_DIR = path.join(SYSTEM_DIR, 'tasks');
@@ -27,11 +57,11 @@ export function getMarkdownFiles(directory: string) {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    return {
+    return sanitizeForNextJs({
       path: fullPath,
       content,
       ...data,
-    };
+    });
   });
 }
 
@@ -71,10 +101,10 @@ export function getSyncPrompt() {
   const fileContents = fs.readFileSync(SYNC_PROMPT_PATH, 'utf8');
   const { data, content } = matter(fileContents);
 
-  return {
+  return sanitizeForNextJs({
     content,
     ...data,
-  };
+  });
 }
 
 /**
