@@ -42,9 +42,6 @@ const servicesByCategory = servicesData.reduce<Record<string, typeof servicesDat
 
 // Create product submenu with only Operating Systems and Workers categories
 const productSubmenu: SubMenuItem[] = [
-  // Header for Products section
-  { label: 'Products', href: '', className: 'font-bold text-xs uppercase tracking-wide opacity-70 cursor-default' },
-  
   // Only show top-level categories: Operating Systems and Workers
   ...Object.entries(productsByFamily)
     .filter(([family]) => family === 'Operating Systems' || family === 'Workers')
@@ -74,9 +71,6 @@ const productSubmenu: SubMenuItem[] = [
 
 // Create service submenu with the four specified categories and appropriate icons
 const serviceSubmenu: SubMenuItem[] = [
-  // Header for Services section
-  { label: 'Services', href: '', className: 'font-bold text-xs uppercase tracking-wide opacity-70 cursor-default' },
-  
   // Show only the four specified categories with icons, ordered by priority
   ...Object.entries(servicesByCategory)
     .filter(([category]) => ['Blockchains', 'Models', 'Science', 'Work'].includes(category))
@@ -128,10 +122,21 @@ const menuItems: MenuItem[] = [
     href: '/agents',
   },
   {
+    label: 'Research',
+    href: '/research',
+    submenu: [
+      { label: 'AI Ethics', href: '/research/ai-ethics', className: 'text-sm' },
+      { label: 'Privacy-Preserving ML', href: '/research/privacy-preserving-ml', className: 'text-sm' },
+      { label: 'Cognitive Systems', href: '/research/cognitive-systems', className: 'text-sm' },
+      { label: 'Economic Simulation', href: '/research/economic-simulation', className: 'text-sm' },
+      { label: 'Metascience', href: '/research/metascience', className: 'text-sm' },
+      { label: 'All Research Areas', href: '/research', className: 'mt-2 font-semibold' },
+    ],
+  },
+  {
     label: 'Company',
     submenu: [
       { label: 'About', href: '/about' },
-      { label: 'Research', href: '/research' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact', href: '/contact' },
     ],

@@ -21,15 +21,15 @@ export default function Discord() {
   // Channel definitions
   const channels = [
     {
-      name: '# general',
+      name: 'general',
       description: 'General discussions and community updates'
     },
     {
-      name: '# support',
+      name: 'support',
       description: 'Technical support and troubleshooting'
     },
     {
-      name: '# showcase',
+      name: 'showcase',
       description: 'Share your projects and get feedback'
     }
   ];

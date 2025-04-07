@@ -1,0 +1,74 @@
+{
+  "audit_date": "2025-04-07",
+  "broken_links": [
+    {
+      "path": "/docs/infrastructure",
+      "referenced_from": ["/services/model-training"],
+      "placeholder_created": true,
+      "priority": "medium",
+      "status": "placeholder"
+    },
+    {
+      "path": "/docs/api",
+      "referenced_from": ["/products/rolodexter-gpt", "/products/rolodexter-vs"],
+      "placeholder_created": true,
+      "priority": "high",
+      "status": "placeholder"
+    },
+    {
+      "path": "/docs/models",
+      "referenced_from": ["/products/models"],
+      "placeholder_created": true,
+      "priority": "medium",
+      "status": "placeholder"
+    },
+    {
+      "path": "/docs/partners",
+      "referenced_from": ["/companies/partners"],
+      "placeholder_created": true,
+      "priority": "low",
+      "status": "placeholder"
+    },
+    {
+      "path": "/docs/applications",
+      "referenced_from": ["/products/applications"],
+      "placeholder_created": true,
+      "priority": "medium",
+      "status": "placeholder"
+    },
+    {
+      "path": "/knowledge/ecosystem",
+      "referenced_from": ["example provided by user"],
+      "placeholder_created": true,
+      "priority": "high",
+      "status": "placeholder"
+    },
+    {
+      "path": "/case-studies/ai-transformation-at-global-bank",
+      "referenced_from": ["/case-studies"],
+      "placeholder_created": true,
+      "priority": "medium",
+      "status": "placeholder"
+    },
+    {
+      "path": "/case-studies/healthcare-analytics-platform",
+      "referenced_from": ["/case-studies"],
+      "placeholder_created": false,
+      "priority": "medium",
+      "status": "needs_placeholder"
+    },
+    {
+      "path": "/case-studies/manufacturing-process-optimization",
+      "referenced_from": ["/case-studies"],
+      "placeholder_created": false,
+      "priority": "medium",
+      "status": "needs_placeholder"
+    }
+  ],
+  "next_steps": [
+    "Create remaining placeholder pages for case studies",
+    "Verify navigation menus do not lead to 404 pages",
+    "Prioritize content creation for high priority pages",
+    "Consider adding 'Coming Soon' badges to navigation items that lead to placeholders"
+  ]
+}

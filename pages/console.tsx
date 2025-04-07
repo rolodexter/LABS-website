@@ -35,13 +35,16 @@ const ConsolePage: NextPageWithLayout = () => {
     if (normalizedCommand === 'help') {
       response = `
 Available commands:
-- help: Display this help message
-- whoami: Display your user information
-- clear: Clear the console
-- agents: List available agents
-- projects: List available projects
-- knowledge: Access knowledge modules
-- exit: Return to dashboard
+
+<ul class="list-disc pl-5 space-y-1">
+  <li>help: Display this help message</li>
+  <li>whoami: Display your user information</li>
+  <li>clear: Clear the console</li>
+  <li>agents: List available agents</li>
+  <li>projects: List available projects</li>
+  <li>knowledge: Access knowledge modules</li>
+  <li>exit: Return to dashboard</li>
+</ul>
       `;
     } else if (normalizedCommand === 'whoami') {
       response = `
