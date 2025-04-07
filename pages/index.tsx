@@ -1,9 +1,16 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePrivy } from '@privy-io/react-auth';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the SwarmVisualization with no SSR to avoid hydration issues
+const SwarmVisualization = dynamic(
+  () => import('../components/SwarmVisualization'),
+  { ssr: false }
+);
 
 interface HomePageProps {}
 
@@ -47,9 +54,22 @@ const Home: NextPage<HomePageProps> & {
   getLayout?: (page: ReactElement) => ReactElement;
 } = () => {
   const { ready, authenticated, login } = usePrivy();
+  const [showSwarm, setShowSwarm] = useState(true);
+  const [fadeMainContent, setFadeMainContent] = useState(false);
+
+  useEffect(() => {
+    // After 6 seconds, start fading in the main content
+    const timer = setTimeout(() => {
+      setFadeMainContent(true);
+      // After fading in, hide the swarm visualization
+      setTimeout(() => setShowSwarm(false), 1000);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen w-full bg-white text-black">
+    <div className="min-h-screen w-full bg-white text-black relative">
       <Head>
         <title>rolodexterLABS | Frontier AI for Executive Intelligence</title>
         <meta name="description" content="Advanced AI systems for research, knowledge management, and executive intelligence." />
@@ -59,7 +79,13 @@ const Home: NextPage<HomePageProps> & {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet" />
       </Head>
       
-      <main className="overflow-hidden">
+      {showSwarm && (
+        <div className={`fixed inset-0 z-50 ${fadeMainContent ? 'opacity-0' : 'opacity-100'} transition-opacity duration-1000`}>
+          <SwarmVisualization />
+        </div>
+      )}
+
+      <main className={`overflow-hidden ${fadeMainContent ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
         {/* Hero Section */}
         <section className="min-h-[80vh] flex items-center justify-center border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-6 py-24 text-center">
