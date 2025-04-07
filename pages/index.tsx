@@ -1,75 +1,34 @@
 import Head from 'next/head';
-import type { NextPage } from 'next';
-import { ReactElement, useEffect, useState } from 'react';
+import type { NextPage, GetStaticProps } from 'next';
+import { ReactElement } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePrivy } from '@privy-io/react-auth';
-import dynamic from 'next/dynamic';
 
-// Dynamically import the SwarmVisualization with no SSR to avoid hydration issues
-const SwarmVisualization = dynamic(
-  () => import('../components/SwarmVisualization'),
-  { ssr: false }
-);
+// Import homepage components
+import SystemDialogues from '../components/homepage/SystemDialogues';
+import TaskStatusBoard from '../components/homepage/TaskStatusBoard';
+import ProjectStatus from '../components/homepage/ProjectStatus';
+import SystemSnapshot from '../components/homepage/SystemSnapshot';
 
-interface HomePageProps {}
+// Import markdown utilities
+import { getHomepageData } from '../lib/markdown';
 
-// Feature section item type
-type FeatureItem = {
-  title: string;
-  description: string;
-  icon: string;
-  link: string;
-};
+interface HomePageProps {
+  tasks: any[];
+  projects: any[];
+  prompts: any[];
+  syncPromptContent: string;
+}
 
-// Core system features
-const features: FeatureItem[] = [
-  {
-    title: 'Agent Network',
-    description: 'Specialized AI agents working together to provide comprehensive intelligence services across domains.',
-    icon: '/icons/agent.svg',
-    link: '/agents'
-  },
-  {
-    title: 'Knowledge System',
-    description: 'Curated documentation, research findings, and structured knowledge modules.',
-    icon: '/icons/knowledge.svg',
-    link: '/docs'
-  },
-  {
-    title: 'Project Ecosystem',
-    description: 'Interconnected tools and applications built on the rolodexterLABS infrastructure.',
-    icon: '/icons/projects.svg',
-    link: '/projects'
-  },
-  {
-    title: 'Interactive Console',
-    description: 'Direct interface for interacting with the rolodexterLABS intelligence systems.',
-    icon: '/icons/console.svg',
-    link: '/console'
-  }
-];
+
 
 const Home: NextPage<HomePageProps> & {
   getLayout?: (page: ReactElement) => ReactElement;
-} = () => {
+} = ({ tasks, projects, prompts, syncPromptContent }) => {
   const { ready, authenticated, login } = usePrivy();
-  const [showSwarm, setShowSwarm] = useState(true);
-  const [fadeMainContent, setFadeMainContent] = useState(false);
-
-  useEffect(() => {
-    // After 6 seconds, start fading in the main content
-    const timer = setTimeout(() => {
-      setFadeMainContent(true);
-      // After fading in, hide the swarm visualization
-      setTimeout(() => setShowSwarm(false), 1000);
-    }, 6000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
-    <div className="min-h-screen w-full bg-white text-black relative">
+    <div className="min-h-screen w-full bg-white text-black">
       <Head>
         <title>rolodexterLABS | Frontier AI for Executive Intelligence</title>
         <meta name="description" content="Advanced AI systems for research, knowledge management, and executive intelligence." />
@@ -79,162 +38,53 @@ const Home: NextPage<HomePageProps> & {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet" />
       </Head>
       
-      {showSwarm && (
-        <div className={`fixed inset-0 z-50 ${fadeMainContent ? 'opacity-0' : 'opacity-100'} transition-opacity duration-1000`}>
-          <SwarmVisualization />
-        </div>
-      )}
-
-      <main className={`overflow-hidden ${fadeMainContent ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-        {/* Hero Section */}
-        <section className="min-h-[80vh] flex items-center justify-center border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 py-24 text-center">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">rolodexterLABS</h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto font-serif">
-              Frontier AI systems for executive intelligence, knowledge management, and research synthesis
+      <main className="overflow-hidden">
+        {/* Header */}
+        <header className="border-b border-gray-200 py-16">
+          <div className="max-w-5xl mx-auto px-6">
+            <h1 className="text-4xl font-serif font-normal mb-3">rolodexterLABS</h1>
+            <p className="text-lg font-mono text-gray-700 mb-0">
+              Executive intelligence systems for knowledge manufacturing and scientific discovery
             </p>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link 
-                href="/products" 
-                className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors"
-              >
-                Explore Products
-              </Link>
-              <Link 
-                href="/docs" 
-                className="px-8 py-4 bg-white border border-black text-black rounded-md font-medium text-lg hover:bg-gray-50 transition-colors"
-              >
-                Read Documentation
-              </Link>
-            </div>
           </div>
-        </section>
+        </header>
 
-        {/* System Structure Section */}
-        <section className="py-24 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">System Structure</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                The rolodexterLABS ecosystem is composed of specialized components working together to provide a comprehensive intelligence platform.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {features.map((feature, index) => (
-                <Link 
-                  key={index}
-                  href={feature.link}
-                  className="bg-white border border-gray-200 rounded-lg p-6 hover:border-black transition-colors"
-                >
-                  <div className="h-12 w-12 mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                    {/* Fallback icon if SVG doesn't exist */}
-                    <span className="text-2xl font-bold text-gray-400">{feature.title.charAt(0)}</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 mb-4">{feature.description}</p>
-                  <span className="text-black font-medium">Learn more &rarr;</span>
-                </Link>
-              ))}
-            </div>
+        {/* Main Content */}
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          {/* System Dialogues Section - Agent Collaboration */}
+          <SystemDialogues prompts={prompts} />
+          
+          {/* Tasks & Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
+            <TaskStatusBoard tasks={tasks} />
+            <ProjectStatus projects={projects} />
           </div>
-        </section>
-
-        {/* Agent Highlight Section */}
-        <section className="py-24 px-6 bg-gray-50 border-y border-gray-200">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Meet Our Agents</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Specialized AI agents with distinct capabilities and areas of expertise, working together in the rolodexterLABS ecosystem.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white p-8 border border-gray-200 rounded-lg">
-                <h3 className="text-2xl font-bold mb-4">rolodexterGPT</h3>
-                <p className="text-gray-700 mb-6">
-                  Our knowledge navigator agent specialized in research, information retrieval, and knowledge synthesis across multiple domains.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Advanced research synthesis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Multi-source knowledge integration</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Complex reasoning chains</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-white p-8 border border-gray-200 rounded-lg">
-                <h3 className="text-2xl font-bold mb-4">rolodexterVS</h3>
-                <p className="text-gray-700 mb-6">
-                  Our development agent responsible for managing source code, scripts, configuration files, and build automation.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Code management and optimization</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Web development expertise</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-black mr-2">•</span>
-                    <span>Build process automation</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <Link 
-                href="/agents" 
-                className="px-6 py-3 bg-white border border-black text-black rounded-md font-medium hover:bg-black hover:text-white transition-colors"
-              >
-                View All Agents
-              </Link>
-            </div>
+          
+          {/* System Snapshot Section */}
+          <SystemSnapshot syncPromptContent={syncPromptContent} />
           </div>
-        </section>
-
-        {/* Call to Action */}
-        <section className="py-24 px-6 bg-white border-t border-gray-200">
-          <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Self-building, networked intelligence systems</h2>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              I build knowledge-forward tools and systems, using frontier AI as a foundation rather than an endpoint. My focus is on manufacturing knowledge at scale and producing intelligence systems that can <Link href="/research" className="underline hover:text-black transition-colors">mine science</Link> for novel insights.
-            </p>
-            
-            <Link 
-              href="/docs" 
-              className="px-8 py-4 bg-black text-white rounded-md font-medium text-lg hover:bg-gray-800 transition-colors mr-4"
-            >
-              Explore Documentation
-            </Link>
-            <Link 
-              href="/products" 
-              className="px-8 py-4 bg-white border border-black text-black rounded-md font-medium text-lg hover:bg-gray-50 transition-colors"
-            >
-              View Products
-            </Link>
-          </div>
-        </section>
       </main>
     </div>
   );
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <div>{page}</div>;
+  return page;
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { tasks, projects, prompts, syncPrompt } = getHomepageData();
+  
+  return {
+    props: {
+      tasks,
+      projects,
+      prompts,
+      syncPromptContent: syncPrompt.content,
+    },
+    // Revalidate every minute to keep content fresh
+    revalidate: 60,
+  };
 };
 
 export default Home;
