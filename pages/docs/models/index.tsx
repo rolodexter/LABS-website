@@ -159,7 +159,7 @@ export default function ModelsDocumentation() {
             <p className="mb-4">
               REST and GraphQL endpoints for model capabilities, with standardized request/response formats and authentication.
             </p>
-            <Button as={Link} href="/docs/api" size="sm">
+            <Button as={Link} href="/docs/api" size="small">
               API Documentation
             </Button>
           </div>
@@ -169,7 +169,7 @@ export default function ModelsDocumentation() {
             <p className="mb-4">
               Containerized deployment options for on-premises infrastructure with configuration for security and resource requirements.
             </p>
-            <Button as={Link} href="/docs/infrastructure" size="sm">
+            <Button as={Link} href="/docs/infrastructure" size="small">
               Deployment Guide
             </Button>
           </div>
@@ -179,7 +179,7 @@ export default function ModelsDocumentation() {
             <p className="mb-4">
               Framework for domain adaptation through knowledge refinement and module configuration without full retraining.
             </p>
-            <Button as={Link} href="/contact" size="sm">
+            <Button as={Link} href="/contact" size="small">
               Request Customization
             </Button>
           </div>
@@ -189,7 +189,7 @@ export default function ModelsDocumentation() {
             <p className="mb-4">
               Tools for integrating model capabilities into existing enterprise workflows and decision processes.
             </p>
-            <Button as={Link} href="/docs/applications" size="sm">
+            <Button as={Link} href="/docs/applications" size="small">
               Integration Patterns
             </Button>
           </div>
