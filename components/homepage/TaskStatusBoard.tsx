@@ -25,10 +25,7 @@ const TaskStatusBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   return (
     <section className="my-12">
       <div className="border-b border-gray-200 pb-2 mb-6">
-        <h2 className="text-2xl font-serif font-normal">Active Tasks</h2>
-        <p className="text-sm text-gray-600 mt-1 font-mono">
-          {activeTasks.length} active task{activeTasks.length !== 1 ? 's' : ''} in the system
-        </p>
+        <h2 className="text-2xl font-serif font-normal">Tasks</h2>
       </div>
       
       <div className="space-y-4">

@@ -57,7 +57,7 @@ const SystemDialogues: React.FC<{ prompts?: any[] }> = ({ prompts: providedPromp
           </p>
         </div>
         <Link
-          href="/system/dialogues"
+          href="/prompt-archive"
           className="text-xs flex items-center px-2 py-1 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors shadow-sm bg-white"
         >
           <svg
@@ -74,7 +74,7 @@ const SystemDialogues: React.FC<{ prompts?: any[] }> = ({ prompts: providedPromp
               d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
             />
           </svg>
-          View Archive
+          View all prompt exchanges →
         </Link>
       </div>
 

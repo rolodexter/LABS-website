@@ -41,40 +41,53 @@ const ClientPrivyProvider = dynamic(
         );
       }
 
+      // Define the wallet config outside the provider to ensure it's fully initialized
+      const privyConfig = {
+        loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'],
+        supportedChains: [
+          { id: 1, name: 'Ethereum' },
+          { id: 137, name: 'Polygon' },
+          { id: 42161, name: 'Arbitrum' },
+          { id: 10, name: 'Optimism' },
+          { id: 8453, name: 'Base' },
+        ],
+        appearance: {
+          theme: 'light',
+          accentColor: '#000000',
+          logo: '/logos/logotype-black.png',
+          showWalletLoginFirst: false,
+        },
+        embeddedWallets: {
+          createOnLogin: 'users-without-wallets',
+          noPromptOnSignature: true,
+        },
+        // Important: Define the wallet array with a clear, complete structure
+        wallets: [
+          {
+            name: 'embedded',
+            showOnDesktop: true,
+            showOnMobile: true,
+            privyWalletConfig: { // Fixed from privyWalletOverride to match Privy's expected API
+              displayName: 'RolodexterWallet',
+              iconUrl: '/logos/symbol-black.png',
+            },
+            // Add fallback for privyWalletOverride to ensure backward compatibility
+            privyWalletOverride: {},
+          },
+          {
+            provider: 'wallet-connect',
+            privyWalletOverride: {}
+          }
+        ],
+      };
+
+      // Debug the config to help diagnose
+      console.log('Privy configuration:', JSON.stringify(privyConfig, null, 2));
+
       return (
         <PrivyProvider
           appId={appId}
-          config={{
-            loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'],
-            supportedChains: [
-              { id: 1, name: 'Ethereum' },
-              { id: 137, name: 'Polygon' },
-              { id: 42161, name: 'Arbitrum' },
-              { id: 10, name: 'Optimism' },
-              { id: 8453, name: 'Base' },
-            ],
-            appearance: {
-              theme: 'light',
-              accentColor: '#000000',
-              logo: '/logos/logotype-black.png',
-              showWalletLoginFirst: false,
-            },
-            embeddedWallets: {
-              createOnLogin: 'users-without-wallets',
-              noPromptOnSignature: true, // Prevents signature prompts for a smoother UX
-            },
-            wallets: [
-              {
-                name: 'embedded',
-                showOnDesktop: true,
-                showOnMobile: true,
-                privyWalletOverride: {
-                  name: 'RolodexterWallet',
-                  icon: '/logos/symbol-black.png', // Using your logo for the wallet
-                },
-              },
-            ],
-          }}
+          config={privyConfig}
           onSuccess={async user => {
             console.log('Successfully authenticated:', user);
             // Save user data to database

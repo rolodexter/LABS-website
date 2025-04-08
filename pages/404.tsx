@@ -3,12 +3,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import Header from '@/components/navigation/Header';
 import Footer from '@/components/navigation/Footer';
 import servicesData from '@/data/services.json';
 import productsData from '@/data/products.json';
+import type { ReactElement } from 'react';
 
-export default function Custom404() {
+function Custom404() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   
@@ -71,7 +71,7 @@ export default function Custom404() {
         <meta name="description" content="We build systems, not dead ends. Let's get you back on track." />
       </Head>
 
-      <Header />
+      {/* Header is rendered by Layout in _app.tsx */}
 
       <main className="flex-grow container mx-auto px-4 py-12">
         <motion.div 
@@ -185,3 +185,9 @@ export default function Custom404() {
     </div>
   );
 }
+
+Custom404.getLayout = function getLayout(page: ReactElement) {
+  return page;
+};
+
+export default Custom404;

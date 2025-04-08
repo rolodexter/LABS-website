@@ -279,7 +279,7 @@ export default function Header() {
             ))}
 
             <Tooltip content={menuTooltips['Login']}>
-              <div className="flex items-center space-x-1 bg-black text-white px-3 py-1.5 rounded-full hover:bg-gray-800 transition-colors duration-200">
+              <div className="flex items-center space-x-1 border border-black px-3 py-1.5 rounded-full hover:bg-gray-50 transition-colors duration-200">
                 <LoginIcon className="w-4 h-4" />
                 <LoginButton />
               </div>

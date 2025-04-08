@@ -37,16 +37,6 @@ const Home: NextPage<HomePageProps> & {
       </Head>
       
       <main className="overflow-hidden">
-        {/* Header */}
-        <header className="border-b border-gray-200 py-16">
-          <div className="max-w-5xl mx-auto px-6">
-            <h1 className="text-4xl font-serif font-normal mb-3">rolodexterLABS</h1>
-            <p className="text-lg font-mono text-gray-700 mb-0">
-              Executive intelligence systems for knowledge manufacturing and scientific discovery
-            </p>
-          </div>
-        </header>
-
         {/* Main Content */}
         <div className="max-w-5xl mx-auto px-6 py-8">
           {/* System Dialogues Section - Agent Collaboration */}
