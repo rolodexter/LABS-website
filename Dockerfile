@@ -22,7 +22,7 @@ RUN npm install --verbose
 # Copy the rest of the application code
 COPY . .
 
-# Make build error capture script executable
+# Make scripts executable
 RUN chmod +x scripts/capture-build-error.sh
 
 # Print Node and npm versions for debugging
@@ -37,5 +37,5 @@ EXPOSE 3000
 # Set environment to production
 ENV NODE_ENV=production
 
-# Command to run the application
-CMD ["npm", "start"]
+# Command to run the application with runtime error logging
+CMD ["node", "scripts/runtime-error-log.js"]

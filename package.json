@@ -8,7 +8,7 @@
     "dev": "next dev",
     "pre-build-type-check": "ts-node scripts/pre-build-type-check.ts",
     "build": "npm run pre-build-type-check && next build",
-    "start": "cross-env NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
@@ -23,7 +23,8 @@
     "validate-content": "ts-node scripts/validate-content.ts",
     "validate-prisma-imports": "ts-node scripts/validate-prisma-imports.ts",
     "validate": "npm run lint && npm run pre-build-type-check && npm run build && npm run validate-content && npm run validate-prisma-imports",
-    "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts"
+    "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts",
+    "runtime-error-log": "node scripts/runtime-error-log.js"
   },
   "author": "Joe Maristela",
   "license": "ISC",
