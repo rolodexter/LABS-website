@@ -1,3 +1,7 @@
+import path from 'path';
+import fs from 'fs';
+import matter from 'gray-matter';
+
 import { prisma } from './prisma';
 // Keep categories import for backward compatibility
 import { categories, getCategoryById } from './categories';
