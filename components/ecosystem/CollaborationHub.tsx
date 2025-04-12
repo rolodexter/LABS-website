@@ -12,7 +12,6 @@ interface Node {
   id: string;
   label: string;
   type: 'agent' | 'activity';
-  subtype?: string;
   x: number;
   y: number;
   vx: number;
@@ -73,7 +72,6 @@ const CollaborationHub: React.FC<CollaborationHubProps> = ({ activities, agents 
         vy: 0,
         radius: 15,
         color: '#ffffff',
-        subtype: agent.type,
       })),
 
       // Activity nodes
@@ -88,43 +86,11 @@ const CollaborationHub: React.FC<CollaborationHubProps> = ({ activities, agents 
         vy: 0,
         radius: 10,
         color: '#f0f0f0',
-        subtype: activity.type,
       })),
-    ];
-
-    // Create links
-    const newLinks: Link[] = [
-      // Agent to activity links
-      ...activities.slice(0, 50).map(activity => ({
-        source: activity.agentId,
-        target: activity.id,
-        strength: 0.1,
-        color: getActivityColor(activity.type, 0.6),
-        dashed: false,
-      })),
-
-      // Activity to activity links (related content)
-      ...activities
-        .slice(0, 50)
-        .flatMap(activity =>
-          (activity.relatedIds || []).map(relatedId => ({
-            source: activity.id,
-            target: relatedId,
-            strength: 0.05,
-            color: 'rgba(255,255,255,0.2)',
-            dashed: true,
-          }))
-        )
-        .filter(
-          link =>
-            // Ensure both source and target exist as nodes
-            newNodes.some(n => n.id === link.source) && newNodes.some(n => n.id === link.target)
-        ),
     ];
 
     setNodes(newNodes);
-    setLinks(newLinks);
-  }, [activities, agents, dimensions]);
+  }, [agents, activities, dimensions]);
 
   // Draw the visualization
   useEffect(() => {
@@ -384,7 +350,7 @@ const CollaborationHub: React.FC<CollaborationHubProps> = ({ activities, agents 
             }}
           >
             <div className="flex items-center mb-1">
-              {hoveredNode.type === 'activity' && hoveredNode.subtype && (
+              {hoveredNode.type === 'activity' && hoveredNode.color && (
                 <span
                   className="w-2 h-2 rounded-full mr-2"
                   style={{ backgroundColor: hoveredNode.color }}
@@ -393,11 +359,7 @@ const CollaborationHub: React.FC<CollaborationHubProps> = ({ activities, agents 
               <span className="font-medium">{hoveredNode.label}</span>
             </div>
             <div className="text-xs text-lab-gray-400">
-              {hoveredNode.type === 'agent'
-                ? 'Agent'
-                : hoveredNode.subtype
-                  ? hoveredNode.subtype.charAt(0).toUpperCase() + hoveredNode.subtype.slice(1)
-                  : 'Activity'}
+              {hoveredNode.type === 'agent' ? 'Agent' : 'Activity'}
             </div>
           </motion.div>
         )}
