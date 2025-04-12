@@ -7,6 +7,9 @@ RUN apk add --no-cache git curl bash
 # Set working directory
 WORKDIR /app
 
+# Disable Husky during CI
+ENV HUSKY=0
+
 # Copy package files first for better caching
 COPY package*.json ./
 
@@ -19,14 +22,14 @@ RUN npm install --verbose
 # Copy the rest of the application code
 COPY . .
 
-# Initialize git repository for husky
-RUN git init && git add . && git commit -m "Initial commit"
+# Make build error capture script executable
+RUN chmod +x scripts/capture-build-error.sh
 
 # Print Node and npm versions for debugging
 RUN node --version && npm --version
 
-# Run pre-build type checks and build
-RUN npm run build
+# Run build with error capture
+RUN scripts/capture-build-error.sh
 
 # Expose the port the app runs on
 EXPOSE 3000
