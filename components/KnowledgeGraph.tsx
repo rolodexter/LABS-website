@@ -51,7 +51,7 @@ const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
       label: item.meta.title,
       category: item.meta.category,
       slug: item.meta.slug,
-      radius: Math.max(30, Math.min(50, item.readingTime * 3)), // Size based on reading time
+      radius: Math.max(30, Math.min(50, (item.readTime || 1) * 3)), // Size based on reading time
       x: Math.random() * width,
       y: Math.random() * height,
       vx: 0,
