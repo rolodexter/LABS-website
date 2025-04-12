@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { prisma } from './prisma';
+import { ContentItem as DBContentItem, Tag, Category } from '@prisma/client';
+// Keep categories import for backward compatibility
 import { categories, getCategoryById } from './categories';
 
 // Define content types
@@ -151,7 +151,7 @@ export const getAllContent = (type: ContentType): ContentItem[] => {
 };
 
 // Get content by category
-export function getContentByCategory(category: string, count: number = 10): ContentItem[] {
+export function getContentByCategory(category: string, count = 10): ContentItem[] {
   const allContent = getAllContent('knowledge');
   return allContent
     .filter(item => item.meta.category.startsWith(category))
@@ -159,7 +159,7 @@ export function getContentByCategory(category: string, count: number = 10): Cont
 }
 
 // Get content by tag
-export const getContentByTag = (tag: string, count: number = 10): ContentItem[] => {
+export const getContentByTag = (tag: string, count = 10): ContentItem[] => {
   const allContent = getAllContent('knowledge');
   return allContent
     .filter(item => item.meta.tags && item.meta.tags.includes(tag))
@@ -169,7 +169,7 @@ export const getContentByTag = (tag: string, count: number = 10): ContentItem[] 
 // Get content by slug
 export const getContentBySlug = (slug: string): ContentItem | null => {
   // Normalize the slug by removing leading slash if present
-  let normalizedSlug = slug.startsWith('/') ? slug : `/${slug}`;
+  const normalizedSlug = slug.startsWith('/') ? slug : `/${slug}`;
   
   // Determine content type from slug
   let contentType: ContentType = 'knowledge';
@@ -245,7 +245,7 @@ export function getContentSections(): ContentSection[] {
 }
 
 // Get featured content
-export function getFeaturedContent(count: number = 3): ContentItem[] {
+export function getFeaturedContent(count = 3): ContentItem[] {
   // Get all content
   const allContent = getAllContent('knowledge');
   

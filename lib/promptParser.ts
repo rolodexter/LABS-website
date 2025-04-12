@@ -271,3 +271,92 @@ export function getPromptChatMessages(baseContentPath = 'content/system/prompts'
 
   return formatPromptsForChat(validPrompts);
 }
+
+export interface AgentInteraction {
+  agents: string[];
+  exchanges: {
+    speaker: string;
+    message: string;
+    keywords?: string[];
+  }[];
+  metadata?: {
+    taskComplete?: boolean;
+    context?: string;
+  };
+}
+
+export function parsePromptArchive(filePath: string): AgentInteraction | null {
+  try {
+    // Read markdown file
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const { content } = matter(fileContent);
+
+    // Extract unique agents and their exchanges
+    const agentExchanges: AgentInteraction = {
+      agents: [],
+      exchanges: []
+    };
+
+    // Regex to match agent messages (e.g., **joe**: message)
+    const messageRegex = /\*\*(\w+)\*\*:\s*(.+)/g;
+    let match;
+    
+    while ((match = messageRegex.exec(content)) !== null) {
+      const [, agent, message] = match;
+      
+      // Track unique agents
+      if (!agentExchanges.agents.includes(agent)) {
+        agentExchanges.agents.push(agent);
+      }
+
+      // Extract keywords (simple implementation)
+      const keywords = message.match(/\[(\w+)\]/g)?.map(k => k.slice(1, -1)) || [];
+
+      agentExchanges.exchanges.push({
+        speaker: agent,
+        message: message.replace(/\[(\w+)\]/g, '').trim(),
+        keywords
+      });
+    }
+
+    // Check for task completion
+    agentExchanges.metadata = {
+      taskComplete: content.includes('[task-complete]'),
+      context: content.match(/^#\s*(.+)/)?.[1]
+    };
+
+    return agentExchanges.agents.length > 0 ? agentExchanges : null;
+  } catch (error) {
+    console.error(`Error parsing prompt archive ${filePath}:`, error);
+    return null;
+  }
+}
+
+export function findPromptArchives(baseDir: string): string[] {
+  const archivePaths: string[] = [];
+
+  function traverseDirectory(currentPath: string) {
+    const files = fs.readdirSync(currentPath);
+    
+    files.forEach(file => {
+      const fullPath = path.join(currentPath, file);
+      const stat = fs.statSync(fullPath);
+      
+      if (stat.isDirectory()) {
+        traverseDirectory(fullPath);
+      } else if (file.endsWith('.md')) {
+        archivePaths.push(fullPath);
+      }
+    });
+  }
+
+  traverseDirectory(baseDir);
+  return archivePaths;
+}
+
+export function loadAllPromptArchives(baseDir: string): AgentInteraction[] {
+  const archivePaths = findPromptArchives(baseDir);
+  return archivePaths
+    .map(parsePromptArchive)
+    .filter((interaction): interaction is AgentInteraction => interaction !== null);
+}

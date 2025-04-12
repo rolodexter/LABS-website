@@ -1,0 +1,13 @@
+{
+  "name": "joe",
+  "type": "human",
+  "shape": "cube",
+  "icon": "👨‍💻",
+  "splineSceneUrl": "/scenes/joe-agent.spline",
+  "animationConfig": {
+    "baseColor": "#000000",
+    "wireframeOnly": true,
+    "movementPattern": "oscillate",
+    "interactionRadius": 50
+  }
+}

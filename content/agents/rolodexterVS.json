@@ -1,0 +1,13 @@
+{
+  "name": "rolodexterVS",
+  "type": "tool",
+  "shape": "sphere",
+  "icon": "🛠️",
+  "splineSceneUrl": "/scenes/rolodexterVS-agent.spline",
+  "animationConfig": {
+    "baseColor": "#000000",
+    "wireframeOnly": true,
+    "movementPattern": "pulse",
+    "interactionRadius": 60
+  }
+}

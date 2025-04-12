@@ -42,8 +42,9 @@ const ClientPrivyProvider = dynamic(
       }
 
       // Define the wallet config outside the provider to ensure it's fully initialized
+      // Use explicit type casting to match Privy's expected types
       const privyConfig = {
-        loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'],
+        loginMethods: ['email', 'wallet', 'google', 'github', 'twitter'] as const,
         supportedChains: [
           { id: 1, name: 'Ethereum' },
           { id: 137, name: 'Polygon' },
@@ -52,13 +53,13 @@ const ClientPrivyProvider = dynamic(
           { id: 8453, name: 'Base' },
         ],
         appearance: {
-          theme: 'light',
-          accentColor: '#000000',
+          theme: 'light' as const,
+          accentColor: '#000000' as `#${string}`,
           logo: '/logos/logotype-black.png',
           showWalletLoginFirst: false,
         },
         embeddedWallets: {
-          createOnLogin: 'users-without-wallets',
+          createOnLogin: 'users-without-wallets' as const,
           noPromptOnSignature: true,
         },
         // Important: Define the wallet array with a clear, complete structure

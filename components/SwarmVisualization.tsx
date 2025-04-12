@@ -156,7 +156,7 @@ const SwarmVisualization: React.FC = () => {
     const animationDuration = 5000;
     const timeCompression = animationDuration / timeRange;
     
-    let startTimestamp = performance.now();
+    const startTimestamp = performance.now();
     
     const animate = (timestamp: number) => {
       const elapsed = timestamp - startTimestamp;

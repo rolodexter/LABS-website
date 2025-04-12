@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as d3 from 'd3';
+import React, { useState } from 'react';
+// NOTE: To fully restore functionality, install d3 with: npm install d3 @types/d3
 
 interface KnowledgeNode {
   id: string;
@@ -32,7 +32,6 @@ const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
   showLabels = true,
   interactive = true,
 }) => {
-  const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredNode, setHoveredNode] = useState<KnowledgeNode | null>(null);
 
   // Colors based on theme
@@ -41,7 +40,7 @@ const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
     node: theme === 'light' ? '#000000' : '#ffffff',
     link: theme === 'light' ? '#cccccc' : '#333333',
     text: theme === 'light' ? '#333333' : '#ffffff',
-    highlight: '#555555',
+    highlight: '#ff0000',
   };
 
   // Category colors
@@ -54,202 +53,169 @@ const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
     // Add more categories as needed
   };
 
-  useEffect(() => {
-    if (!svgRef.current || nodes.length === 0) return;
+  // Get node size based on strength
+  const getNodeSize = (node: KnowledgeNode): number => {
+    return (node.strength || 5) * 2 + 10;
+  };
 
-    // Clear previous graph
-    d3.select(svgRef.current).selectAll('*').remove();
+  // Get category color
+  const getCategoryColor = (category: string): string => {
+    return categoryColors[category] || colors.node;
+  };
+  
+  // Calculate positions in a circular layout
+  const calculateNodePositions = () => {
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) / 3;
+    
+    return nodes.map((node, index) => {
+      const angle = (index / Math.max(nodes.length, 1)) * Math.PI * 2;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      return { node, x, y };
+    });
+  };
+  
+  const nodePositions = calculateNodePositions();
 
-    // Create links data from node connections
-    const links = nodes.flatMap(node => 
-      node.connections.map(targetId => ({
-        source: node.id,
-        target: targetId,
-        value: 1
-      }))
-    ).filter(link => 
-      // Ensure both source and target exist in nodes
-      nodes.some(n => n.id === link.source) && 
-      nodes.some(n => n.id === link.target)
+  // Render tooltip for hovered node
+  const renderTooltip = () => {
+    if (!hoveredNode) return null;
+
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          padding: '10px',
+          backgroundColor: colors.background,
+          border: `1px solid ${colors.node}`,
+          borderRadius: '4px',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+          zIndex: 1000,
+          maxWidth: '250px',
+          color: colors.text,
+        }}
+      >
+        <h3 style={{ margin: '0 0 5px', fontSize: '14px', fontWeight: 'bold' }}>
+          {hoveredNode.title}
+        </h3>
+        <p style={{ margin: '0 0 3px', fontSize: '12px' }}>
+          Category: {hoveredNode.category}
+        </p>
+        {hoveredNode.tags && hoveredNode.tags.length > 0 && (
+          <p style={{ margin: '0', fontSize: '12px' }}>
+            Tags: {hoveredNode.tags.join(', ')}
+          </p>
+        )}
+        {hoveredNode.connections && (
+          <p style={{ margin: '3px 0 0', fontSize: '12px' }}>
+            Connections: {hoveredNode.connections.length}
+          </p>
+        )}
+      </div>
     );
+  };
 
-    // Create SVG
-    const svg = d3.select(svgRef.current)
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', [0, 0, width, height])
-      .style('background', colors.background);
-
-    // Create a group for the graph
-    const g = svg.append('g');
-
-    // Create zoom behavior
-    if (interactive) {
-      const zoom = d3.zoom()
-        .scaleExtent([0.1, 4])
-        .on('zoom', (event) => {
-          g.attr('transform', event.transform);
-        });
-
-      svg.call(zoom as any);
-    }
-
-    // Create simulation
-    const simulation = d3.forceSimulation(nodes as any)
-      .force('link', d3.forceLink(links).id((d: any) => d.id).distance(100))
-      .force('charge', d3.forceManyBody().strength(-200))
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius((d: any) => (d.strength || 5) * 2 + 10));
-
-    // Draw links
-    const link = g.append('g')
-      .attr('stroke', colors.link)
-      .attr('stroke-opacity', 0.6)
-      .selectAll('line')
-      .data(links)
-      .join('line')
-      .attr('stroke-width', (d: any) => Math.sqrt(d.value));
-
-    // Draw nodes
-    const node = g.append('g')
-      .selectAll('circle')
-      .data(nodes)
-      .join('circle')
-      .attr('r', (d: any) => (d.strength || 5) + 5)
-      .attr('fill', (d: any) => categoryColors[d.category] || colors.node)
-      .attr('stroke', colors.background)
-      .attr('stroke-width', 1.5)
-      .style('cursor', interactive ? 'pointer' : 'default')
-      .on('mouseover', (event, d: any) => {
-        setHoveredNode(d);
-        d3.select(event.currentTarget)
-          .attr('stroke', colors.highlight)
-          .attr('stroke-width', 2);
-      })
-      .on('mouseout', (event) => {
-        setHoveredNode(null);
-        d3.select(event.currentTarget)
-          .attr('stroke', colors.background)
-          .attr('stroke-width', 1.5);
-      })
-      .on('click', (event, d: any) => {
-        if (interactive && onNodeClick) {
-          onNodeClick(d);
-        }
-      });
-
-    // Add titles for accessibility
-    node.append('title')
-      .text((d: any) => d.title);
-
-    // Draw labels if showLabels is true
-    if (showLabels) {
-      const labels = g.append('g')
-        .selectAll('text')
-        .data(nodes)
-        .join('text')
-        .attr('dx', 12)
-        .attr('dy', '.35em')
-        .text((d: any) => d.title)
-        .style('font-size', '10px')
-        .style('font-family', 'sans-serif')
-        .style('fill', colors.text)
-        .style('pointer-events', 'none')
-        .style('opacity', 0.7);
-
-      // Update label positions on tick
-      simulation.on('tick', () => {
-        link
-          .attr('x1', (d: any) => d.source.x)
-          .attr('y1', (d: any) => d.source.y)
-          .attr('x2', (d: any) => d.target.x)
-          .attr('y2', (d: any) => d.target.y);
-
-        node
-          .attr('cx', (d: any) => d.x)
-          .attr('cy', (d: any) => d.y);
-
-        labels
-          .attr('x', (d: any) => d.x)
-          .attr('y', (d: any) => d.y);
-      });
-    } else {
-      // Just update node and link positions
-      simulation.on('tick', () => {
-        link
-          .attr('x1', (d: any) => d.source.x)
-          .attr('y1', (d: any) => d.source.y)
-          .attr('x2', (d: any) => d.target.x)
-          .attr('y2', (d: any) => d.target.y);
-
-        node
-          .attr('cx', (d: any) => d.x)
-          .attr('cy', (d: any) => d.y);
-      });
-    }
-
-    // If focusNodeId is provided, center the view on that node
-    if (focusNodeId) {
-      const focusNode = nodes.find(n => n.id === focusNodeId);
-      if (focusNode && interactive) {
-        // Highlight the focus node
-        node.filter((d: any) => d.id === focusNodeId)
-          .attr('stroke', '#ff0000')
-          .attr('stroke-width', 3)
-          .attr('r', (d: any) => (d.strength || 5) + 8);
-        
-        // Highlight direct connections
-        const connectedIds = focusNode.connections;
-        node.filter((d: any) => connectedIds.includes(d.id))
-          .attr('stroke', '#ff0000')
-          .attr('stroke-width', 2);
-        
-        link.filter((d: any) => 
-          d.source.id === focusNodeId || d.target.id === focusNodeId
-        )
-          .attr('stroke', '#ff0000')
-          .attr('stroke-opacity', 1)
-          .attr('stroke-width', 2);
-      }
-    }
-
-    // Cleanup
-    return () => {
-      simulation.stop();
-    };
-  }, [nodes, height, width, focusNodeId, theme, showLabels, interactive, colors, categoryColors, onNodeClick]);
-
+  // Draw the knowledge graph using SVG
   return (
-    <div className="relative">
-      <svg ref={svgRef} />
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: `${height}px`,
+        backgroundColor: colors.background,
+        overflow: 'hidden',
+        borderRadius: '4px',
+      }}
+    >
+      {/* Temporary message about d3 */}
+      <div style={{ 
+        position: 'absolute', 
+        top: '10px', 
+        left: '10px', 
+        padding: '5px 10px',
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        borderRadius: '4px',
+        fontSize: '12px',
+        color: colors.text,
+        zIndex: 5
+      }}>
+        <p style={{ margin: 0 }}>Simplified Knowledge Graph (d3 required for full functionality)</p>
+      </div>
+
+      {/* SVG for the knowledge graph */}
+      <svg
+        width={width}
+        height={height}
+        style={{ display: 'block' }}
+      >
+        {/* Draw connections between nodes */}
+        {nodes.flatMap(sourceNode => 
+          (sourceNode.connections || []).map(targetId => {
+            const targetNode = nodes.find(n => n.id === targetId);
+            if (!targetNode) return null;
+            
+            const sourcePos = nodePositions.find(p => p.node.id === sourceNode.id);
+            const targetPos = nodePositions.find(p => p.node.id === targetId);
+            
+            if (!sourcePos || !targetPos) return null;
+            
+            return (
+              <line
+                key={`${sourceNode.id}-${targetId}`}
+                x1={sourcePos.x}
+                y1={sourcePos.y}
+                x2={targetPos.x}
+                y2={targetPos.y}
+                stroke={colors.link}
+                strokeWidth={1}
+                strokeOpacity={0.6}
+              />
+            );
+          })
+        ).filter(Boolean)}
+        
+        {/* Draw nodes */}
+        {nodePositions.map(({ node, x, y }) => {
+          const isFocused = node.id === focusNodeId;
+          const nodeSize = getNodeSize(node);
+          
+          return (
+            <g key={node.id}>
+              <circle
+                cx={x}
+                cy={y}
+                r={nodeSize}
+                fill={getCategoryColor(node.category)}
+                stroke={isFocused ? colors.highlight : colors.background}
+                strokeWidth={isFocused ? 3 : 1.5}
+                style={{ cursor: interactive ? 'pointer' : 'default' }}
+                onMouseOver={() => setHoveredNode(node)}
+                onMouseOut={() => setHoveredNode(null)}
+                onClick={() => interactive && onNodeClick && onNodeClick(node)}
+              />
+              
+              {showLabels && (
+                <text
+                  x={x + nodeSize + 5}
+                  y={y + 5}
+                  fontSize="10px"
+                  fill={colors.text}
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {node.title.length > 20 ? `${node.title.substring(0, 17)}...` : node.title}
+                </text>
+              )}
+            </g>
+          );
+        })}
+      </svg>
       
-      {/* Tooltip for hovered node */}
-      {hoveredNode && interactive && (
-        <div 
-          className="absolute bg-white shadow-lg rounded-md p-3 z-10 max-w-xs"
-          style={{ 
-            left: `${(hoveredNode as any).x + 20}px`, 
-            top: `${(hoveredNode as any).y - 10}px` 
-          }}
-        >
-          <h4 className="font-bold text-sm">{hoveredNode.title}</h4>
-          <div className="text-xs text-gray-600 mt-1">
-            <span className="uppercase">{hoveredNode.category}</span>
-            {hoveredNode.tags.length > 0 && (
-              <div className="mt-1 flex flex-wrap gap-1">
-                {hoveredNode.tags.slice(0, 3).map(tag => (
-                  <span key={tag} className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">
-                    {tag}
-                  </span>
-                ))}
-                {hoveredNode.tags.length > 3 && (
-                  <span className="text-gray-500">+{hoveredNode.tags.length - 3} more</span>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Render tooltip for hovered node */}
+      {renderTooltip()}
     </div>
   );
 };

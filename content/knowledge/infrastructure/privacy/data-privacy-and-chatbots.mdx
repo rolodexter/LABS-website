@@ -1,0 +1,131 @@
+---
+title: 'Data Privacy in Conversational Agents: Lessons for rolodexter'
+slug: '/knowledge/infrastructure/privacy/data-privacy-and-chatbots'
+status: 'draft'
+version: '1.0.0'
+last_updated: '2025-04-03'
+category: 'infrastructure'
+subcategory: 'privacy'
+agent_author: 'rolodexterGPT'
+contributors:
+  - 'Joe Maristela'
+reviewStatus: 'pending'
+complexity: 'intermediate'
+estimatedReadTime: '8 mins'
+tags: ['privacy', 'data governance', 'chatbots', 'security', 'rolodexterGPT']
+aiKeywords: ['data retention', 'chatbot privacy', 'PII filtering', 'secure agents']
+thought_process: |
+  This module was created to ensure the design of rolodexter's AI agents includes rigorous data privacy constraints. While OpenAI, Google, and DeepSeek take different approaches to data retention and usage, rolodexter must hardcode safeguards into the stack—including optional full client-side operations, no PII ingestion policies, and user education about opt-out limitations.
+dependencies:
+  - '/knowledge/ecosystem/executive-agent-coordination'
+conceptualDependencies:
+  - 'zero-knowledge architecture'
+  - 'differential privacy'
+  - 'agentic containment'
+apiVersion: '1.0.0'
+compatibilityMatrix:
+  rolodexterGPT: 'full'
+  rolodexterDOC: 'full'
+  rolodexterAPI: 'in-planning'
+externalDependencies:
+  - 'OpenAI API (restricted mode)'
+  - 'Gemini API (client-evaluated mode)'
+  - 'Local LLM containers (e.g., DeepSeek, LLaMA-3)'
+prerequisites:
+  - 'Basic understanding of chatbot architecture'
+  - 'Familiarity with PII definitions'
+outcomes:
+  - Understand how rolodexter protects user data compared to existing platforms
+  - Identify the limitations of opt-out mechanisms in current AI systems
+  - Learn what categories of information must be filtered or redacted
+validation:
+  - Includes comparison to ChatGPT, Gemini, DeepSeek
+  - 7 privacy categories addressed
+  - Aligned with rolodexter agent design goals
+references:
+  - 'https://help.openai.com/en/articles/7730893-data-controls-faq'
+  - 'https://techcrunch.com/2024/02/08/google-saves-your-conversations-with-gemini-for-years-by-default/'
+  - 'https://milvus.io/ai-quick-reference/how-does-deepseek-handle-data-privacy-during-model-training'
+  - 'https://www.tomsguide.com/ai/i-test-ai-for-a-living-and-these-are-7-things-i-would-never-tell-chatgpt-heres-why'
+changelog:
+  - '1.0.0 – Initial draft created on 2025-04-03'
+---
+
+# DATA PRIVACY IN CONVERSATIONAL AGENTS: LESSONS FOR ROLODEXTER
+
+## Summary
+
+This module outlines privacy risks in public-facing chatbots and draws clear distinctions between commercial practices (OpenAI, Google, DeepSeek) and the emerging privacy-first design of rolodexter agents. It introduces a taxonomy of sensitive data types that should never be entered into general-purpose conversational agents and provides concrete design goals for `rolodexterGPT` and related services.
+
+---
+
+## Key Takeaways
+
+1. **rolodexter must default to a zero-retention, zero-PII policy** for all AI interactions.
+2. **Many opt-out controls in commercial chatbots are limited**, temporary, or retroactive-only—rolodexter's approach must avoid these pitfalls.
+3. **Educating users on what not to share** is as vital as securing infrastructure.
+
+---
+
+## Key Concepts
+
+### Retention vs. Training
+
+- **OpenAI and Gemini**: Don't train on user inputs by default, but retain conversations (30 days / 3 years).
+- **DeepSeek**: Trains on user inputs using anonymization and differential privacy.
+
+### Categories of Sensitive Information
+
+rolodexterGPT must recognize and filter the following:
+
+1. **Personally Identifiable Information (PII)**
+2. **Financial Data**
+3. **Authentication Credentials**
+4. **Highly Sensitive Personal Disclosures**
+5. **Confidential Business Documents**
+6. **Explicit / Threatening Language**
+7. **Detailed Health Records**
+
+Each agent in the stack must apply real-time filters or redaction logic where appropriate.
+
+---
+
+## Use Cases
+
+### Secure Resume Editing
+
+- `rolodexterDOC` allows users to redact name/email fields during draft phase and reinsert them manually before export.
+
+### Research Agent Containment
+
+- `rolodexterGPT` is paired with a runtime monitor that flags the presence of PII or medical keywords before data is stored or transmitted.
+
+### API Gateway Policies
+
+- `rolodexterAPI` blocks any form submissions containing strings that match known authentication patterns (e.g., "sk-...", "0x...", or CVV-like formats).
+
+---
+
+## System Integration
+
+```mermaid
+graph TD
+  A[User Input] -->|Redacted at Source| B[rolodexterGPT]
+  B -->|No Retention| C[Volatile Context Store]
+  C -->|Ephemeral Processing| D[rolodexterDOC or rolodexterAPI]
+  E[Redaction Filter] --> B
+  F[PII Classifier] --> A
+  B -->|Warning| G[User Notification UI]
+```
+
+---
+
+## Notes / Additional Context
+
+- **No agent in the rolodexter ecosystem should rely on external LLM inference** for sensitive tasks unless hosted in a zero-knowledge sandbox.
+- A potential path includes **user-configured modes**:
+  - _Offline-only local LLMs_
+  - _Cloud inference with redaction_
+  - _Enterprise-grade zero-trust deployment for commercial clients_
+
+---

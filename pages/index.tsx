@@ -8,6 +8,8 @@ import { usePrivy } from '@privy-io/react-auth';
 import SystemDialogues from '../components/homepage/SystemDialogues';
 import TaskStatusBoard from '../components/homepage/TaskStatusBoard';
 import ProjectStatus from '../components/homepage/ProjectStatus';
+import AgentCanvas from '../components/AgentCanvas';
+import { useAgentCanvasData } from '../hooks/useAgentCanvasData';
 
 // Import markdown utilities
 import { getHomepageData } from '../lib/markdown';
@@ -18,12 +20,11 @@ interface HomePageProps {
   prompts: any[];
 }
 
-
-
 const Home: NextPage<HomePageProps> & {
   getLayout?: (page: ReactElement) => ReactElement;
 } = ({ tasks, projects, prompts }) => {
   const { ready, authenticated, login } = usePrivy();
+  const agentData = useAgentCanvasData();
 
   return (
     <div className="min-h-screen w-full bg-white text-black">
@@ -37,6 +38,13 @@ const Home: NextPage<HomePageProps> & {
       </Head>
       
       <main className="overflow-hidden">
+        {/* Agent Collaboration Canvas */}
+        <div className="w-full h-[500px] md:h-[700px] mb-16">
+          {agentData.length > 0 && (
+            <AgentCanvas agents={agentData} />
+          )}
+        </div>
+
         {/* Main Content */}
         <div className="max-w-5xl mx-auto px-6 py-8">
           {/* System Dialogues Section - Agent Collaboration */}
@@ -47,8 +55,7 @@ const Home: NextPage<HomePageProps> & {
             <TaskStatusBoard tasks={tasks} />
             <ProjectStatus projects={projects} />
           </div>
-          
-          </div>
+        </div>
       </main>
     </div>
   );
