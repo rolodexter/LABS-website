@@ -61,7 +61,7 @@ const KnowledgeGraph: React.FC<KnowledgeGraphProps> = ({
     // Create edges based on dependencies or related content
     const newEdges: Edge[] = [];
     knowledgeItems.forEach((item) => {
-      if (item.meta.dependencies) {
+      if (item.meta?.dependencies && Array.isArray(item.meta.dependencies)) {
         item.meta.dependencies.forEach((dep: string) => {
           const targetNode = newNodes.find((n) => n.slug === dep || dep.includes(n.slug));
           if (targetNode) {

@@ -29,6 +29,7 @@ export type ContentItem = {
     dailyFocus?: boolean;
     tags?: string[];
     complexity?: 'beginner' | 'intermediate' | 'advanced';
+    dependencies?: string[];
   };
   content: string;
   raw_content?: string;
