@@ -20,7 +20,8 @@
     "update-swarm": "node scripts/update-swarm-feed.js",
     "type-check": "ts-node scripts/type-safety-check.ts",
     "validate-content": "ts-node scripts/validate-content-schema.ts",
-    "validate": "npm run lint && npm run build && npm run validate-content"
+    "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts",
+    "validate": "npm run lint && npm run build && npm run validate-content && npm run audit-prisma-imports"
   },
   "author": "Joe Maristela",
   "license": "ISC",
