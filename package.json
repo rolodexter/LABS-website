@@ -21,7 +21,8 @@
     "type-check": "ts-node scripts/type-safety-check.ts",
     "validate-content": "ts-node scripts/validate-content-schema.ts",
     "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts",
-    "validate": "npm run lint && npm run build && npm run validate-content && npm run audit-prisma-imports"
+    "validate-prisma-imports": "ts-node scripts/validate-prisma-imports.ts",
+    "validate": "npm run lint && npm run build && npm run validate-content && npm run audit-prisma-imports && npm run validate-prisma-imports"
   },
   "author": "Joe Maristela",
   "license": "ISC",
