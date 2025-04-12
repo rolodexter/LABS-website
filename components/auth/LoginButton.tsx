@@ -2,7 +2,12 @@ import { usePrivy } from '@privy-io/react-auth';
 import { MouseEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 
-export function LoginButton() {
+// Define props type
+type LoginButtonProps = {
+  className?: string;
+};
+
+export function LoginButton({ className = '' }: LoginButtonProps) {
   // Default to not authenticated before Privy is ready
   const { login, logout, authenticated = false, ready } = usePrivy();
   const [isClient, setIsClient] = useState(false);
@@ -14,7 +19,9 @@ export function LoginButton() {
     try {
       // Check if we're in an iframe (cross-origin context)
       if (typeof window !== 'undefined' && window.top !== window.self) {
-        console.warn('LoginButton is running inside an iframe. Some wallet features may be limited.');
+        console.warn(
+          'LoginButton is running inside an iframe. Some wallet features may be limited.'
+        );
         return;
       }
 
@@ -64,20 +71,17 @@ export function LoginButton() {
     );
   }
 
-  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
+  // Handle login action
+  const handleLogin = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('Login button clicked');
+
+    if (!ready) {
+      console.warn('Privy authentication not ready');
+      return;
+    }
 
     try {
-      // Reset error state on new attempt
-      setHasError(false);
       setIsLoading(true);
-
-      // Check for cross-origin context
-      if (typeof window !== 'undefined' && window.top !== window.self) {
-        throw new Error('Cannot initialize wallet in an iframe due to security restrictions');
-      }
-
       if (authenticated) {
         console.log('Attempting to log out...');
         await logout?.();
@@ -95,10 +99,11 @@ export function LoginButton() {
     } catch (error) {
       console.error('Authentication error:', error);
       setHasError(true);
-      
+
       // Don't show alert in production to maintain minimalist UX
       if (process.env.NODE_ENV !== 'production') {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error during authentication';
+        const errorMessage =
+          error instanceof Error ? error.message : 'Unknown error during authentication';
         console.warn(`Authentication failed: ${errorMessage}`);
       }
     } finally {
@@ -118,11 +123,17 @@ export function LoginButton() {
     );
   }
 
+  // Render login/logout button
   return (
     <button
-      onClick={handleClick}
-      disabled={isLoading}
-      className={`text-sm bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:text-black hover:border-black transition-colors ${isLoading ? 'opacity-75 cursor-wait' : ''} ${!login ? 'cursor-not-allowed opacity-60' : 'hover:bg-gray-100'}`}
+      onClick={handleLogin}
+      disabled={isLoading || !ready}
+      className={`
+        ${className} 
+        ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
+        ${hasError ? 'bg-red-500 text-white' : ''}
+        ${authenticated ? 'bg-red-500 text-white' : ''}
+      `}
     >
       {isLoading ? 'Processing...' : authenticated ? 'Sign Out' : 'Login'}
     </button>
