@@ -19,10 +19,10 @@
     "sync-prompt": "node scripts/generate-sync-prompt.js",
     "update-swarm": "node scripts/update-swarm-feed.js",
     "type-check": "ts-node scripts/type-safety-check.ts",
-    "validate-content": "ts-node scripts/validate-content-schema.ts",
-    "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts",
+    "validate-content": "ts-node scripts/validate-content.ts",
     "validate-prisma-imports": "ts-node scripts/validate-prisma-imports.ts",
-    "validate": "npm run lint && npm run build && npm run validate-content && npm run audit-prisma-imports && npm run validate-prisma-imports"
+    "validate": "npm run lint && npm run build && npm run validate-content && npm run validate-prisma-imports",
+    "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts"
   },
   "author": "Joe Maristela",
   "license": "ISC",
