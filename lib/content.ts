@@ -39,6 +39,7 @@ export type ContentItem = {
   type: ContentType;
   readTime?: number;
   wordCount?: number;
+  excerpt?: string;
 };
 
 // Get the content directory based on type
