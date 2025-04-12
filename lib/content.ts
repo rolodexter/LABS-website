@@ -1,5 +1,4 @@
 import { prisma } from './prisma';
-import { Category } from '@prisma/client';
 // Keep categories import for backward compatibility
 import { categories, getCategoryById } from './categories';
 

@@ -3,11 +3,14 @@ const nextConfig = {
   // Experimental features configuration
   experimental: {
     // Temporarily disable trace file generation to resolve build freezes
-    outputFileTracing: false,
-    // Help with module resolution
+    // outputFileTracing: false,
+    // Removed experimental.outputFileTracing
     esmExternals: false,
     serverComponentsExternalPackages: ['express'],
   },
+  // Enable output file tracing at top-level if needed
+  outputFileTracing: false,
+  
   reactStrictMode: true,
 
   // Disable ESLint during builds to prevent deployment blocking

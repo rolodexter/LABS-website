@@ -1,6 +1,9 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
+
+# Install git for husky
+RUN apk add --no-cache git
 
 # Copy package files first for better layer caching
 COPY package.json package-lock.json ./
@@ -21,5 +24,5 @@ ENV PORT=3000
 # Expose the port
 EXPOSE 3000
 
-# Start the server
-CMD ["node", "server.js"]
+# Start the application
+CMD ["npm", "start"]
