@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "pre-build-type-check": "ts-node scripts/pre-build-type-check.ts",
+    "build": "npm run pre-build-type-check && next build",
     "start": "cross-env NODE_ENV=production node server.js",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -21,7 +22,7 @@
     "type-check": "ts-node scripts/type-safety-check.ts",
     "validate-content": "ts-node scripts/validate-content.ts",
     "validate-prisma-imports": "ts-node scripts/validate-prisma-imports.ts",
-    "validate": "npm run lint && npm run build && npm run validate-content && npm run validate-prisma-imports",
+    "validate": "npm run lint && npm run pre-build-type-check && npm run build && npm run validate-content && npm run validate-prisma-imports",
     "audit-prisma-imports": "ts-node scripts/audit-prisma-imports.ts"
   },
   "author": "Joe Maristela",
