@@ -19,7 +19,8 @@
     "sync-prompt": "node scripts/generate-sync-prompt.js",
     "update-swarm": "node scripts/update-swarm-feed.js",
     "type-check": "ts-node scripts/type-safety-check.ts",
-    "validate": "npm run lint && npm run build && npm run type-check"
+    "validate-content": "ts-node scripts/validate-content-schema.ts",
+    "validate": "npm run lint && npm run build && npm run validate-content"
   },
   "author": "Joe Maristela",
   "license": "ISC",
