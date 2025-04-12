@@ -2,7 +2,7 @@
 FROM docker.io/library/node:20-alpine
 
 # Install git and other necessary tools
-RUN apk add --no-cache git curl
+RUN apk add --no-cache git curl bash
 
 # Set working directory
 WORKDIR /app
@@ -10,17 +10,17 @@ WORKDIR /app
 # Copy package files first for better caching
 COPY package*.json ./
 
-# Verify package files exist
-RUN ls -l package*.json
+# Update npm to latest version
+RUN npm install -g npm@latest
 
-# Install ALL dependencies (including dev) to support build scripts
+# Install dependencies with verbose output
 RUN npm install --verbose
 
 # Copy the rest of the application code
 COPY . .
 
-# Verify files are copied correctly
-RUN ls -la
+# Initialize git repository for husky
+RUN git init && git add . && git commit -m "Initial commit"
 
 # Print Node and npm versions for debugging
 RUN node --version && npm --version
