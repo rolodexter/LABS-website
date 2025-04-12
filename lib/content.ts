@@ -51,13 +51,13 @@ const getContentDirectory = (type: ContentType): string => {
 export const parseContentFile = (filePath: string, type: ContentType): ContentItem | null => {
   try {
     // Read the file
-    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const fileContent = fs.readFileSync(filePath, 'utf8');
 
     // Parse frontmatter with gray-matter
-    const { data, content } = matter(fileContents);
+    const { data: frontmatter, content } = matter(fileContent);
 
     // Validate required fields
-    if (!data.title || !data.slug) {
+    if (!frontmatter.title || !frontmatter.slug) {
       console.warn(`Missing required fields in ${filePath}`);
       return null;
     }
@@ -95,25 +95,29 @@ export const parseContentFile = (filePath: string, type: ContentType): ContentIt
       }
     } else {
       // Fallback to summary if no suitable paragraph found
-      excerpt = data.summary || '';
+      excerpt = frontmatter.summary || '';
     }
 
     // Return structured content item
     return {
       meta: {
-        title: data.title,
-        slug: data.slug,
-        category: category || 'uncategorized',
-        summary: data.summary || '',
-        last_updated: data.last_updated || new Date().toISOString().split('T')[0],
-        status: data.status || 'published',
-        featured: data.featured || false,
-        dailyFocus: data.dailyFocus || false,
-        tags: data.tags || [],
+        title: frontmatter.title,
+        slug: frontmatter.slug,
+        category: frontmatter.category,
+        summary: frontmatter.summary,
+        last_updated: frontmatter.last_updated || new Date().toISOString(),
+        status: frontmatter.status || 'draft',
+        featured: frontmatter.featured || false,
+        dailyFocus: frontmatter.dailyFocus || false,
+        tags: frontmatter.tags || [],
+        complexity: frontmatter.complexity,
+        dependencies: frontmatter.dependencies || []
       },
       content,
       excerpt,
-      readingTime: readingTimeMinutes,
+      readTime: readingTimeMinutes,
+      type,
+      raw_content: fileContent
     };
   } catch (error) {
     console.error(`Error parsing file ${filePath}:`, error);

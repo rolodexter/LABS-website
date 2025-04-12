@@ -1,28 +1,29 @@
-FROM node:20-alpine
+# Use Node.js 20 Alpine as base image
+FROM docker.io/library/node:20-alpine
 
-WORKDIR /app
-
-# Install git for husky
+# Install git and other necessary tools
 RUN apk add --no-cache git
 
-# Copy package files first for better layer caching
-COPY package.json package-lock.json ./
+# Set working directory
+WORKDIR /app
 
-# Install dependencies and update package-lock.json
-RUN npm install
+# Copy package files first for better caching
+COPY package*.json ./
 
-# Copy the rest of the application
+# Install ALL dependencies (including dev) to support build scripts
+RUN npm ci
+
+# Copy the rest of the application code
 COPY . .
 
-# Build the application
+# Run pre-build type checks and build
 RUN npm run build
 
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# Expose the port
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Start the application
+# Set environment to production
+ENV NODE_ENV=production
+
+# Command to run the application
 CMD ["npm", "start"]
