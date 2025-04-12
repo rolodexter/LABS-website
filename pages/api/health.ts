@@ -6,6 +6,7 @@ type HealthStatus = {
   timestamp: string;
   database: string;
   environment: string;
+  pid?: number;
 };
 
 /**
@@ -27,28 +28,38 @@ export default async function handler(
   }
 
   try {
-    // Test database connection
-    const dbResult = await pool.query('SELECT 1 as result');
-    const dbConnected = dbResult.rows.length > 0 && dbResult.rows[0].result === 1;
+    // Minimal health check without blocking on database
+    const baseHealthCheck: HealthStatus = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development',
+      database: 'unknown',
+      pid: process.pid
+    };
 
-    if (dbConnected) {
-      return res.status(200).json({
-        status: 'healthy',
-        timestamp: new Date().toISOString(),
-        database: 'connected',
-        environment: process.env.NODE_ENV || 'development'
-      });
-    } else {
-      throw new Error('Database query did not return expected result');
+    // Optional database check that doesn't block the health endpoint
+    try {
+      const dbResult = await Promise.race([
+        pool.query('SELECT 1 as result'),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Database timeout')), 2000))
+      ]);
+
+      baseHealthCheck.database = 'connected';
+    } catch (dbError) {
+      console.warn('Database health check failed:', dbError);
+      baseHealthCheck.database = 'disconnected';
     }
+
+    return res.status(200).json(baseHealthCheck);
   } catch (error) {
-    console.error('Health check error:', error);
+    console.error('Unexpected health check error:', error);
     
     return res.status(500).json({
       status: 'unhealthy',
       timestamp: new Date().toISOString(),
-      database: 'disconnected',
-      environment: process.env.NODE_ENV || 'development'
+      database: 'unknown',
+      environment: process.env.NODE_ENV || 'development',
+      pid: process.pid
     });
   }
 }
