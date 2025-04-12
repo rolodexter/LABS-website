@@ -17,7 +17,9 @@
     "sync-knowledge": "node scripts/sync-knowledge-modules.js",
     "migrate-tasks": "node scripts/migrate-tasks.js",
     "sync-prompt": "node scripts/generate-sync-prompt.js",
-    "update-swarm": "node scripts/update-swarm-feed.js"
+    "update-swarm": "node scripts/update-swarm-feed.js",
+    "type-check": "ts-node scripts/type-safety-check.ts",
+    "validate": "npm run lint && npm run build && npm run type-check"
   },
   "author": "Joe Maristela",
   "license": "ISC",
